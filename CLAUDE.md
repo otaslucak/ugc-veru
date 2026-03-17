@@ -47,6 +47,24 @@ All compressed: 720×1280, H.264, CRF 28, no audio, `faststart`. Source original
 - Position Socials as go-to agency for UGC creatives (human + AI avatars)
 - Bonus/lead magnet: UGC Playbook for attendees who watch until the end
 
+## Section Order (13 sections)
+
+1. Hero (dark) — headline, photo, registration form
+2. Video Teaser (elevated) — 6 compact videos, horizontal scroll mobile, 6-col desktop
+3. Pain Points (dark) — 5 pain cards
+4. Takeaways (elevated) — 5 numbered items
+5. Personas (dark) — 3 target audience cards
+6. Speakers (elevated) — Veronika + Otakar
+7. Video Showcase (dark) — **tabbed**: Natios (4) | Nutworld (5) | Virexa (3)
+8. Mid CTA (elevated) — registration form 2/3
+9. Bonus (dark) — UGC Playbook with CSS cover mockup
+10. Social Proof (elevated) — stats + testimonial (Shoptet link)
+11. FAQ (dark) — accordion
+12. Final CTA (elevated) — countdown + registration form 3/3
+13. Footer
+
+Background alternates strictly: dark → elevated → dark → ...
+
 ## Technical Notes
 
 - **No framework** — standalone HTML + CSS + vanilla JS
@@ -55,11 +73,14 @@ All compressed: 720×1280, H.264, CRF 28, no audio, `faststart`. Source original
 - **3 registration forms:** hero, mid-page, final CTA — all submit to `/api/subscribe`
 - **Ecomail integration:** Skeleton ready, needs `ECOMAIL_API_KEY` + `ECOMAIL_LIST_ID` env vars on Vercel
 - **Meta Pixel:** Placeholder in `<head>`, needs real PIXEL_ID
+- **GDPR:** All "Ochrana osobních údajů" links point to `https://www.socials.cz/gdpr`
 - **Videos:** 12 compressed videos (1.5–6.3 MB each), `preload="none"`, lazy autoplay via IntersectionObserver
-- **Video Teaser section:** 6 videos (mix of human + AI) right after hero, horizontal scroll on mobile, 6-col grid on desktop
-- **Tabbed Video Showcase:** 3 tabs (Natios/Nutworld/Virexa), tab switch pauses hidden videos and re-observes visible ones
+- **Video Teaser:** 6 videos (mix human + AI) right after hero, horizontal scroll on mobile, 6-col grid on desktop
+- **Tabbed Video Showcase:** 3 tabs (Natios/Nutworld/Virexa), tab switch pauses hidden videos and re-observes visible ones via hoisted `videoObserver`
 - **AI Avatar badges:** Green outline variant (`.video-card__badge--ai`) to distinguish AI-generated creatives
-- **Section backgrounds:** Strict dark/elevated alternation across all 13 sections
+- **Playbook Cover:** CSS-only mockup (`.playbook-cover`) with green header, TOC preview, Socials branding
+- **Social Proof:** 28 recenzí linked to [Shoptet profil](https://partneri.shoptet.cz/profesionalove/socials-advertising/), real testimonial from teenwear.eu
+- **Cache strategy:** CSS/JS use `?v=N` query params for cache-busting; `max-age=3600, must-revalidate`. Images/videos use long-lived `immutable` cache.
 - **Performance target:** LCP < 2.5s, total page < 300KB (excl. lazy-loaded videos)
 
 ## Content Guidelines
