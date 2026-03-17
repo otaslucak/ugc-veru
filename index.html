@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UGC videa: Kdy reálně vydělává a kdy je to drahý obsah | Socials</title>
+  <meta name="description" content="Live webinář 8.4.2026 v 10:00. Reálná data z kampaní, framework na UGC kreativy, AI avatary v Meta Ads. Bez prodejního pitche.">
+
+  <!-- OG / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="UGC videa: Kdy reálně vydělává a kdy je to drahý obsah">
+  <meta property="og:description" content="Live webinář | 8.4.2026 | Reálná data z kampaní, ne teorie">
+  <meta property="og:image" content="images/og-image.jpg">
+  <meta property="og:locale" content="cs_CZ">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Preload critical font -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/worksans/v19/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K0nXNi8SoM3jb0mp.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Google Fonts: Work Sans 400, 600, 800 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Meta Pixel — nahradit PIXEL_ID -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    // fbq('init', 'PIXEL_ID');
+    // fbq('track', 'PageView');
+  </script>
+</head>
+<body>
+
+  <!-- ====================================================================
+       1. STICKY HEADER
+       ==================================================================== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="/" aria-label="Socials"><img src="images/socials-logo.svg" alt="Socials" class="header__logo"></a>
+      <a href="#hero-form" class="btn btn--primary">Registrovat se zdarma</a>
+    </div>
+  </header>
+
+  <!-- ====================================================================
+       2. HERO
+       ==================================================================== -->
+  <section class="hero section section--dark" id="hero">
+    <div class="container">
+      <div class="hero__grid">
+        <div class="hero__content">
+          <div class="hero__badge">
+            Live webinář &bull; Středa 8.4.2026 &bull; 10:00
+          </div>
+
+          <h1 class="hero__title">
+            UGC videa: Kdy UGC reálně vydělává peníze a&nbsp;kdy je to jen drahý obsah
+          </h1>
+
+          <p class="hero__subtitle">
+            Reálná data z kampaní, ne teorie. Framework, který mění UGC z nákladu na opakovatelný systém snižující PNO. Včetně AI avatarů v Meta Ads.
+          </p>
+
+          <!-- Registration form (1/3) -->
+          <form class="form" id="hero-form" data-form="register">
+            <div class="form__row">
+              <input
+                type="text"
+                name="name"
+                class="form__input"
+                placeholder="Vaše jméno"
+                required
+                autocomplete="given-name"
+              >
+              <input
+                type="email"
+                name="email"
+                class="form__input"
+                placeholder="Váš email"
+                required
+                autocomplete="email"
+              >
+            </div>
+            <!-- Honeypot -->
+            <div class="form__honeypot" aria-hidden="true">
+              <label for="hero-website">Website</label>
+              <input type="text" name="website" id="hero-website" tabindex="-1" autocomplete="off">
+            </div>
+            <button type="submit" class="btn btn--primary btn--full">
+              Registrovat se zdarma
+            </button>
+            <p class="form__micro">
+              Zdarma &bull; 45 min &bull; Bez prodejního pitche &bull;
+              <a href="#" target="_blank" rel="noopener">Ochrana osobních údajů</a>
+            </p>
+            <div class="form__success" role="alert">
+              Děkujeme! Odkaz na webinář přijde na váš email.
+            </div>
+            <div class="form__error" role="alert"></div>
+          </form>
+        </div>
+
+        <!-- Hero image -->
+        <div class="hero__image-wrap">
+          <img
+            src="images/veronika.png"
+            alt="Veronika — UGC specialistka a Meta Ads expertka"
+            class="hero__image"
+            width="400"
+            height="533"
+          >
+          <div class="hero__image-overlay">
+            <span class="hero__overlay-dot"></span>
+            <span class="hero__overlay-text"><strong>Veronika Styková</strong> UGC tvůrkyně &amp; Meta Ads specialistka @ Socials</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       3. PAIN POINTS
+       ==================================================================== -->
+  <section class="section section--elevated" id="pain-points">
+    <div class="container">
+      <span class="section__label">Poznáváte to?</span>
+      <h2 class="section__title mb-3">5 slepých míst, která vás stojí peníze</h2>
+
+      <div class="pain-points__grid">
+        <div class="pain-card">
+          <div class="pain-card__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/><path d="M10 6v5"/><circle cx="10" cy="14" r="0.5" fill="currentColor"/></svg>
+          </div>
+          <h3 class="pain-card__title">UGC jako estetika, ne jako výkon</h3>
+          <p class="pain-card__text">Pořizujete UGC, protože &quot;to dělají všichni&quot;, ale neměříte dopad na konverze a PNO. Hezká videa, žádná data.</p>
+        </div>
+
+        <div class="pain-card">
+          <div class="pain-card__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 10h14M10 3v14"/></svg>
+          </div>
+          <h3 class="pain-card__title">Žádný systém testování</h3>
+          <p class="pain-card__text">UGC se natočí jednou, hodí do kampaně a čeká se na zázrak. Chybí iterace: hook varianty, CTA varianty, formátové mutace.</p>
+        </div>
+
+        <div class="pain-card">
+          <div class="pain-card__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 9l2 2 4-4"/></svg>
+          </div>
+          <h3 class="pain-card__title">Špatný brief = špatný obsah</h3>
+          <p class="pain-card__text">Tvůrci dostávají vágní zadání (&quot;natočte něco autentického&quot;) místo výkonnostního briefu postaveného na datech z kampaní.</p>
+        </div>
+
+        <div class="pain-card">
+          <div class="pain-card__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 15l3-3m3-3l3-3m-3 3l-3-3m3 3l3 3"/><circle cx="4" cy="15" r="1.5"/><circle cx="16" cy="5" r="1.5"/></svg>
+          </div>
+          <h3 class="pain-card__title">Neškáluje se</h3>
+          <p class="pain-card__text">Najdete jednoho dobrého tvůrce, ale neumíte z toho udělat opakovatelný proces. Když odpadne, odpadne celý kanál.</p>
+        </div>
+
+        <div class="pain-card">
+          <div class="pain-card__icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 10h5m4 0h5"/><path d="M8 7v6m4-6v6"/></svg>
+          </div>
+          <h3 class="pain-card__title">Kreativa a nákup žijí odděleně</h3>
+          <p class="pain-card__text">Kdo nakupuje média, nerozumí kreativě. Kdo dělá kreativu, nesleduje čísla. UGC visí mezi tím a nikdo za něj neodpovídá.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       4. TAKEAWAYS
+       ==================================================================== -->
+  <section class="section section--dark" id="takeaways">
+    <div class="container">
+      <span class="section__label">Co si odnesete</span>
+      <h2 class="section__title mb-4">5 konkrétních věcí, se&nbsp;kterými odejdete</h2>
+
+      <div class="takeaways__list">
+        <div class="takeaway">
+          <div class="takeaway__number">1</div>
+          <div class="takeaway__content">
+            <h3 class="takeaway__title">UGC je testovací materiál, ne finální kreativa</h3>
+            <p class="takeaway__text">Jeden UGC výstup = základ pro 10&ndash;20 variant. Kdo testuje 3 verze, prohrává s tím, kdo testuje 30. AI tohle umožňuje škálovat.</p>
+          </div>
+        </div>
+
+        <div class="takeaway">
+          <div class="takeaway__number">2</div>
+          <div class="takeaway__content">
+            <h3 class="takeaway__title">Brief rozhoduje o 80 % výkonu</h3>
+            <p class="takeaway__text">Struktura výkonnostního UGC briefu postavená na datech z kampaní &mdash; winning hooky, pain pointy cílovky, proven CTA. Ne z &quot;pocitu&quot; kreativce.</p>
+          </div>
+        </div>
+
+        <div class="takeaway">
+          <div class="takeaway__number">3</div>
+          <div class="takeaway__content">
+            <h3 class="takeaway__title">Hook je vše &mdash; prvních 1,5 s rozhodne</h3>
+            <p class="takeaway__text">Konkrétní příklady hooků, které drží watch-time a konvertují. Reálná data z kampaní: jak se liší CTR podle typu hooku.</p>
+          </div>
+        </div>
+
+        <div class="takeaway">
+          <div class="takeaway__number">4</div>
+          <div class="takeaway__content">
+            <h3 class="takeaway__title">AI jako multiplikátor, ne náhrada</h3>
+            <p class="takeaway__text">Kde AI v UGC procesu reálně šetří čas (generování variant, analýza winning elementů) a kde ho nasadit nesmíte (autenticita, emoce, důvěra).</p>
+          </div>
+        </div>
+
+        <div class="takeaway">
+          <div class="takeaway__number">5</div>
+          <div class="takeaway__content">
+            <h3 class="takeaway__title">Měřte UGC jako investici</h3>
+            <p class="takeaway__text">Cost-per-winning-creative framework: kolik stojí 1 UGC sada, kolik variant z ní vytěžíte, jaký je ROI. Když tohle neměříte, střílíte naslepo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       5. PRO KOHO
+       ==================================================================== -->
+  <section class="section section--elevated" id="personas">
+    <div class="container">
+      <span class="section__label">Pro koho je webinář</span>
+      <h2 class="section__title mb-4">Je to pro vás?</h2>
+
+      <div class="personas__grid">
+        <div class="persona-card">
+          <div class="persona-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)" stroke-width="1.5"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3z"/><circle cx="17.5" cy="17.5" r="3.5"/></svg>
+          </div>
+          <h3 class="persona-card__title">Performance marketéři</h3>
+          <p class="persona-card__text">Řešíte PNO, ROAS a škálování kampaní na Meta/TikToku. Hledáte způsob, jak přestat být závislí na jedné kreativě.</p>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3 class="persona-card__title">CMO / marketingoví manažeři</h3>
+          <p class="persona-card__text">Firmy s obratem 30M+ Kč za rok. Hledáte způsob, jak snížit PNO a zvýšit počet objednávek.</p>
+        </div>
+
+        <div class="persona-card">
+          <div class="persona-card__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--c-primary)" stroke-width="1.5"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><path d="M16 3a4 4 0 010 8m5 10v-2a4 4 0 00-3-3.87"/></svg>
+          </div>
+          <h3 class="persona-card__title">Majitelé e-shopů</h3>
+          <p class="persona-card__text">Utrácíte 100k+ CZK/měsíc v paid social a chcete vědět, jestli UGC reálně sníží vaše PNO.</p>
+        </div>
+      </div>
+
+      <div class="personas__note">
+        <strong>Úroveň: střední až pokročilá.</strong> Nebudeme vysvětlovat, co je UGC. Už jste rozjeli kampaně, znáte Business Manager, řešíte kreativní únavu.
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       6. SPEAKERS
+       ==================================================================== -->
+  <section class="section section--dark" id="speakers">
+    <div class="container">
+      <span class="section__label">Kdo mluví</span>
+      <h2 class="section__title text-center mb-4">Přednášející</h2>
+
+      <div class="speakers__grid">
+        <div class="speaker-card">
+          <img
+            src="images/veronika.png"
+            alt="Veronika — UGC specialistka"
+            class="speaker-card__image"
+            width="360"
+            height="360"
+            loading="lazy"
+          >
+          <div class="speaker-card__body">
+            <h3 class="speaker-card__name">Veronika</h3>
+            <p class="speaker-card__role">UGC tvůrkyně &amp; Meta Ads specialistka</p>
+            <p class="speaker-card__bio">Vytváří UGC kreativy a řídí Meta Ads kampaně pro klienty Socials. Kombinuje pohled tvůrce s daty z performance.</p>
+          </div>
+        </div>
+
+        <div class="speaker-card">
+          <img
+            src="images/otakar.jpg"
+            alt="Otakar Lucák — spolumajitel Socials"
+            class="speaker-card__image"
+            width="360"
+            height="360"
+            loading="lazy"
+          >
+          <div class="speaker-card__body">
+            <h3 class="speaker-card__name">Otakar Lucák</h3>
+            <p class="speaker-card__role">Spolumajitel Socials, moderátor</p>
+            <p class="speaker-card__bio">Performance marketing, strategie a škálování kampaní. V Socials vede tým, který ročně vyprodukuje 3 000+ reklamních kreativ.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       UKÁZKY Z PRAXE (UGC videa)
+       ==================================================================== -->
+  <section class="section section--elevated" id="ukazky">
+    <div class="container">
+      <span class="section__label">Ukázky z praxe</span>
+      <h2 class="section__title text-center mb-2">Jedno zadání, tři hooky, tři výsledky</h2>
+      <p class="section__subtitle text-center mb-4" style="margin-left:auto;margin-right:auto;">
+        Stejný produkt, stejná tvůrkyně &mdash; jiný hook. Takhle vypadá testování kreativ v praxi. Prvních 1,5&nbsp;sekundy rozhoduje.
+      </p>
+
+      <div class="videos__grid">
+        <div class="video-card">
+          <div class="video-card__badge">Hook 1</div>
+          <video
+            class="video-card__video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            poster="videos/poster1.jpg"
+            width="720"
+            height="1280"
+          >
+            <source src="videos/hook1.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="video-card">
+          <div class="video-card__badge">Hook 2</div>
+          <video
+            class="video-card__video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            poster="videos/poster2.jpg"
+            width="720"
+            height="1280"
+          >
+            <source src="videos/hook2.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="video-card">
+          <div class="video-card__badge">Hook 3</div>
+          <video
+            class="video-card__video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            poster="videos/poster3.jpg"
+            width="720"
+            height="1280"
+          >
+            <source src="videos/hook3.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <p class="videos__caption">
+        UGC kreativa pro Natios &mdash; magnézium. 3 varianty hooku, stejný brief, stejná tvůrkyně.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       MID CTA (2/3)
+       ==================================================================== -->
+  <section class="section section--dark mid-cta" id="mid-cta">
+    <div class="container">
+      <h2 class="section__title text-center mb-2">Chcete se přihlásit?</h2>
+      <p class="section__subtitle text-center mb-4" style="margin-left:auto;margin-right:auto;">Zdarma, 45 minut, bez prodejního pitche. Registrace trvá 10 sekund.</p>
+
+      <form class="form" id="mid-form" data-form="register">
+        <div class="form__row">
+          <input type="text" name="name" class="form__input" placeholder="Vaše jméno" required autocomplete="given-name">
+          <input type="email" name="email" class="form__input" placeholder="Váš email" required autocomplete="email">
+        </div>
+        <div class="form__honeypot" aria-hidden="true">
+          <label for="mid-website">Website</label>
+          <input type="text" name="website" id="mid-website" tabindex="-1" autocomplete="off">
+        </div>
+        <button type="submit" class="btn btn--primary btn--full">Registrovat se zdarma</button>
+        <p class="form__micro text-center">
+          <a href="#" target="_blank" rel="noopener">Ochrana osobních údajů</a>
+        </p>
+        <div class="form__success" role="alert">
+          Děkujeme! Odkaz na webinář přijde na váš email.
+        </div>
+        <div class="form__error" role="alert"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       7. BONUS: UGC PLAYBOOK
+       ==================================================================== -->
+  <section class="section section--dark bonus" id="bonus">
+    <div class="container">
+      <div class="bonus__card">
+        <div class="bonus__grid">
+          <div class="bonus__content">
+            <div class="bonus__badge">Bonus pro účastníky</div>
+            <h2 class="bonus__title">UGC Playbook</h2>
+            <p class="bonus__text">
+              Kompletní framework, který používáme v Socials na produkci a škálování UGC kreativ. Žádná teorie &mdash; jen proces, šablony a čísla.
+            </p>
+
+            <ul class="bonus__list">
+              <li class="bonus__list-item">Strategická část pro zakladatele a CMO &mdash; kdy UGC (ne)dělat</li>
+              <li class="bonus__list-item">15krokový checklist spolupráce s tvůrci</li>
+              <li class="bonus__list-item">UGC brief šablona připravená k okamžitému použití</li>
+              <li class="bonus__list-item">Outreach zprávy, které reálně fungují</li>
+              <li class="bonus__list-item">Pricing guide + benchmarky (CTR, CPA, ROAS, watch time)</li>
+            </ul>
+
+            <div class="bonus__condition">
+              Playbook obdrží každý, kdo webinář dosleduje do konce.
+            </div>
+          </div>
+
+          <div class="bonus__mockup-wrap">
+            <!-- Replace with actual mockup when available -->
+            <div class="bonus__mockup-placeholder">
+              <span class="bonus__mockup-placeholder-icon">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="var(--c-primary)" stroke-width="1.5"><rect x="8" y="4" width="32" height="40" rx="4"/><path d="M16 16h16M16 24h16M16 32h10"/></svg>
+              </span>
+              <span class="bonus__mockup-placeholder-text">UGC Playbook<br>by Socials</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       8. SOCIAL PROOF
+       ==================================================================== -->
+  <section class="section section--elevated" id="social-proof">
+    <div class="container">
+      <div class="social-proof__bar">
+        <div class="social-proof__stat">
+          <div class="social-proof__stat-value">3 000+</div>
+          <div class="social-proof__stat-label">reklamních kreativ ročně</div>
+        </div>
+        <div class="social-proof__stat">
+          <div class="social-proof__stat-value">5.0</div>
+          <div class="social-proof__stat-label">hodnocení</div>
+        </div>
+        <div class="social-proof__stat">
+          <div class="social-proof__stat-value">27</div>
+          <div class="social-proof__stat-label">recenzí</div>
+        </div>
+      </div>
+
+      <!-- Client logos placeholder - replace with actual logos -->
+      <!--
+      <div class="social-proof__logos">
+        <img src="images/logo-client-1.svg" alt="Klient 1" width="120" height="24" loading="lazy">
+      </div>
+      -->
+
+      <div class="testimonial">
+        <p class="testimonial__quote">Socials nám pomohli změnit UGC z náhodného experimentu na systematický proces. PNO kleslo o 22 % za první 3 měsíce.</p>
+        <p class="testimonial__author">&mdash; Klient Socials, e-commerce</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       9. FAQ
+       ==================================================================== -->
+  <section class="section section--dark" id="faq">
+    <div class="container">
+      <span class="section__label">Časté otázky</span>
+      <h2 class="section__title text-center mb-4">FAQ</h2>
+
+      <div class="faq__list">
+        <div class="faq-item">
+          <button class="faq-item__question" aria-expanded="false">
+            <span>Je webinář zdarma?</span>
+            <span class="faq-item__icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-item__answer">
+            <div class="faq-item__answer-inner">
+              Ano, webinář je kompletně zdarma. Žádné skryté poplatky, žádný upsell během vysílání.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__question" aria-expanded="false">
+            <span>Bude záznam?</span>
+            <span class="faq-item__icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-item__answer">
+            <div class="faq-item__answer-inner">
+              Záznam plánujeme zpřístupnit, ale pouze registrovaným účastníkům. Doporučujeme přijít naživo &mdash; budete se moct ptát v reálném čase.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__question" aria-expanded="false">
+            <span>Pro koho to není?</span>
+            <span class="faq-item__icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-item__answer">
+            <div class="faq-item__answer-inner">
+              Pokud jste úplný začátečník a nevíte, co je UGC nebo Business Manager, tento webinář bude příliš pokročilý. Zaměřujeme se na lidi, kteří už kampaně běží a chtějí výsledky posunout dál.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__question" aria-expanded="false">
+            <span>Co potřebuji?</span>
+            <span class="faq-item__icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-item__answer">
+            <div class="faq-item__answer-inner">
+              Jen prohlížeč a stabilní připojení k internetu. Odkaz na Riverside stream vám pošleme emailem po registraci.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__question" aria-expanded="false">
+            <span>Kde se bude konat?</span>
+            <span class="faq-item__icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-item__answer">
+            <div class="faq-item__answer-inner">
+              Online přes platformu Riverside. Po registraci dostanete email s odkazem. Žádná instalace není potřeba.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__question" aria-expanded="false">
+            <span>Jak získám UGC Playbook?</span>
+            <span class="faq-item__icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+          </button>
+          <div class="faq-item__answer">
+            <div class="faq-item__answer-inner">
+              Playbook pošleme emailem všem registrovaným účastníkům, kteří webinář dosledují do konce. Je to náš způsob, jak odměnit ty, kteří si vyhradili čas.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       10. FINAL CTA
+       ==================================================================== -->
+  <section class="section section--elevated final-cta" id="final-cta">
+    <div class="container">
+      <!-- Countdown -->
+      <div class="countdown" id="countdown">
+        <div class="countdown__block">
+          <div class="countdown__value" id="countdown-days">--</div>
+          <div class="countdown__label">Dnů</div>
+        </div>
+        <div class="countdown__block">
+          <div class="countdown__value" id="countdown-hours">--</div>
+          <div class="countdown__label">Hodin</div>
+        </div>
+        <div class="countdown__block">
+          <div class="countdown__value" id="countdown-minutes">--</div>
+          <div class="countdown__label">Minut</div>
+        </div>
+        <div class="countdown__block">
+          <div class="countdown__value" id="countdown-seconds">--</div>
+          <div class="countdown__label">Sekund</div>
+        </div>
+      </div>
+
+      <h2 class="section__title mb-2">Přihlaste se na webinář</h2>
+      <p class="final-cta__info">
+        <strong>Středa 8. dubna 2026</strong> v 10:00 &bull; Online přes Riverside &bull; Zdarma
+      </p>
+
+      <!-- Registration form (3/3) -->
+      <form class="form" id="final-form" data-form="register">
+        <div class="form__row">
+          <input type="text" name="name" class="form__input" placeholder="Vaše jméno" required autocomplete="given-name">
+          <input type="email" name="email" class="form__input" placeholder="Váš email" required autocomplete="email">
+        </div>
+        <div class="form__honeypot" aria-hidden="true">
+          <label for="final-website">Website</label>
+          <input type="text" name="website" id="final-website" tabindex="-1" autocomplete="off">
+        </div>
+        <button type="submit" class="btn btn--primary btn--full">Registrovat se zdarma</button>
+        <p class="form__micro text-center">
+          <a href="#" target="_blank" rel="noopener">Ochrana osobních údajů</a>
+        </p>
+        <div class="form__success" role="alert">
+          Děkujeme! Odkaz na webinář přijde na váš email.
+        </div>
+        <div class="form__error" role="alert"></div>
+      </form>
+
+      <!-- Expired state -->
+      <div class="final-cta__expired" id="expired-state">
+        <p class="final-cta__expired-text">Webinář už proběhl. Děkujeme všem účastníkům!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       11. FOOTER
+       ==================================================================== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="https://socials.cz" target="_blank" rel="noopener"><img src="images/socials-logo.svg" alt="Socials" class="footer__logo-img"></a>
+      <div class="footer__links">
+        <a href="https://socials.cz" target="_blank" rel="noopener">socials.cz</a>
+        <a href="#" target="_blank" rel="noopener">Ochrana osobních údajů</a>
+      </div>
+      <p class="footer__copy">&copy; 2026 Socials. Všechna práva vyhrazena.</p>
+    </div>
+  </footer>
+
+  <!-- ====================================================================
+       STICKY MOBILE CTA
+       ==================================================================== -->
+  <div class="sticky-cta" id="sticky-cta">
+    <a href="#hero-form" class="btn btn--primary btn--full">Registrovat se zdarma</a>
+  </div>
+
+  <!-- JS -->
+  <script src="js/main.js" defer></script>
+</body>
+</html>

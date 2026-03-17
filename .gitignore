@@ -1,0 +1,10 @@
+.DS_Store
+.env
+.env.local
+node_modules/
+.vercel/
+
+# Original full-size videos (only compressed versions tracked)
+videos/Horčík-CZ-hook1.MP4
+videos/Horčík-CZ-hook2.MP4
+videos/Horčík-CZ-hook3.MP4
