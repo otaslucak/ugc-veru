@@ -633,6 +633,105 @@ h4 { font-size: 1.25rem; }
 }
 
 /* ==========================================================================
+   VIDEO TEASER (6 ukázek za hero)
+   ========================================================================== */
+.teaser__grid {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+}
+
+.teaser__caption {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+}
+
+.teaser__link {
+  color: var(--c-primary);
+  font-weight: var(--fw-semibold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.teaser__link:hover {
+  color: var(--c-primary-light);
+}
+
+/* Smaller video cards for teaser */
+.video-card--sm {
+  flex: 0 0 55%;
+  scroll-snap-align: center;
+}
+
+@media (min-width: 768px) {
+  .teaser__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-x: visible;
+    scroll-snap-type: none;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .video-card--sm {
+    flex: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .teaser__grid {
+    grid-template-columns: repeat(6, 1fr);
+    max-width: 100%;
+  }
+}
+
+/* ==========================================================================
+   TABS (Video showcase)
+   ========================================================================== */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.tabs__btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 100px;
+  font-size: 0.875rem;
+  font-weight: var(--fw-semibold);
+  color: var(--c-fg-muted);
+  background: var(--c-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  min-height: 44px;
+}
+
+.tabs__btn:hover {
+  color: var(--c-white);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.tabs__btn.is-active {
+  background: var(--c-primary);
+  color: var(--c-bg);
+  border-color: var(--c-primary);
+}
+
+.tabs__panel {
+  display: none;
+}
+
+.tabs__panel.is-active {
+  display: block;
+}
+
+/* ==========================================================================
    VIDEO SHOWCASE (Ukázky z praxe)
    ========================================================================== */
 .videos__grid {
@@ -664,6 +763,12 @@ h4 { font-size: 1.25rem; }
   border-radius: 100px;
 }
 
+.video-card__badge--ai {
+  background: transparent;
+  color: var(--c-primary);
+  border: 1.5px solid var(--c-primary);
+}
+
 .video-card__video {
   width: 100%;
   height: auto;
@@ -691,7 +796,7 @@ h4 { font-size: 1.25rem; }
   }
 
   .video-card {
-    flex: 0 0 75%;
+    flex: 0 0 65%;
     scroll-snap-align: center;
   }
 }
@@ -700,6 +805,22 @@ h4 { font-size: 1.25rem; }
 @media (min-width: 768px) {
   .videos__grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .videos__grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 100%;
+  }
+
+  .videos__grid--5 {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .videos__grid--5 {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
@@ -793,39 +914,114 @@ h4 { font-size: 1.25rem; }
   justify-content: center;
 }
 
-.bonus__mockup {
-  max-width: 280px;
+/* --- Playbook Cover Mockup --- */
+.playbook-cover {
+  width: 260px;
   border-radius: var(--radius-md);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  background: #0d0d0d;
+  border: 1px solid rgba(148, 231, 0, 0.15);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(148, 231, 0, 0.08);
+  display: flex;
+  flex-direction: column;
 }
 
-/* Fallback when no mockup image */
-.bonus__mockup-placeholder {
-  width: 240px;
-  height: 320px;
-  background: linear-gradient(135deg, var(--c-primary-darkest), var(--c-bg-card));
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(148, 231, 0, 0.2);
+.playbook-cover__header {
+  background: var(--c-primary);
+  padding: 1rem 1.25rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+}
+
+.playbook-cover__logo {
+  height: 14px;
+  width: auto;
+  filter: brightness(0);
+}
+
+.playbook-cover__body {
+  padding: 1.5rem 1.25rem 1rem;
+  flex: 1;
+}
+
+.playbook-cover__label {
+  display: block;
+  font-size: 0.5625rem;
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--c-primary);
+  margin-bottom: 0.75rem;
+}
+
+.playbook-cover__title {
+  font-size: 1.75rem;
+  font-weight: var(--fw-extrabold);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--c-white);
+  margin-bottom: 0.625rem;
+}
+
+.playbook-cover__subtitle {
+  font-size: 0.6875rem;
+  color: var(--c-fg-muted);
+  line-height: 1.4;
+  margin-bottom: 1.25rem;
+}
+
+.playbook-cover__toc {
+  display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 1.5rem;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+  gap: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 1rem;
 }
 
-.bonus__mockup-placeholder-icon {
-  font-size: 2.5rem;
+.playbook-cover__toc-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
 }
 
-.bonus__mockup-placeholder-text {
-  font-size: 0.875rem;
+.playbook-cover__toc-num {
+  font-size: 0.625rem;
+  font-weight: var(--fw-extrabold);
+  color: var(--c-primary);
+  flex-shrink: 0;
+  width: 1.25rem;
+}
+
+.playbook-cover__toc-text {
+  font-size: 0.625rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.3;
+}
+
+.playbook-cover__footer {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.playbook-cover__year {
+  font-size: 0.625rem;
+  font-weight: var(--fw-extrabold);
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.1em;
+}
+
+.playbook-cover__by {
+  font-size: 0.625rem;
   font-weight: var(--fw-semibold);
   color: var(--c-primary);
-  text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
 /* ==========================================================================
@@ -854,6 +1050,21 @@ h4 { font-size: 1.25rem; }
   font-size: 0.8125rem;
   color: var(--c-fg-muted);
   margin-top: 0.125rem;
+}
+
+.social-proof__stat-link {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s;
+}
+
+.social-proof__stat-link:hover {
+  opacity: 0.8;
+}
+
+.social-proof__stat-link .social-proof__stat-label {
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .social-proof__logos {

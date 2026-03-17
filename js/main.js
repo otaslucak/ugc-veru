@@ -163,11 +163,12 @@
 
   /* ------------------------------------------------------------------
      LAZY VIDEO AUTOPLAY
-     Videos start playing only when visible
+     Videos start playing only when visible (hoisted for tab reuse)
      ------------------------------------------------------------------ */
+  var videoObserver = null;
+
   if ('IntersectionObserver' in window) {
-    var videos = document.querySelectorAll('.video-card__video');
-    var videoObserver = new IntersectionObserver(
+    videoObserver = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
@@ -180,12 +181,63 @@
       { threshold: 0.3 }
     );
 
-    videos.forEach(function (video) {
+    var allVideos = document.querySelectorAll('.video-card__video');
+    allVideos.forEach(function (video) {
       video.removeAttribute('autoplay');
       video.pause();
-      videoObserver.observe(video);
+      // Only observe videos in visible panels (not hidden tabs)
+      var panel = video.closest('.tabs__panel');
+      if (!panel || panel.classList.contains('is-active')) {
+        videoObserver.observe(video);
+      }
     });
   }
+
+  /* ------------------------------------------------------------------
+     TAB SWITCHING (Video showcase)
+     ------------------------------------------------------------------ */
+  var tabBtns = document.querySelectorAll('.tabs__btn');
+  var tabPanels = document.querySelectorAll('.tabs__panel');
+
+  tabBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var targetId = btn.getAttribute('aria-controls');
+
+      // Deactivate all tabs
+      tabBtns.forEach(function (b) {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-selected', 'false');
+      });
+
+      // Hide all panels, pause & unobserve their videos
+      tabPanels.forEach(function (panel) {
+        panel.classList.remove('is-active');
+        panel.setAttribute('hidden', '');
+        if (videoObserver) {
+          panel.querySelectorAll('.video-card__video').forEach(function (v) {
+            v.pause();
+            videoObserver.unobserve(v);
+          });
+        }
+      });
+
+      // Activate clicked tab
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected', 'true');
+
+      // Show target panel, observe its videos
+      var targetPanel = document.getElementById(targetId);
+      if (targetPanel) {
+        targetPanel.classList.add('is-active');
+        targetPanel.removeAttribute('hidden');
+        if (videoObserver) {
+          targetPanel.querySelectorAll('.video-card__video').forEach(function (v) {
+            videoObserver.observe(v);
+          });
+        }
+      }
+    });
+  });
 
   /* ------------------------------------------------------------------
      STICKY MOBILE CTA (IntersectionObserver)

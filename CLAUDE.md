@@ -9,16 +9,27 @@ Landing page for a UGC webinar by Socials agency. Standalone HTML/CSS/JS, deploy
 ## Repository Structure
 
 ```
-index.html              — Landing page (all 12 sections)
+index.html              — Landing page (13 sections incl. video teaser + tabbed showcase)
 css/styles.css          — Mobile-first styles, custom properties, components
-js/main.js              — Countdown, sticky header, accordion, form AJAX, lazy video
+js/main.js              — Countdown, sticky header, accordion, form AJAX, lazy video, tab switching
 api/subscribe.js        — Vercel serverless function (Ecomail API proxy, skeleton)
-vercel.json             — Vercel config (rewrites, cache headers)
+vercel.json             — Vercel config (rewrites, cache headers for css/js/images/videos)
 images/                 — veronika.png, otakar.jpg, socials-logo.svg
-videos/                 — hook1-3.mp4 (compressed), poster1-3.jpg
+videos/                 — 12 compressed videos + 12 poster JPGs (see Video Structure below)
 kontext.md              — Webinar brief (Czech, not tracked in git)
 playbook.md             — UGC playbook (Slovak, not tracked in git)
 ```
+
+### Video Structure (12 videos, 3 brands)
+
+| Brand | Files | Count |
+|-------|-------|-------|
+| **Natios** (magnézium) | `natios-hook1/2/3.mp4`, `natios-ai1.mp4` | 3 human + 1 AI |
+| **Nutworld** (ořechy) | `nutworld-hook1/2/3.mp4`, `nutworld-ai1.mp4`, `nutworld-ai2.mp4` | 3 human + 2 AI |
+| **Virexa** (doplňky) | `virexa-hook1/2/3.mp4` | 3 human |
+
+Posters follow naming: `{brand}-poster-{hook1|hook2|hook3|ai1|ai2}.jpg`
+All compressed: 720×1280, H.264, CRF 28, no audio, `faststart`. Source originals in `.gitignore`.
 
 ## Key Context
 
@@ -44,7 +55,11 @@ playbook.md             — UGC playbook (Slovak, not tracked in git)
 - **3 registration forms:** hero, mid-page, final CTA — all submit to `/api/subscribe`
 - **Ecomail integration:** Skeleton ready, needs `ECOMAIL_API_KEY` + `ECOMAIL_LIST_ID` env vars on Vercel
 - **Meta Pixel:** Placeholder in `<head>`, needs real PIXEL_ID
-- **Videos:** Compressed from originals (~33MB → ~1.5MB each), `preload="none"`, lazy autoplay via IntersectionObserver
+- **Videos:** 12 compressed videos (1.5–6.3 MB each), `preload="none"`, lazy autoplay via IntersectionObserver
+- **Video Teaser section:** 6 videos (mix of human + AI) right after hero, horizontal scroll on mobile, 6-col grid on desktop
+- **Tabbed Video Showcase:** 3 tabs (Natios/Nutworld/Virexa), tab switch pauses hidden videos and re-observes visible ones
+- **AI Avatar badges:** Green outline variant (`.video-card__badge--ai`) to distinguish AI-generated creatives
+- **Section backgrounds:** Strict dark/elevated alternation across all 13 sections
 - **Performance target:** LCP < 2.5s, total page < 300KB (excl. lazy-loaded videos)
 
 ## Content Guidelines
