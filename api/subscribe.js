@@ -32,6 +32,9 @@ module.exports = async function handler(req, res) {
 
   var email = body.email.trim();
   var name = body.name.trim();
+  var nameParts = name.split(/\s+/);
+  var firstName = nameParts[0] || '';
+  var surname = nameParts.slice(1).join(' ') || '';
   var utmSource = (body.utm_source || '').trim();
   var utmMedium = (body.utm_medium || '').trim();
   var utmCampaign = (body.utm_campaign || '').trim();
@@ -67,7 +70,8 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         subscriber_data: {
           email: email,
-          name: name,
+          name: firstName,
+          surname: surname,
           source: 'ugc-webinar-lp',
           tags: ['ugc-webinar-2026'],
           custom_fields: {

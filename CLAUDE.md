@@ -36,7 +36,7 @@ All compressed: 720×1280, H.264, CRF 28, no audio, `faststart`. Source original
 ## Key Context
 
 - **Agency:** Socials — performance marketing boutique
-- **Webinar:** "UGC videa: Kdy UGC reálně vydělává peníze a kdy je to jen drahý obsah"
+- **Webinar:** "UGC: Kdy zvyšuje výkon kampaní a kdy je to jen drahý obsah?"
 - **Date:** Wednesday 8.4.2026, 10:00
 - **Platform:** Riverside
 - **Target audience:** Performance marketers, CMOs, e-shop owners (100k+ CZK/month paid social)
@@ -72,8 +72,8 @@ Background alternates strictly: dark → elevated → dark → ...
 - **No framework** — standalone HTML + CSS + vanilla JS
 - **Mobile-first** — most traffic from Meta Ads is mobile
 - **Hero layout:** On mobile: badge → headline (short, no prefix) → Veronika photo → form. On desktop: 2-column grid with headline+subtitle+form left, photo right.
-- **3 registration forms:** hero, mid-page, final CTA — all submit to `/api/subscribe`
-- **Ecomail integration:** Fully wired. `api/subscribe.js` calls Ecomail `/lists/{id}/subscribe` with `skip_confirmation`, `trigger_autoresponders`, `update_existing`. Contacts land in "Hlavní seznam" with tag `ugc-webinar-2026`. UTM params (`utm_source`, `utm_medium`, `utm_campaign`) parsed from URL and stored as custom fields (`UTM_SOURCE`, `UTM_MEDIUM`, `UTM_CAMPAIGN`). Requires `ECOMAIL_API_KEY` + `ECOMAIL_LIST_ID` env vars on Vercel (already set). Falls back to skeleton success response when env vars are missing (local dev).
+- **3 registration forms:** hero, mid-page, final CTA — all submit to `/api/subscribe`. Placeholder "Jméno a příjmení" — backend splits into `name` + `surname`.
+- **Ecomail integration:** Fully wired. `api/subscribe.js` calls Ecomail `/lists/{id}/subscribe` with `skip_confirmation`, `trigger_autoresponders`, `update_existing`. Full name is split on whitespace: first word → `name`, rest → `surname`. Contacts land in "Hlavní seznam" with tag `ugc-webinar-2026`. UTM params (`utm_source`, `utm_medium`, `utm_campaign`) parsed from URL and stored as custom fields (`UTM_SOURCE`, `UTM_MEDIUM`, `UTM_CAMPAIGN`). Requires `ECOMAIL_API_KEY` + `ECOMAIL_LIST_ID` env vars on Vercel (already set). Falls back to skeleton success response when env vars are missing (local dev).
 - **Meta Pixel:** Active (ID `2287597364836978`). Events: `PageView` on both pages, `Lead` on form submit (main.js), `CompleteRegistration` on thank-you page load
 - **GDPR:** All "Ochrana osobních údajů" links point to `https://www.socials.cz/gdpr`
 - **Videos:** 12 compressed videos (1.5–6.3 MB each), `preload="none"`, lazy autoplay via IntersectionObserver
@@ -83,10 +83,15 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Playbook Cover:** CSS-only mockup (`.playbook-cover`) with green header, TOC preview, Socials branding
 - **Social Proof:** 28 recenzí linked to [Shoptet profil](https://partneri.shoptet.cz/profesionalove/socials-advertising/), real testimonial from teenwear.eu
 - **Cache strategy:** CSS/JS use `?v=N` query params for cache-busting; `max-age=3600, must-revalidate`. Images/videos use long-lived `immutable` cache.
-- **Thank-you page (`/dekujeme`):** Post-registration redirect (300ms delay for Pixel). Animated checkmark (CSS-only), date badge, calendar links (Google Calendar URL + `.ics` download), 3 resource cards (YouTube, Podcast, Natima case study). `noindex, nofollow`.
+- **Riverside link:** `https://riverside.com/studio/socials-advertisings-studio?t=3a938320e33f7df4b5d4` — shown on thank-you page as primary CTA button, included in Google Calendar details and `.ics` file.
+- **Thank-you page (`/dekujeme`):** Post-registration redirect (300ms delay for Pixel). Animated checkmark (CSS-only), date badge, Riverside join button, calendar links (Google Calendar URL + `.ics` download), 3 resource cards (YouTube, Podcast, Natima case study). `noindex, nofollow`.
 - **Calendar integration:** Google Calendar via URL params, Apple/Outlook via static `webinar.ics` file. Vercel serves `.ics` with `Content-Type: text/calendar`.
 - **Form flow:** Submit → Ecomail API (with UTM data) → Lead Pixel event → 300ms delay → redirect to `/dekujeme` → CompleteRegistration Pixel event on page load
 - **Performance target:** LCP < 2.5s, total page < 300KB (excl. lazy-loaded videos)
+
+## TODO (manual, not code)
+
+- **Ecomail autoresponder:** Set up in Ecomail dashboard (Automatizace → trigger: Přidání do seznamu → akce: Odeslat email). Email should contain: greeting by name, date/time, Riverside link button, calendar link. Condition: tag `ugc-webinar-2026`.
 
 ## Content Guidelines
 
