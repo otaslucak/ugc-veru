@@ -101,6 +101,12 @@
      ------------------------------------------------------------------ */
   var forms = document.querySelectorAll('[data-form="register"]');
 
+  // Set timestamp on all forms for anti-bot check
+  forms.forEach(function (form) {
+    var tsField = form.querySelector('input[name="_ts"]');
+    if (tsField) tsField.value = Date.now();
+  });
+
   forms.forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -110,6 +116,10 @@
 
       // Honeypot check
       if (honeypot) return;
+
+      // Timestamp anti-bot check — reject if submitted in under 2 seconds
+      var ts = parseInt(formData.get('_ts'), 10);
+      if (!ts || (Date.now() - ts) < 2000) return;
 
       var name = formData.get('name');
       var email = formData.get('email');
@@ -155,6 +165,9 @@
           if (typeof fbq === 'function') {
             fbq('track', 'Lead');
           }
+
+          // Set sessionStorage flag for thank-you page verification
+          try { sessionStorage.setItem('ugc-registered', '1'); } catch (e) {}
 
           // Hide form fields
           var inputs = form.querySelectorAll('.form__row, .form__micro, button[type="submit"]');

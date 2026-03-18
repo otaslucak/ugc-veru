@@ -12,10 +12,11 @@ Landing page for a UGC webinar by Socials agency. Standalone HTML/CSS/JS, deploy
 index.html              — Landing page (13 sections incl. video teaser + tabbed showcase)
 dekujeme.html           — Thank-you page (post-registration confirmation + resources)
 css/styles.css          — Mobile-first styles, custom properties, components
-js/main.js              — Countdown, sticky header, accordion, form AJAX, lazy video, tab switching
-api/subscribe.js        — Vercel serverless function (Ecomail API proxy, fully wired)
-vercel.json             — Vercel config (rewrites, cache headers for css/js/images/videos/.ics)
+js/main.js              — Countdown, sticky header, accordion, form AJAX, lazy video, tab switching, anti-bot, sessionStorage gate
+api/subscribe.js        — Vercel serverless function (Ecomail API proxy, rate limiting, CORS, input validation)
+vercel.json             — Vercel config (rewrites, cache headers, security headers)
 webinar.ics             — iCalendar file for Apple/Outlook calendar import
+robots.txt              — Crawler directives (allow /, disallow /api/)
 images/                 — veronika.png, otakar.jpg, socials-logo.svg
 videos/                 — 12 compressed videos + 12 poster JPGs (see Video Structure below)
 kontext.md              — Webinar brief (Czech, not tracked in git)
@@ -24,11 +25,11 @@ playbook.md             — UGC playbook (Slovak, not tracked in git)
 
 ### Video Structure (12 videos, 3 brands)
 
-| Brand | Files | Count |
-|-------|-------|-------|
-| **Natios** (magnézium) | `natios-hook1/2/3.mp4`, `natios-ai1.mp4` | 3 human + 1 AI |
-| **Nutworld** (ořechy) | `nutworld-hook1/2/3.mp4`, `nutworld-ai1.mp4`, `nutworld-ai2.mp4` | 3 human + 2 AI |
-| **Virexa** (doplňky) | `virexa-hook1/2/3.mp4` | 3 human |
+| Brand | Files | Count | Note |
+|-------|-------|-------|------|
+| **Natios** (magnézium) | `natios-hook1/2/3.mp4`, `natios-ai1.mp4` | 3 human + 1 AI | Hook videos are **SK (Slovak)** versions |
+| **Nutworld** (ořechy) | `nutworld-hook1/2/3.mp4`, `nutworld-ai1.mp4`, `nutworld-ai2.mp4` | 3 human + 2 AI | |
+| **Virexa** (doplňky) | `virexa-hook1/2/3.mp4` | 3 human | |
 
 Posters follow naming: `{brand}-poster-{hook1|hook2|hook3|ai1|ai2}.jpg`
 All compressed: 720×1280, H.264, CRF 28, no audio, `faststart`. Source originals in `.gitignore`.
@@ -74,24 +75,35 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Hero layout:** On mobile: badge → headline (short, no prefix) → Veronika photo → form. On desktop: 2-column grid with headline+subtitle+form left, photo right.
 - **3 registration forms:** hero, mid-page, final CTA — all submit to `/api/subscribe`. Placeholder "Jméno a příjmení" — backend splits into `name` + `surname`.
 - **Ecomail integration:** Fully wired. `api/subscribe.js` calls Ecomail `/lists/{id}/subscribe` with `skip_confirmation`, `trigger_autoresponders`, `update_existing`. Full name is split on whitespace: first word → `name`, rest → `surname`. Contacts land in "Hlavní seznam" with tag `ugc-webinar-2026`. UTM params (`utm_source`, `utm_medium`, `utm_campaign`) parsed from URL and stored as custom fields (`UTM_SOURCE`, `UTM_MEDIUM`, `UTM_CAMPAIGN`). Requires `ECOMAIL_API_KEY` + `ECOMAIL_LIST_ID` env vars on Vercel (already set). Falls back to skeleton success response when env vars are missing (local dev).
-- **Meta Pixel:** Active (ID `2287597364836978`). Events: `PageView` on both pages, `Lead` on form submit (main.js), `CompleteRegistration` on thank-you page load
+- **Meta Pixel:** Active (ID `2287597364836978`). Events: `PageView` on both pages, `Lead` on form submit (main.js), `CompleteRegistration` on thank-you page only when `sessionStorage('ugc-registered')` is verified (prevents bot/direct-access inflation)
 - **GDPR:** All "Ochrana osobních údajů" links point to `https://www.socials.cz/gdpr`
-- **Videos:** 12 compressed videos (1.5–6.3 MB each), `preload="none"`, lazy autoplay via IntersectionObserver
+- **Videos:** 12 compressed videos (2–6.3 MB each), `preload="none"`, lazy autoplay via IntersectionObserver
 - **Video Teaser:** 6 videos (mix human + AI) right after hero, horizontal scroll on mobile, 6-col grid on desktop
 - **Tabbed Video Showcase:** 3 tabs (Natios/Nutworld/Virexa), tab switch pauses hidden videos and re-observes visible ones via hoisted `videoObserver`
 - **AI Avatar badges:** Green outline variant (`.video-card__badge--ai`) to distinguish AI-generated creatives
 - **Playbook Cover:** CSS-only mockup (`.playbook-cover`) with green header, TOC preview, Socials branding
 - **Social Proof:** 28 recenzí linked to [Shoptet profil](https://partneri.shoptet.cz/profesionalove/socials-advertising/), real testimonial from teenwear.eu
 - **Cache strategy:** CSS/JS use `?v=N` query params for cache-busting; `max-age=3600, must-revalidate`. Images/videos use long-lived `immutable` cache.
-- **Riverside link:** `https://riverside.com/studio/socials-advertisings-studio?t=3a938320e33f7df4b5d4` — shown on thank-you page as primary CTA button, included in Google Calendar details and `.ics` file.
-- **Thank-you page (`/dekujeme`):** Post-registration redirect (300ms delay for Pixel). Animated checkmark (CSS-only), date badge, Riverside join button, calendar links (Google Calendar URL + `.ics` download), 3 resource cards (YouTube, Podcast, Natima case study). `noindex, nofollow`.
+- **Riverside link:** `https://riverside.com/studio/socials-advertisings-studio?t=3a938320e33f7df4b5d4` — **gated** behind sessionStorage on thank-you page (hidden until verified registration), also in Google Calendar details and `.ics` file.
+- **Thank-you page (`/dekujeme`):** Post-registration redirect (300ms delay for Pixel). Animated checkmark (CSS-only), date badge. Riverside button + calendar links are hidden by default (`#thankyou-gated`), shown only when `sessionStorage('ugc-registered')` is present. Direct access without registration shows fallback message (`#thankyou-noauth`) with link back to LP. 3 resource cards (YouTube, Podcast, Natima case study). `noindex, nofollow`.
 - **Calendar integration:** Google Calendar via URL params, Apple/Outlook via static `webinar.ics` file. Vercel serves `.ics` with `Content-Type: text/calendar`.
-- **Form flow:** Submit → Ecomail API (with UTM data) → Lead Pixel event → 300ms delay → redirect to `/dekujeme` → CompleteRegistration Pixel event on page load
+- **Form flow:** Submit → timestamp anti-bot check (< 2s = silent reject) → honeypot check → Ecomail API (with UTM data) → Lead Pixel event → set `sessionStorage('ugc-registered')` → 300ms delay → redirect to `/dekujeme` → verify sessionStorage → show gated content + CompleteRegistration Pixel → remove sessionStorage flag
+- **SEO basics:** `<link rel="canonical">` set to `https://ugc-veru.vercel.app/`, `og:url` set, Event schema (JSON-LD) with webinar metadata (date, speakers, free offer). No og:image currently — add `images/og-image.jpg` (1200×630) and restore og:image + twitter:card meta tags when ready. `robots.txt` allows `/`, disallows `/api/`.
 - **Performance target:** LCP < 2.5s, total page < 300KB (excl. lazy-loaded videos)
 
-## TODO (manual, not code)
+## Security
 
-- **Ecomail autoresponder:** Set up in Ecomail dashboard (Automatizace → trigger: Přidání do seznamu → akce: Odeslat email). Email should contain: greeting by name, date/time, Riverside link button, calendar link. Condition: tag `ugc-webinar-2026`.
+- **Rate limiting:** In-memory per-IP tracking in `api/subscribe.js`. Max 5 requests per 10 minutes per IP. Returns `429`. Periodic cleanup prevents memory leaks. Note: resets on cold start (serverless limitation).
+- **CORS:** `Access-Control-Allow-Origin` restricted to `https://ugc-veru.vercel.app` and `http://localhost:3000`. No wildcard.
+- **OPTIONS handling:** CORS headers set and preflight handled before POST method check in `api/subscribe.js`.
+- **Input validation:** Backend rejects name > 200 chars, email > 254 chars, UTM fields > 500 chars each (400). HTML inputs have `maxlength="100"` (name) and `maxlength="254"` (email).
+- **Anti-bot (3 layers):** (1) Honeypot field `website` — hidden, bots fill it → silent reject. (2) Timestamp field `_ts` — set to `Date.now()` on page load, submissions under 2 seconds are silently rejected. (3) Rate limiting on backend.
+- **Thank-you page gate:** Riverside link + calendar links hidden by default on `/dekujeme`. Shown only when `sessionStorage('ugc-registered')` is present (set on successful form submit). Prevents casual/direct URL access and bot pixel inflation.
+- **Security headers (vercel.json):** `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()` — applied globally via `/(.*) ` rule.
+
+## Completed Setup
+
+- **Ecomail autoresponder:** Configured in Ecomail dashboard (Automatizace → trigger: Přidání do seznamu → akce: Odeslat email). Greeting by name, date/time, Riverside link button, calendar links. Condition: tag `ugc-webinar-2026`. Tested and working.
 
 ## Content Guidelines
 

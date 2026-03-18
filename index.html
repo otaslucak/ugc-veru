@@ -10,9 +10,51 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="UGC: Kdy zvyšuje výkon kampaní a kdy je to jen drahý obsah?">
   <meta property="og:description" content="Live webinář | 8.4.2026 | Reálná data z kampaní, ne teorie">
-  <meta property="og:image" content="images/og-image.jpg">
+  <meta property="og:url" content="https://ugc-veru.vercel.app/">
   <meta property="og:locale" content="cs_CZ">
-  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://ugc-veru.vercel.app/">
+
+  <!-- Event Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "UGC: Kdy zvyšuje výkon kampaní a kdy je to jen drahý obsah?",
+    "description": "Live webinář o UGC video obsahu a AI avatarech v Meta Ads kampaniích. Reálná data z kampaní, framework na UGC kreativy.",
+    "startDate": "2026-04-08T10:00:00+02:00",
+    "endDate": "2026-04-08T11:00:00+02:00",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+    "location": {
+      "@type": "VirtualLocation",
+      "url": "https://ugc-veru.vercel.app/"
+    },
+    "organizer": {
+      "@type": "Organization",
+      "name": "Socials",
+      "url": "https://socials.cz"
+    },
+    "performer": [
+      {
+        "@type": "Person",
+        "name": "Veronika Styková"
+      },
+      {
+        "@type": "Person",
+        "name": "Otakar Šlucák"
+      }
+    ],
+    "offers": {
+      "@type": "Offer",
+      "url": "https://ugc-veru.vercel.app/",
+      "price": "0",
+      "priceCurrency": "CZK",
+      "availability": "https://schema.org/InStock"
+    }
+  }
+  </script>
 
   <!-- Preload critical font -->
   <link rel="preload" href="https://fonts.gstatic.com/s/worksans/v19/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K0nXNi8SoM3jb0mp.woff2" as="font" type="font/woff2" crossorigin>
@@ -98,6 +140,7 @@
                 placeholder="Jméno a příjmení"
                 required
                 autocomplete="name"
+                maxlength="100"
               >
               <input
                 type="email"
@@ -106,6 +149,7 @@
                 placeholder="Váš email"
                 required
                 autocomplete="email"
+                maxlength="254"
               >
             </div>
             <!-- Honeypot -->
@@ -113,6 +157,7 @@
               <label for="hero-website">Website</label>
               <input type="text" name="website" id="hero-website" tabindex="-1" autocomplete="off">
             </div>
+            <input type="hidden" name="_ts" value="">
             <button type="submit" class="btn btn--primary btn--full">
               Registrovat se zdarma
             </button>
@@ -502,13 +547,14 @@
 
       <form class="form" id="mid-form" data-form="register">
         <div class="form__row">
-          <input type="text" name="name" class="form__input" placeholder="Jméno a příjmení" required autocomplete="name">
-          <input type="email" name="email" class="form__input" placeholder="Váš email" required autocomplete="email">
+          <input type="text" name="name" class="form__input" placeholder="Jméno a příjmení" required autocomplete="name" maxlength="100">
+          <input type="email" name="email" class="form__input" placeholder="Váš email" required autocomplete="email" maxlength="254">
         </div>
         <div class="form__honeypot" aria-hidden="true">
           <label for="mid-website">Website</label>
           <input type="text" name="website" id="mid-website" tabindex="-1" autocomplete="off">
         </div>
+        <input type="hidden" name="_ts" value="">
         <button type="submit" class="btn btn--primary btn--full">Registrovat se zdarma</button>
         <p class="form__micro text-center">
           <a href="https://www.socials.cz/gdpr" target="_blank" rel="noopener">Ochrana osobních údajů</a>
@@ -748,13 +794,14 @@
       <!-- Registration form (3/3) -->
       <form class="form" id="final-form" data-form="register">
         <div class="form__row">
-          <input type="text" name="name" class="form__input" placeholder="Jméno a příjmení" required autocomplete="name">
-          <input type="email" name="email" class="form__input" placeholder="Váš email" required autocomplete="email">
+          <input type="text" name="name" class="form__input" placeholder="Jméno a příjmení" required autocomplete="name" maxlength="100">
+          <input type="email" name="email" class="form__input" placeholder="Váš email" required autocomplete="email" maxlength="254">
         </div>
         <div class="form__honeypot" aria-hidden="true">
           <label for="final-website">Website</label>
           <input type="text" name="website" id="final-website" tabindex="-1" autocomplete="off">
         </div>
+        <input type="hidden" name="_ts" value="">
         <button type="submit" class="btn btn--primary btn--full">Registrovat se zdarma</button>
         <p class="form__micro text-center">
           <a href="https://www.socials.cz/gdpr" target="_blank" rel="noopener">Ochrana osobních údajů</a>
@@ -794,6 +841,6 @@
   </div>
 
   <!-- JS -->
-  <script src="js/main.js?v=5" defer></script>
+  <script src="js/main.js?v=6" defer></script>
 </body>
 </html>

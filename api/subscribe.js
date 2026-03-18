@@ -7,37 +7,107 @@
  *   ECOMAIL_LIST_ID  — Target list ID in Ecomail
  */
 
-module.exports = async function handler(req, res) {
-  // Only allow POST
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({ error: 'Method not allowed' });
+/* ------------------------------------------------------------------
+   Rate limiting — in-memory, per warm serverless instance
+   Max 5 requests per IP per 10 minutes
+   ------------------------------------------------------------------ */
+var rateLimitMap = new Map();
+var RATE_LIMIT_MAX = 5;
+var RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
+
+function isRateLimited(ip) {
+  var now = Date.now();
+  var entry = rateLimitMap.get(ip);
+
+  if (!entry) {
+    rateLimitMap.set(ip, { count: 1, start: now });
+    return false;
   }
 
-  // CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Window expired — reset
+  if (now - entry.start > RATE_LIMIT_WINDOW_MS) {
+    rateLimitMap.set(ip, { count: 1, start: now });
+    return false;
+  }
+
+  entry.count++;
+  return entry.count > RATE_LIMIT_MAX;
+}
+
+// Periodic cleanup to prevent memory leak (every 5 minutes)
+setInterval(function () {
+  var now = Date.now();
+  rateLimitMap.forEach(function (entry, ip) {
+    if (now - entry.start > RATE_LIMIT_WINDOW_MS) {
+      rateLimitMap.delete(ip);
+    }
+  });
+}, 5 * 60 * 1000);
+
+/* ------------------------------------------------------------------
+   Allowed origins for CORS
+   ------------------------------------------------------------------ */
+var ALLOWED_ORIGINS = [
+  'https://ugc-veru.vercel.app',
+  'http://localhost:3000'
+];
+
+module.exports = async function handler(req, res) {
+  // --- CORS headers (before anything else) ---
+  var origin = req.headers.origin || '';
+  var allowedOrigin = ALLOWED_ORIGINS.indexOf(origin) !== -1 ? origin : ALLOWED_ORIGINS[0];
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
+  // --- Handle preflight ---
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
+  // --- Only allow POST ---
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST, OPTIONS');
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // --- Rate limiting ---
+  var ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+           req.socket.remoteAddress || 'unknown';
+
+  if (isRateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+  }
+
   var body = req.body;
 
-  // Validate input
+  // Validate required fields
   if (!body || !body.email || !body.name) {
     return res.status(400).json({ error: 'Name and email are required.' });
   }
 
   var email = body.email.trim();
   var name = body.name.trim();
-  var nameParts = name.split(/\s+/);
-  var firstName = nameParts[0] || '';
-  var surname = nameParts.slice(1).join(' ') || '';
+
+  // --- Input length validation ---
+  if (name.length > 200) {
+    return res.status(400).json({ error: 'Name is too long (max 200 characters).' });
+  }
+  if (email.length > 254) {
+    return res.status(400).json({ error: 'Email is too long (max 254 characters).' });
+  }
+
   var utmSource = (body.utm_source || '').trim();
   var utmMedium = (body.utm_medium || '').trim();
   var utmCampaign = (body.utm_campaign || '').trim();
+
+  if (utmSource.length > 500 || utmMedium.length > 500 || utmCampaign.length > 500) {
+    return res.status(400).json({ error: 'UTM parameter too long (max 500 characters).' });
+  }
+
+  var nameParts = name.split(/\s+/);
+  var firstName = nameParts[0] || '';
+  var surname = nameParts.slice(1).join(' ') || '';
 
   // Basic email validation
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
