@@ -32,6 +32,9 @@ module.exports = async function handler(req, res) {
 
   var email = body.email.trim();
   var name = body.name.trim();
+  var utmSource = (body.utm_source || '').trim();
+  var utmMedium = (body.utm_medium || '').trim();
+  var utmCampaign = (body.utm_campaign || '').trim();
 
   // Basic email validation
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -66,8 +69,16 @@ module.exports = async function handler(req, res) {
           email: email,
           name: name,
           source: 'ugc-webinar-lp',
-          tags: ['ugc-webinar-2026']
-        }
+          tags: ['ugc-webinar-2026'],
+          custom_fields: {
+            UTM_SOURCE: utmSource,
+            UTM_MEDIUM: utmMedium,
+            UTM_CAMPAIGN: utmCampaign
+          }
+        },
+        trigger_autoresponders: true,
+        update_existing: true,
+        skip_confirmation: true
       })
     });
 

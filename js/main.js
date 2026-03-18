@@ -126,12 +126,20 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Odesílám...';
 
+      var urlParams = new URLSearchParams(window.location.search);
+      var utmSource = urlParams.get('utm_source') || '';
+      var utmMedium = urlParams.get('utm_medium') || '';
+      var utmCampaign = urlParams.get('utm_campaign') || '';
+
       fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: name.trim(),
-          email: email.trim()
+          email: email.trim(),
+          utm_source: utmSource,
+          utm_medium: utmMedium,
+          utm_campaign: utmCampaign
         })
       })
         .then(function (res) {
