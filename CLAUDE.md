@@ -10,10 +10,12 @@ Landing page for a UGC webinar by Socials agency. Standalone HTML/CSS/JS, deploy
 
 ```
 index.html              — Landing page (13 sections incl. video teaser + tabbed showcase)
+dekujeme.html           — Thank-you page (post-registration confirmation + resources)
 css/styles.css          — Mobile-first styles, custom properties, components
 js/main.js              — Countdown, sticky header, accordion, form AJAX, lazy video, tab switching
 api/subscribe.js        — Vercel serverless function (Ecomail API proxy, skeleton)
-vercel.json             — Vercel config (rewrites, cache headers for css/js/images/videos)
+vercel.json             — Vercel config (rewrites, cache headers for css/js/images/videos/.ics)
+webinar.ics             — iCalendar file for Apple/Outlook calendar import
 images/                 — veronika.png, otakar.jpg, socials-logo.svg
 videos/                 — 12 compressed videos + 12 poster JPGs (see Video Structure below)
 kontext.md              — Webinar brief (Czech, not tracked in git)
@@ -72,7 +74,7 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Hero layout:** On mobile: badge → headline (short, no prefix) → Veronika photo → form. On desktop: 2-column grid with headline+subtitle+form left, photo right.
 - **3 registration forms:** hero, mid-page, final CTA — all submit to `/api/subscribe`
 - **Ecomail integration:** Skeleton ready, needs `ECOMAIL_API_KEY` + `ECOMAIL_LIST_ID` env vars on Vercel
-- **Meta Pixel:** Placeholder in `<head>`, needs real PIXEL_ID
+- **Meta Pixel:** Active (ID `2287597364836978`). Events: `PageView` on both pages, `Lead` on form submit (main.js), `CompleteRegistration` on thank-you page load
 - **GDPR:** All "Ochrana osobních údajů" links point to `https://www.socials.cz/gdpr`
 - **Videos:** 12 compressed videos (1.5–6.3 MB each), `preload="none"`, lazy autoplay via IntersectionObserver
 - **Video Teaser:** 6 videos (mix human + AI) right after hero, horizontal scroll on mobile, 6-col grid on desktop
@@ -81,6 +83,9 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Playbook Cover:** CSS-only mockup (`.playbook-cover`) with green header, TOC preview, Socials branding
 - **Social Proof:** 28 recenzí linked to [Shoptet profil](https://partneri.shoptet.cz/profesionalove/socials-advertising/), real testimonial from teenwear.eu
 - **Cache strategy:** CSS/JS use `?v=N` query params for cache-busting; `max-age=3600, must-revalidate`. Images/videos use long-lived `immutable` cache.
+- **Thank-you page (`/dekujeme`):** Post-registration redirect (300ms delay for Pixel). Animated checkmark (CSS-only), date badge, calendar links (Google Calendar URL + `.ics` download), 3 resource cards (YouTube, Podcast, Natima case study). `noindex, nofollow`.
+- **Calendar integration:** Google Calendar via URL params, Apple/Outlook via static `webinar.ics` file. Vercel serves `.ics` with `Content-Type: text/calendar`.
+- **Form flow:** Submit → Lead Pixel event → 300ms delay → redirect to `/dekujeme` → CompleteRegistration Pixel event on page load
 - **Performance target:** LCP < 2.5s, total page < 300KB (excl. lazy-loaded videos)
 
 ## Content Guidelines
