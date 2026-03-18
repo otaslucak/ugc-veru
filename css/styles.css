@@ -1446,6 +1446,177 @@ h4 { font-size: 1.25rem; }
 }
 
 /* ==========================================================================
+   THANK-YOU PAGE
+   ========================================================================== */
+.thankyou-hero {
+  padding-top: 6rem;
+}
+
+.thankyou__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.thankyou__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--c-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  animation: iconPop 0.4s ease-out;
+}
+
+@keyframes iconPop {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.thankyou__check-path {
+  stroke-dasharray: 28;
+  stroke-dashoffset: 28;
+  animation: checkDraw 0.4s ease-out 0.3s forwards;
+}
+
+@keyframes checkDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+.thankyou__title {
+  margin-bottom: 0.75rem;
+}
+
+.thankyou__subtitle {
+  color: var(--c-fg-muted);
+  font-size: 1.125rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.thankyou__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(148, 231, 0, 0.1);
+  border: 1px solid rgba(148, 231, 0, 0.25);
+  border-radius: 100px;
+  padding: 0.375rem 1rem;
+  font-size: 0.75rem;
+  font-weight: var(--fw-semibold);
+  color: var(--c-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2rem;
+}
+
+.thankyou__calendar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--c-fg-muted);
+}
+
+.thankyou__calendar-label {
+  color: var(--c-fg-muted);
+}
+
+.thankyou__calendar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--c-primary);
+  font-weight: var(--fw-semibold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+  padding: 0.375rem 0;
+  min-height: 44px;
+}
+
+.thankyou__calendar-link:hover {
+  color: var(--c-primary-light);
+}
+
+.thankyou__calendar-sep {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+/* --- Resource Cards --- */
+.thankyou__resources {
+  display: grid;
+  gap: 1rem;
+}
+
+.resource-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--c-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+
+.resource-card:hover {
+  border-color: rgba(148, 231, 0, 0.3);
+}
+
+.resource-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: rgba(148, 231, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-primary);
+  margin-bottom: 1rem;
+}
+
+.resource-card__title {
+  font-size: 1.125rem;
+  font-weight: var(--fw-semibold);
+  color: var(--c-white);
+  margin-bottom: 0.5rem;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.resource-card__text {
+  font-size: 0.875rem;
+  color: var(--c-fg-muted);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.resource-card__link {
+  font-size: 0.875rem;
+  font-weight: var(--fw-semibold);
+  color: var(--c-primary);
+}
+
+.resource-card:hover .resource-card__link {
+  color: var(--c-primary-light);
+}
+
+@media (min-width: 768px) {
+  .thankyou__resources {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ==========================================================================
    UTILITIES
    ========================================================================== */
 .sr-only {

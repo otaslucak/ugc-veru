@@ -151,6 +151,11 @@
           // Hide form fields
           var inputs = form.querySelectorAll('.form__row, .form__micro, button[type="submit"]');
           inputs.forEach(function (el) { el.style.display = 'none'; });
+
+          // Redirect to thank-you page (300ms delay for Pixel event)
+          setTimeout(function () {
+            window.location.href = '/dekujeme';
+          }, 300);
         })
         .catch(function () {
           errorEl.textContent = 'Něco se pokazilo. Zkuste to prosím znovu.';
@@ -163,16 +168,35 @@
 
   /* ------------------------------------------------------------------
      LAZY VIDEO AUTOPLAY
-     Videos start playing only when visible (hoisted for tab reuse)
+     Videos start playing only when visible (hoisted for tab reuse).
+     Loads video data first to avoid black-frame flash on mobile.
      ------------------------------------------------------------------ */
   var videoObserver = null;
+
+  function playWhenReady(video) {
+    // Already has enough data — play immediately
+    if (video.readyState >= 3) {
+      video.play();
+      return;
+    }
+    // Trigger loading if not started yet
+    if (video.preload === 'none') {
+      video.preload = 'auto';
+      video.load();
+    }
+    // Wait for enough data before playing (keeps poster visible until then)
+    video.addEventListener('canplay', function handler() {
+      video.removeEventListener('canplay', handler);
+      video.play();
+    });
+  }
 
   if ('IntersectionObserver' in window) {
     videoObserver = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
-            entry.target.play();
+            playWhenReady(entry.target);
           } else {
             entry.target.pause();
           }
