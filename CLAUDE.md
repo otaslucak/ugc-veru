@@ -19,7 +19,7 @@ webinar.ics             — iCalendar file for Apple/Outlook calendar import
 .env.example            — Env var documentation (ECOMAIL_API_KEY, ECOMAIL_LIST_ID)
 robots.txt              — Crawler directives (allow /, disallow /api/)
 fonts/                  — Self-hosted Work Sans woff2 (latin + latin-ext)
-images/                 — veronika.png, otakar.jpg, socials-logo.svg, og-image.jpg + WebP variants + responsive sizes
+images/                 — veronika.png, jarda.jpg, socials-logo.svg, og-image.jpg + WebP variants + responsive sizes
 videos/                 — 12 compressed videos + 12 poster JPGs (see Video Structure below)
 favicon.svg             — SVG favicon (green dot on dark bg)
 favicon.ico             — ICO fallback (32×32)
@@ -62,7 +62,7 @@ All compressed: 720×1280, H.264, CRF 28, no audio, `faststart`. Source original
 3. Pain Points (dark) — 5 pain cards
 4. Takeaways (elevated) — 5 numbered items
 5. Personas (dark) — 3 target audience cards
-6. Speakers (elevated) — Veronika + Otakar
+6. Speakers (elevated) — Veronika + Jaroslav Bobák
 7. Video Showcase (dark) — **tabbed**: Natios (4) | Nutworld (5) | Virexa (3)
 8. Mid CTA (elevated) — registration form 2/3
 9. Bonus (dark) — UGC Playbook with CSS cover mockup
