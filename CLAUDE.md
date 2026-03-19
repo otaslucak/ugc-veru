@@ -42,7 +42,7 @@ All compressed: 720×1280, H.264, CRF 28, no audio, `faststart`. Source original
 - **Platform:** Riverside
 - **Target audience:** Performance marketers, CMOs, e-shop owners (100k+ CZK/month paid social)
 - **Language:** All LP copy is in **Czech** (not Slovak)
-- **Deploy:** Vercel — https://ugc-veru.vercel.app
+- **Deploy:** Vercel — https://ugc.socials.cz (alias: ugc-veru.vercel.app)
 - **GitHub:** https://github.com/otaslucak/ugc-veru
 
 ### Business Goal
@@ -88,13 +88,13 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Thank-you page (`/dekujeme`):** Post-registration redirect (300ms delay for Pixel). Animated checkmark (CSS-only), date badge. Riverside button + calendar links are hidden by default (`#thankyou-gated`), shown only when `sessionStorage('ugc-registered')` is present. Direct access without registration shows fallback message (`#thankyou-noauth`) with link back to LP. 3 resource cards (YouTube, Podcast, Natima case study). `noindex, nofollow`.
 - **Calendar integration:** Google Calendar via URL params, Apple/Outlook via static `webinar.ics` file. Vercel serves `.ics` with `Content-Type: text/calendar`.
 - **Form flow:** Submit → timestamp anti-bot check (< 2s = silent reject) → honeypot check → Ecomail API (with UTM data) → Lead Pixel event → set `sessionStorage('ugc-registered')` → 300ms delay → redirect to `/dekujeme` → verify sessionStorage → show gated content + CompleteRegistration Pixel → remove sessionStorage flag
-- **SEO basics:** `<link rel="canonical">` set to `https://ugc-veru.vercel.app/`, `og:url` set, Event schema (JSON-LD) with webinar metadata (date, speakers, free offer). No og:image currently — add `images/og-image.jpg` (1200×630) and restore og:image + twitter:card meta tags when ready. `robots.txt` allows `/`, disallows `/api/`.
+- **SEO basics:** `<link rel="canonical">` set to `https://ugc.socials.cz/`, `og:url` set, Event schema (JSON-LD) with webinar metadata (date, speakers, free offer). No og:image currently — add `images/og-image.jpg` (1200×630) and restore og:image + twitter:card meta tags when ready. `robots.txt` allows `/`, disallows `/api/`.
 - **Performance target:** LCP < 2.5s, total page < 300KB (excl. lazy-loaded videos)
 
 ## Security
 
 - **Rate limiting:** In-memory per-IP tracking in `api/subscribe.js`. Max 5 requests per 10 minutes per IP. Returns `429`. Periodic cleanup prevents memory leaks. Note: resets on cold start (serverless limitation).
-- **CORS:** `Access-Control-Allow-Origin` restricted to `https://ugc-veru.vercel.app` and `http://localhost:3000`. No wildcard.
+- **CORS:** `Access-Control-Allow-Origin` restricted to `https://ugc.socials.cz`, `https://ugc-veru.vercel.app`, and `http://localhost:3000`. No wildcard.
 - **OPTIONS handling:** CORS headers set and preflight handled before POST method check in `api/subscribe.js`.
 - **Input validation:** Backend rejects name > 200 chars, email > 254 chars, UTM fields > 500 chars each (400). HTML inputs have `maxlength="100"` (name) and `maxlength="254"` (email).
 - **Anti-bot (3 layers):** (1) Honeypot field `website` — hidden, bots fill it → silent reject. (2) Timestamp field `_ts` — set to `Date.now()` on page load, submissions under 2 seconds are silently rejected. (3) Rate limiting on backend.
