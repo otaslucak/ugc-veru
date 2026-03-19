@@ -16,11 +16,14 @@
   <link rel="preload" href="fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/work-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 
+  <!-- Cookiebot Consent Banner -->
+  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="a3b796db-bb60-47ce-9097-264161d6d22f" data-blockingmode="auto" type="text/javascript"></script>
+
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css?v=6">
 
-  <!-- Meta Pixel -->
-  <script>
+  <!-- Meta Pixel (blocked until marketing consent via Cookiebot) -->
+  <script type="text/plain" data-cookieconsent="marketing">
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -100,6 +103,7 @@
           (function() {
             var isRegistered = false;
             var alreadyTracked = false;
+            var pixelFired = false;
             try {
               isRegistered = sessionStorage.getItem('ugc-registered') === '1';
               // Check if pixel was already fired (prevent duplicate on refresh)
@@ -126,8 +130,19 @@
                   sessionStorage.removeItem('ugc-registered');
                   sessionStorage.setItem('ugc-registered-time', String(Date.now()));
                 } catch(e) {}
+                // Fire pixel if consent already given (returning visitor)
                 if (typeof fbq === 'function') {
                   fbq('track', 'CompleteRegistration');
+                  pixelFired = true;
+                }
+                // If consent not yet given, fire when user accepts cookies
+                if (!pixelFired) {
+                  window.addEventListener('CookiebotOnAccept', function() {
+                    if (!pixelFired && window.Cookiebot && Cookiebot.consent.marketing && typeof fbq === 'function') {
+                      fbq('track', 'CompleteRegistration');
+                      pixelFired = true;
+                    }
+                  });
                 }
               }
             } else {
