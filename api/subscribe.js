@@ -137,47 +137,62 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  // Call Ecomail API
-  try {
-    var ecomailUrl = 'https://api2.ecomailapp.cz/lists/' + listId + '/subscribe';
+  // Call Ecomail API (with 1 retry on transient failure)
+  var ecomailUrl = 'https://api2.ecomailapp.cz/lists/' + listId + '/subscribe';
+  var ecomailBody = JSON.stringify({
+    subscriber_data: {
+      email: email,
+      name: firstName,
+      surname: surname,
+      source: 'ugc-webinar-lp',
+      tags: ['ugc-webinar-2026'],
+      custom_fields: {
+        UTM_SOURCE: utmSource,
+        UTM_MEDIUM: utmMedium,
+        UTM_CAMPAIGN: utmCampaign
+      }
+    },
+    trigger_autoresponders: true,
+    update_existing: true,
+    skip_confirmation: true
+  });
 
-    var response = await fetch(ecomailUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'key': apiKey
-      },
-      body: JSON.stringify({
-        subscriber_data: {
-          email: email,
-          name: firstName,
-          surname: surname,
-          source: 'ugc-webinar-lp',
-          tags: ['ugc-webinar-2026'],
-          custom_fields: {
-            UTM_SOURCE: utmSource,
-            UTM_MEDIUM: utmMedium,
-            UTM_CAMPAIGN: utmCampaign
-          }
+  var maxAttempts = 2;
+
+  for (var attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      var response = await fetch(ecomailUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'key': apiKey
         },
-        trigger_autoresponders: true,
-        update_existing: true,
-        skip_confirmation: true
-      })
-    });
+        body: ecomailBody
+      });
 
-    if (!response.ok) {
+      if (response.ok) {
+        return res.status(200).json({
+          ok: true,
+          message: 'Successfully registered.'
+        });
+      }
+
       var errorText = await response.text();
-      console.error('Ecomail API error:', response.status, errorText);
-      return res.status(502).json({ error: 'Registration service error.' });
+      console.error('Ecomail API error (attempt ' + attempt + '):', response.status, errorText);
+
+      // Don't retry on client errors (4xx)
+      if (response.status >= 400 && response.status < 500) {
+        return res.status(502).json({ error: 'Registration service error.' });
+      }
+    } catch (err) {
+      console.error('Ecomail API request failed (attempt ' + attempt + '):', err);
     }
 
-    return res.status(200).json({
-      ok: true,
-      message: 'Successfully registered.'
-    });
-  } catch (err) {
-    console.error('Ecomail API request failed:', err);
-    return res.status(500).json({ error: 'Internal server error.' });
+    // Wait 1s before retry (only if not last attempt)
+    if (attempt < maxAttempts) {
+      await new Promise(function (resolve) { setTimeout(resolve, 1000); });
+    }
   }
+
+  return res.status(502).json({ error: 'Registration service temporarily unavailable.' });
 };

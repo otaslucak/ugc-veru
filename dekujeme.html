@@ -7,16 +7,17 @@
   <meta name="description" content="Děkujeme za registraci na webinář UGC videa. Odkaz na stream vám přijde emailem.">
   <meta name="robots" content="noindex, nofollow">
 
-  <!-- Preload critical font -->
-  <link rel="preload" href="https://fonts.gstatic.com/s/worksans/v19/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K0nXNi8SoM3jb0mp.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-  <!-- Google Fonts: Work Sans 400, 600, 800 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Preload critical font (self-hosted) -->
+  <link rel="preload" href="fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/work-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=5">
+  <link rel="stylesheet" href="css/styles.css?v=6">
 
   <!-- Meta Pixel -->
   <script>
@@ -36,6 +37,8 @@
 </head>
 <body>
 
+  <a href="#main-content" class="skip-link">Přeskočit na obsah</a>
+
   <!-- ====================================================================
        HEADER
        ==================================================================== -->
@@ -49,7 +52,7 @@
   <!-- ====================================================================
        HERO / POTVRZENÍ
        ==================================================================== -->
-  <section class="section section--dark thankyou-hero">
+  <section class="section section--dark thankyou-hero" id="main-content">
     <div class="container">
       <div class="thankyou__content">
         <!-- Animated checkmark icon -->
@@ -96,14 +99,36 @@
         <script>
           (function() {
             var isRegistered = false;
-            try { isRegistered = sessionStorage.getItem('ugc-registered') === '1'; } catch(e) {}
+            var alreadyTracked = false;
+            try {
+              isRegistered = sessionStorage.getItem('ugc-registered') === '1';
+              // Check if pixel was already fired (prevent duplicate on refresh)
+              var trackedAt = parseInt(sessionStorage.getItem('ugc-registered-time'), 10);
+              if (trackedAt) {
+                // Still within 24h window — show gated content but don't re-fire pixel
+                var elapsed = Date.now() - trackedAt;
+                if (elapsed < 24 * 60 * 60 * 1000) {
+                  isRegistered = true;
+                  alreadyTracked = true;
+                } else {
+                  // Expired — clean up
+                  sessionStorage.removeItem('ugc-registered');
+                  sessionStorage.removeItem('ugc-registered-time');
+                }
+              }
+            } catch(e) {}
 
             if (isRegistered) {
               document.getElementById('thankyou-gated').style.display = '';
-              try { sessionStorage.removeItem('ugc-registered'); } catch(e) {}
-              // Fire CompleteRegistration pixel
-              if (typeof fbq === 'function') {
-                fbq('track', 'CompleteRegistration');
+              // First visit after registration — fire pixel and mark timestamp
+              if (!alreadyTracked) {
+                try {
+                  sessionStorage.removeItem('ugc-registered');
+                  sessionStorage.setItem('ugc-registered-time', String(Date.now()));
+                } catch(e) {}
+                if (typeof fbq === 'function') {
+                  fbq('track', 'CompleteRegistration');
+                }
               }
             } else {
               document.getElementById('thankyou-noauth').style.display = '';

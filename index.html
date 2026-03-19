@@ -6,6 +6,11 @@
   <title>UGC: Kdy zvyšuje výkon kampaní a kdy je to jen drahý obsah? | Socials</title>
   <meta name="description" content="Live webinář 8.4.2026 v 10:00. Reálná data z kampaní, framework na UGC kreativy, AI avatary v Meta Ads. Bez prodejního pitche.">
 
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
   <!-- OG / Social -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="UGC: Kdy zvyšuje výkon kampaní a kdy je to jen drahý obsah?">
@@ -56,16 +61,12 @@
   }
   </script>
 
-  <!-- Preload critical font -->
-  <link rel="preload" href="https://fonts.gstatic.com/s/worksans/v19/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K0nXNi8SoM3jb0mp.woff2" as="font" type="font/woff2" crossorigin>
-
-  <!-- Google Fonts: Work Sans 400, 600, 800 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Preload critical font (self-hosted) -->
+  <link rel="preload" href="fonts/work-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/work-sans-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=5">
+  <link rel="stylesheet" href="css/styles.css?v=6">
 
   <!-- Meta Pixel -->
   <script>
@@ -82,6 +83,8 @@
   </script>
 </head>
 <body>
+
+  <a href="#hero" class="skip-link">Přeskočit na obsah</a>
 
   <!-- ====================================================================
        1. STICKY HEADER
@@ -116,13 +119,20 @@
 
         <!-- Hero image -->
         <div class="hero__image-wrap">
-          <img
-            src="images/veronika.png"
-            alt="Veronika Styková — UGC specialistka a Meta Ads expertka"
-            class="hero__image"
-            width="400"
-            height="533"
-          >
+          <picture>
+            <source
+              srcset="images/veronika-560.webp 560w, images/veronika.webp 1080w"
+              sizes="(max-width: 1023px) 280px, 400px"
+              type="image/webp"
+            >
+            <img
+              src="images/veronika.png"
+              alt="Veronika Styková — UGC specialistka a Meta Ads expertka"
+              class="hero__image"
+              width="400"
+              height="533"
+            >
+          </picture>
           <div class="hero__image-overlay">
             <span class="hero__overlay-dot"></span>
             <span class="hero__overlay-text"><strong>Veronika Styková</strong> UGC tvůrkyně &amp; Meta Ads specialistka @ Socials</span>
@@ -189,42 +199,42 @@
       <div class="teaser__grid">
         <div class="video-card video-card--sm">
           <div class="video-card__badge">Natios</div>
-          <video class="video-card__video" muted loop playsinline preload="none" poster="videos/natios-poster-hook1.jpg" width="720" height="1280">
+          <video class="video-card__video" muted loop playsinline preload="none" poster="videos/natios-poster-hook1.jpg" width="720" height="1280" aria-label="Natios UGC video — hook varianta 1">
             <source src="videos/natios-hook1.mp4" type="video/mp4">
           </video>
         </div>
 
         <div class="video-card video-card--sm">
           <div class="video-card__badge video-card__badge--ai">AI Avatar</div>
-          <video class="video-card__video" muted loop playsinline preload="none" poster="videos/natios-poster-ai1.jpg" width="720" height="1280">
+          <video class="video-card__video" muted loop playsinline preload="none" poster="videos/natios-poster-ai1.jpg" width="720" height="1280" aria-label="Natios AI avatar kreativa">
             <source src="videos/natios-ai1.mp4" type="video/mp4">
           </video>
         </div>
 
         <div class="video-card video-card--sm">
           <div class="video-card__badge">Nutworld</div>
-          <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-hook1.jpg" width="720" height="1280">
+          <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-hook1.jpg" width="720" height="1280" aria-label="Nutworld UGC video — hook varianta 1">
             <source src="videos/nutworld-hook1.mp4" type="video/mp4">
           </video>
         </div>
 
         <div class="video-card video-card--sm">
           <div class="video-card__badge video-card__badge--ai">AI Avatar</div>
-          <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-ai1.jpg" width="720" height="1280">
+          <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-ai1.jpg" width="720" height="1280" aria-label="Nutworld AI avatar kreativa">
             <source src="videos/nutworld-ai1.mp4" type="video/mp4">
           </video>
         </div>
 
         <div class="video-card video-card--sm">
           <div class="video-card__badge">Virexa</div>
-          <video class="video-card__video" muted loop playsinline preload="none" poster="videos/virexa-poster-hook1.jpg" width="720" height="1280">
+          <video class="video-card__video" muted loop playsinline preload="none" poster="videos/virexa-poster-hook1.jpg" width="720" height="1280" aria-label="Virexa UGC video — hook varianta 1">
             <source src="videos/virexa-hook1.mp4" type="video/mp4">
           </video>
         </div>
 
         <div class="video-card video-card--sm">
           <div class="video-card__badge">Virexa</div>
-          <video class="video-card__video" muted loop playsinline preload="none" poster="videos/virexa-poster-hook2.jpg" width="720" height="1280">
+          <video class="video-card__video" muted loop playsinline preload="none" poster="videos/virexa-poster-hook2.jpg" width="720" height="1280" aria-label="Virexa UGC video — hook varianta 2">
             <source src="videos/virexa-hook2.mp4" type="video/mp4">
           </video>
         </div>
@@ -390,14 +400,21 @@
 
       <div class="speakers__grid">
         <div class="speaker-card">
-          <img
-            src="images/veronika.png"
-            alt="Veronika — UGC specialistka"
-            class="speaker-card__image"
-            width="360"
-            height="360"
-            loading="lazy"
-          >
+          <picture>
+            <source
+              srcset="images/veronika-720.webp 720w, images/veronika.webp 1080w"
+              sizes="(max-width: 767px) 100vw, 360px"
+              type="image/webp"
+            >
+            <img
+              src="images/veronika.png"
+              alt="Veronika — UGC specialistka"
+              class="speaker-card__image"
+              width="360"
+              height="360"
+              loading="lazy"
+            >
+          </picture>
           <div class="speaker-card__body">
             <h3 class="speaker-card__name">Veronika</h3>
             <p class="speaker-card__role">UGC tvůrkyně &amp; Meta Ads specialistka</p>
@@ -406,14 +423,21 @@
         </div>
 
         <div class="speaker-card">
-          <img
-            src="images/otakar.jpg"
-            alt="Otakar Lucák — spolumajitel Socials"
-            class="speaker-card__image"
-            width="360"
-            height="360"
-            loading="lazy"
-          >
+          <picture>
+            <source
+              srcset="images/otakar-720.webp 720w, images/otakar.webp 1500w"
+              sizes="(max-width: 767px) 100vw, 360px"
+              type="image/webp"
+            >
+            <img
+              src="images/otakar.jpg"
+              alt="Otakar Lucák — spolumajitel Socials"
+              class="speaker-card__image"
+              width="360"
+              height="360"
+              loading="lazy"
+            >
+          </picture>
           <div class="speaker-card__body">
             <h3 class="speaker-card__name">Otakar Lucák</h3>
             <p class="speaker-card__role">Spolumajitel Socials, moderátor</p>
@@ -447,25 +471,25 @@
         <div class="videos__grid videos__grid--4">
           <div class="video-card">
             <div class="video-card__badge">Hook 1</div>
-            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/natios-poster-hook1.jpg" width="720" height="1280">
+            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/natios-poster-hook1.jpg" width="720" height="1280" aria-label="Natios UGC video — hook varianta 1">
               <source src="videos/natios-hook1.mp4" type="video/mp4">
             </video>
           </div>
           <div class="video-card">
             <div class="video-card__badge">Hook 2</div>
-            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/natios-poster-hook2.jpg" width="720" height="1280">
+            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/natios-poster-hook2.jpg" width="720" height="1280" aria-label="Natios UGC video — hook varianta 2">
               <source src="videos/natios-hook2.mp4" type="video/mp4">
             </video>
           </div>
           <div class="video-card">
             <div class="video-card__badge">Hook 3</div>
-            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/natios-poster-hook3.jpg" width="720" height="1280">
+            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/natios-poster-hook3.jpg" width="720" height="1280" aria-label="Natios UGC video — hook varianta 3">
               <source src="videos/natios-hook3.mp4" type="video/mp4">
             </video>
           </div>
           <div class="video-card">
             <div class="video-card__badge video-card__badge--ai">AI Avatar</div>
-            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/natios-poster-ai1.jpg" width="720" height="1280">
+            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/natios-poster-ai1.jpg" width="720" height="1280" aria-label="Natios AI avatar kreativa">
               <source src="videos/natios-ai1.mp4" type="video/mp4">
             </video>
           </div>
@@ -478,31 +502,31 @@
         <div class="videos__grid videos__grid--5">
           <div class="video-card">
             <div class="video-card__badge">Hook 1</div>
-            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-hook1.jpg" width="720" height="1280">
+            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-hook1.jpg" width="720" height="1280" aria-label="Nutworld UGC video — hook varianta 1">
               <source src="videos/nutworld-hook1.mp4" type="video/mp4">
             </video>
           </div>
           <div class="video-card">
             <div class="video-card__badge">Hook 2</div>
-            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-hook2.jpg" width="720" height="1280">
+            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-hook2.jpg" width="720" height="1280" aria-label="Nutworld UGC video — hook varianta 2">
               <source src="videos/nutworld-hook2.mp4" type="video/mp4">
             </video>
           </div>
           <div class="video-card">
             <div class="video-card__badge">Hook 3</div>
-            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-hook3.jpg" width="720" height="1280">
+            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-hook3.jpg" width="720" height="1280" aria-label="Nutworld UGC video — hook varianta 3">
               <source src="videos/nutworld-hook3.mp4" type="video/mp4">
             </video>
           </div>
           <div class="video-card">
             <div class="video-card__badge video-card__badge--ai">AI Avatar</div>
-            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-ai1.jpg" width="720" height="1280">
+            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-ai1.jpg" width="720" height="1280" aria-label="Nutworld AI avatar kreativa 1">
               <source src="videos/nutworld-ai1.mp4" type="video/mp4">
             </video>
           </div>
           <div class="video-card">
             <div class="video-card__badge video-card__badge--ai">AI Avatar</div>
-            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-ai2.jpg" width="720" height="1280">
+            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/nutworld-poster-ai2.jpg" width="720" height="1280" aria-label="Nutworld AI avatar kreativa 2">
               <source src="videos/nutworld-ai2.mp4" type="video/mp4">
             </video>
           </div>
@@ -515,19 +539,19 @@
         <div class="videos__grid">
           <div class="video-card">
             <div class="video-card__badge">Hook 1</div>
-            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/virexa-poster-hook1.jpg" width="720" height="1280">
+            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/virexa-poster-hook1.jpg" width="720" height="1280" aria-label="Virexa UGC video — hook varianta 1">
               <source src="videos/virexa-hook1.mp4" type="video/mp4">
             </video>
           </div>
           <div class="video-card">
             <div class="video-card__badge">Hook 2</div>
-            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/virexa-poster-hook2.jpg" width="720" height="1280">
+            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/virexa-poster-hook2.jpg" width="720" height="1280" aria-label="Virexa UGC video — hook varianta 2">
               <source src="videos/virexa-hook2.mp4" type="video/mp4">
             </video>
           </div>
           <div class="video-card">
             <div class="video-card__badge">Hook 3</div>
-            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/virexa-poster-hook3.jpg" width="720" height="1280">
+            <video class="video-card__video" muted loop playsinline preload="none" poster="videos/virexa-poster-hook3.jpg" width="720" height="1280" aria-label="Virexa UGC video — hook varianta 3">
               <source src="videos/virexa-hook3.mp4" type="video/mp4">
             </video>
           </div>
