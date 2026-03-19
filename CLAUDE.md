@@ -18,8 +18,12 @@ vercel.json             — Vercel config (rewrites, cache headers, security hea
 webinar.ics             — iCalendar file for Apple/Outlook calendar import
 .env.example            — Env var documentation (ECOMAIL_API_KEY, ECOMAIL_LIST_ID)
 robots.txt              — Crawler directives (allow /, disallow /api/)
-images/                 — veronika.png, otakar.jpg, socials-logo.svg
+fonts/                  — Self-hosted Work Sans woff2 (latin + latin-ext)
+images/                 — veronika.png, otakar.jpg, socials-logo.svg + WebP variants + responsive sizes
 videos/                 — 12 compressed videos + 12 poster JPGs (see Video Structure below)
+favicon.svg             — SVG favicon (green dot on dark bg)
+favicon.ico             — ICO fallback (32×32)
+apple-touch-icon.png    — Apple touch icon (180×180)
 kontext.md              — Webinar brief (Czech, not tracked in git)
 playbook.md             — UGC playbook (Slovak, not tracked in git)
 ```
@@ -84,13 +88,16 @@ Background alternates strictly: dark → elevated → dark → ...
 - **AI Avatar badges:** Green outline variant (`.video-card__badge--ai`) to distinguish AI-generated creatives
 - **Playbook Cover:** CSS-only mockup (`.playbook-cover`) with green header, TOC preview, Socials branding
 - **Social Proof:** 28 recenzí linked to [Shoptet profil](https://partneri.shoptet.cz/profesionalove/socials-advertising/), real testimonial from teenwear.eu
-- **Cache strategy:** CSS/JS use `?v=N` query params for cache-busting; `max-age=3600, must-revalidate`. Images/videos use long-lived `immutable` cache.
+- **Cache strategy:** CSS/JS use `?v=N` query params for cache-busting; `max-age=3600, must-revalidate`. Images/videos/fonts use long-lived `immutable` cache.
 - **Riverside link:** `https://riverside.com/studio/socials-advertisings-studio?t=3a938320e33f7df4b5d4` — **gated** behind sessionStorage on thank-you page (hidden until verified registration), also in Google Calendar details and `.ics` file.
-- **Thank-you page (`/dekujeme`):** Post-registration redirect (300ms delay for Pixel). Animated checkmark (CSS-only), date badge. Riverside button + calendar links are hidden by default (`#thankyou-gated`), shown only when `sessionStorage('ugc-registered')` is present. Direct access without registration shows fallback message (`#thankyou-noauth`) with link back to LP. 3 resource cards (YouTube, Podcast, Natima case study). `noindex, nofollow`.
+- **Thank-you page (`/dekujeme`):** Post-registration redirect (300ms delay for Pixel). Animated checkmark (CSS-only), date badge. Riverside button + calendar links are hidden by default (`#thankyou-gated`), shown only when `sessionStorage('ugc-registered')` or `sessionStorage('ugc-registered-time')` (24h window) is present. `CompleteRegistration` Pixel fires only once (first visit), subsequent refreshes within 24h show gated content without re-firing. Direct access without registration shows fallback message (`#thankyou-noauth`) with link back to LP. 3 resource cards (YouTube, Podcast, Natima case study). `noindex, nofollow`.
 - **Calendar integration:** Google Calendar via URL params, Apple/Outlook via static `webinar.ics` file. Vercel serves `.ics` with `Content-Type: text/calendar`.
-- **Form flow:** Submit → timestamp anti-bot check (< 2s = silent reject) → honeypot check → Ecomail API (with UTM data) → Lead Pixel event → set `sessionStorage('ugc-registered')` → 300ms delay → redirect to `/dekujeme` → verify sessionStorage → show gated content + CompleteRegistration Pixel → remove sessionStorage flag
+- **Form flow:** Submit → timestamp anti-bot check (< 2s = silent reject) → honeypot check → Ecomail API (with UTM data, 1 retry on 5xx/network error) → Lead Pixel event → set `sessionStorage('ugc-registered')` → 300ms delay → redirect to `/dekujeme` → verify sessionStorage → show gated content + CompleteRegistration Pixel → set `ugc-registered-time` timestamp (24h persistence)
+- **Favicon:** SVG (scalable, green dot on dark bg), ICO fallback (32×32), apple-touch-icon (180×180). Both HTML pages reference all three.
 - **SEO basics:** `<link rel="canonical">` set to `https://ugc.socials.cz/`, `og:url` set, Event schema (JSON-LD) with webinar metadata (date, speakers, free offer). No og:image currently — add `images/og-image.jpg` (1200×630) and restore og:image + twitter:card meta tags when ready. `robots.txt` allows `/`, disallows `/api/`.
-- **Accessibility:** `:focus-visible` styles on all interactive elements (buttons, inputs, tabs, FAQ, links) — green outline (`var(--c-primary)`) with `outline-offset: 2px` (inputs use `-2px` inset). Playbook TOC text contrast fixed to WCAG AA (4.7:1).
+- **Fonts:** Self-hosted Work Sans (variable font, wght 400–800) in `fonts/` directory. Two woff2 files: latin + latin-ext (for Czech characters). Preloaded in both HTML pages. No external Google Fonts requests.
+- **Images:** Hero + speaker images use `<picture>` elements with WebP sources and original PNG/JPG fallback. Responsive `srcset` with mobile-optimized sizes (560w hero, 720w speakers). Original full-size images kept as fallback.
+- **Accessibility:** `:focus-visible` styles on all interactive elements (buttons, inputs, tabs, FAQ, links) — green outline (`var(--c-primary)`) with `outline-offset: 2px` (inputs use `-2px` inset). Playbook TOC text contrast fixed to WCAG AA (4.7:1). Skip-to-content link on both pages. All 18 `<video>` elements have `aria-label` attributes. Print stylesheet hides videos, CTAs, sticky elements.
 - **Performance target:** LCP < 2.5s, total page < 300KB (excl. lazy-loaded videos)
 
 ## Security
@@ -101,12 +108,18 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Input validation:** Backend rejects name > 200 chars, email > 254 chars, UTM fields > 500 chars each (400). HTML inputs have `maxlength="100"` (name) and `maxlength="254"` (email).
 - **Anti-bot (4 layers):** (1) Honeypot field `website` — hidden, bots fill it → silent reject (client-side). (2) Timestamp field `_ts` — set to `Date.now()` on page load, submissions under 2 seconds are silently rejected (client-side). (3) Server-side `_ts` validation — `_ts` is sent in POST body, backend rejects if missing or < 2s with fake 200 success (silent reject). (4) Rate limiting on backend.
 - **IP detection:** `x-forwarded-for` → `x-real-ip` → `socket.remoteAddress` fallback chain.
-- **Thank-you page gate:** Riverside link + calendar links hidden by default on `/dekujeme`. Shown only when `sessionStorage('ugc-registered')` is present (set on successful form submit). Prevents casual/direct URL access and bot pixel inflation.
-- **Security headers (vercel.json):** `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `Strict-Transport-Security: max-age=63072000; includeSubDomains`, `Content-Security-Policy` (script/style/font/img/connect/media-src scoped, `unsafe-inline` for Meta Pixel + sessionStorage check) — applied globally via `/(.*) ` rule.
+- **Thank-you page gate:** Riverside link + calendar links hidden by default on `/dekujeme`. Shown only when `sessionStorage('ugc-registered')` or `sessionStorage('ugc-registered-time')` within 24h is present. Prevents casual/direct URL access and bot pixel inflation.
+- **Ecomail retry:** Single retry with 1s delay on 5xx/network errors. No retry on 4xx client errors.
+- **Security headers (vercel.json):** `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `Strict-Transport-Security: max-age=63072000; includeSubDomains`, `Content-Security-Policy` (script/style/font-src `'self'` only, no external font/style domains; `unsafe-inline` for Meta Pixel + sessionStorage check) — applied globally via `/(.*) ` rule.
 
 ## Completed Setup
 
 - **Ecomail autoresponder:** Configured in Ecomail dashboard (Automatizace → trigger: Přidání do seznamu → akce: Odeslat email). Greeting by name, date/time, Riverside link button, calendar links. Condition: tag `ugc-webinar-2026`. Tested and working.
+
+## Remaining TODO
+
+- **OG image:** Blocked on graphic (1200×630 `images/og-image.jpg`). Once provided, add `og:image`, `og:image:width`, `og:image:height`, `twitter:card` meta tags to `index.html`.
+- **Persistent rate limiting (Vercel KV):** In-memory map resets on cold start. Consider Vercel KV for production-grade persistence.
 
 ## Content Guidelines
 
