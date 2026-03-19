@@ -48,6 +48,7 @@ setInterval(function () {
    Allowed origins for CORS
    ------------------------------------------------------------------ */
 var ALLOWED_ORIGINS = [
+  'https://ugc.socials.cz',
   'https://ugc-veru.vercel.app',
   'http://localhost:3000'
 ];
