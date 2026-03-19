@@ -997,7 +997,7 @@ h4 { font-size: 1.25rem; }
 
 .playbook-cover__toc-text {
   font-size: 0.625rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.65);
   line-height: 1.3;
 }
 
@@ -1618,6 +1618,35 @@ h4 { font-size: 1.25rem; }
   .thankyou__resources {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* ==========================================================================
+   FOCUS-VISIBLE (Accessibility)
+   ========================================================================== */
+.btn:focus-visible {
+  outline: 2px solid var(--c-primary);
+  outline-offset: 2px;
+}
+
+.form__input:focus-visible {
+  border-color: var(--c-primary);
+  outline: 2px solid var(--c-primary);
+  outline-offset: -2px;
+}
+
+.tabs__btn:focus-visible {
+  outline: 2px solid var(--c-primary);
+  outline-offset: 2px;
+}
+
+.faq-item__question:focus-visible {
+  outline: 2px solid var(--c-primary);
+  outline-offset: 2px;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--c-primary);
+  outline-offset: 2px;
 }
 
 /* ==========================================================================

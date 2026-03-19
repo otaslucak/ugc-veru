@@ -149,7 +149,8 @@
           email: email.trim(),
           utm_source: utmSource,
           utm_medium: utmMedium,
-          utm_campaign: utmCampaign
+          utm_campaign: utmCampaign,
+          _ts: ts
         })
       })
         .then(function (res) {

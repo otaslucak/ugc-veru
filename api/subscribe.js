@@ -34,15 +34,14 @@ function isRateLimited(ip) {
   return entry.count > RATE_LIMIT_MAX;
 }
 
-// Periodic cleanup to prevent memory leak (every 5 minutes)
-setInterval(function () {
+function cleanupStaleEntries() {
   var now = Date.now();
   rateLimitMap.forEach(function (entry, ip) {
     if (now - entry.start > RATE_LIMIT_WINDOW_MS) {
       rateLimitMap.delete(ip);
     }
   });
-}, 5 * 60 * 1000);
+}
 
 /* ------------------------------------------------------------------
    Allowed origins for CORS
@@ -73,7 +72,11 @@ module.exports = async function handler(req, res) {
   }
 
   // --- Rate limiting ---
+  // Cleanup stale rate-limit entries per request
+  cleanupStaleEntries();
+
   var ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+           req.headers['x-real-ip'] ||
            req.socket.remoteAddress || 'unknown';
 
   if (isRateLimited(ip)) {
@@ -104,6 +107,12 @@ module.exports = async function handler(req, res) {
 
   if (utmSource.length > 500 || utmMedium.length > 500 || utmCampaign.length > 500) {
     return res.status(400).json({ error: 'UTM parameter too long (max 500 characters).' });
+  }
+
+  // Anti-bot: reject submissions faster than 2 seconds (silent reject)
+  var ts = parseInt(body._ts, 10);
+  if (!ts || (Date.now() - ts) < 2000) {
+    return res.status(200).json({ ok: true, message: 'Successfully registered.' });
   }
 
   var nameParts = name.split(/\s+/);

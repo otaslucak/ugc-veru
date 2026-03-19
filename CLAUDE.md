@@ -16,6 +16,7 @@ js/main.js              — Countdown, sticky header, accordion, form AJAX, lazy
 api/subscribe.js        — Vercel serverless function (Ecomail API proxy, rate limiting, CORS, input validation)
 vercel.json             — Vercel config (rewrites, cache headers, security headers)
 webinar.ics             — iCalendar file for Apple/Outlook calendar import
+.env.example            — Env var documentation (ECOMAIL_API_KEY, ECOMAIL_LIST_ID)
 robots.txt              — Crawler directives (allow /, disallow /api/)
 images/                 — veronika.png, otakar.jpg, socials-logo.svg
 videos/                 — 12 compressed videos + 12 poster JPGs (see Video Structure below)
@@ -89,17 +90,19 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Calendar integration:** Google Calendar via URL params, Apple/Outlook via static `webinar.ics` file. Vercel serves `.ics` with `Content-Type: text/calendar`.
 - **Form flow:** Submit → timestamp anti-bot check (< 2s = silent reject) → honeypot check → Ecomail API (with UTM data) → Lead Pixel event → set `sessionStorage('ugc-registered')` → 300ms delay → redirect to `/dekujeme` → verify sessionStorage → show gated content + CompleteRegistration Pixel → remove sessionStorage flag
 - **SEO basics:** `<link rel="canonical">` set to `https://ugc.socials.cz/`, `og:url` set, Event schema (JSON-LD) with webinar metadata (date, speakers, free offer). No og:image currently — add `images/og-image.jpg` (1200×630) and restore og:image + twitter:card meta tags when ready. `robots.txt` allows `/`, disallows `/api/`.
+- **Accessibility:** `:focus-visible` styles on all interactive elements (buttons, inputs, tabs, FAQ, links) — green outline (`var(--c-primary)`) with `outline-offset: 2px` (inputs use `-2px` inset). Playbook TOC text contrast fixed to WCAG AA (4.7:1).
 - **Performance target:** LCP < 2.5s, total page < 300KB (excl. lazy-loaded videos)
 
 ## Security
 
-- **Rate limiting:** In-memory per-IP tracking in `api/subscribe.js`. Max 5 requests per 10 minutes per IP. Returns `429`. Periodic cleanup prevents memory leaks. Note: resets on cold start (serverless limitation).
+- **Rate limiting:** In-memory per-IP tracking in `api/subscribe.js`. Max 5 requests per 10 minutes per IP. Returns `429`. Per-request cleanup of stale entries (`cleanupStaleEntries()`). Note: resets on cold start (serverless limitation).
 - **CORS:** `Access-Control-Allow-Origin` restricted to `https://ugc.socials.cz`, `https://ugc-veru.vercel.app`, and `http://localhost:3000`. No wildcard.
 - **OPTIONS handling:** CORS headers set and preflight handled before POST method check in `api/subscribe.js`.
 - **Input validation:** Backend rejects name > 200 chars, email > 254 chars, UTM fields > 500 chars each (400). HTML inputs have `maxlength="100"` (name) and `maxlength="254"` (email).
-- **Anti-bot (3 layers):** (1) Honeypot field `website` — hidden, bots fill it → silent reject. (2) Timestamp field `_ts` — set to `Date.now()` on page load, submissions under 2 seconds are silently rejected. (3) Rate limiting on backend.
+- **Anti-bot (4 layers):** (1) Honeypot field `website` — hidden, bots fill it → silent reject (client-side). (2) Timestamp field `_ts` — set to `Date.now()` on page load, submissions under 2 seconds are silently rejected (client-side). (3) Server-side `_ts` validation — `_ts` is sent in POST body, backend rejects if missing or < 2s with fake 200 success (silent reject). (4) Rate limiting on backend.
+- **IP detection:** `x-forwarded-for` → `x-real-ip` → `socket.remoteAddress` fallback chain.
 - **Thank-you page gate:** Riverside link + calendar links hidden by default on `/dekujeme`. Shown only when `sessionStorage('ugc-registered')` is present (set on successful form submit). Prevents casual/direct URL access and bot pixel inflation.
-- **Security headers (vercel.json):** `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()` — applied globally via `/(.*) ` rule.
+- **Security headers (vercel.json):** `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `Strict-Transport-Security: max-age=63072000; includeSubDomains`, `Content-Security-Policy` (script/style/font/img/connect/media-src scoped, `unsafe-inline` for Meta Pixel + sessionStorage check) — applied globally via `/(.*) ` rule.
 
 ## Completed Setup
 
