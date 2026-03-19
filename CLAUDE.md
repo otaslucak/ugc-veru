@@ -19,7 +19,7 @@ webinar.ics             — iCalendar file for Apple/Outlook calendar import
 .env.example            — Env var documentation (ECOMAIL_API_KEY, ECOMAIL_LIST_ID)
 robots.txt              — Crawler directives (allow /, disallow /api/)
 fonts/                  — Self-hosted Work Sans woff2 (latin + latin-ext)
-images/                 — veronika.png, otakar.jpg, socials-logo.svg + WebP variants + responsive sizes
+images/                 — veronika.png, otakar.jpg, socials-logo.svg, og-image.jpg + WebP variants + responsive sizes
 videos/                 — 12 compressed videos + 12 poster JPGs (see Video Structure below)
 favicon.svg             — SVG favicon (green dot on dark bg)
 favicon.ico             — ICO fallback (32×32)
@@ -80,7 +80,8 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Hero layout:** On mobile: badge → headline (short, no prefix) → Veronika photo → form. On desktop: 2-column grid with headline+subtitle+form left, photo right.
 - **3 registration forms:** hero, mid-page, final CTA — all submit to `/api/subscribe`. Placeholder "Jméno a příjmení" — backend splits into `name` + `surname`.
 - **Ecomail integration:** Fully wired. `api/subscribe.js` calls Ecomail `/lists/{id}/subscribe` with `skip_confirmation`, `trigger_autoresponders`, `update_existing`. Full name is split on whitespace: first word → `name`, rest → `surname`. Contacts land in "Hlavní seznam" with tag `ugc-webinar-2026`. UTM params (`utm_source`, `utm_medium`, `utm_campaign`) parsed from URL and stored as custom fields (`UTM_SOURCE`, `UTM_MEDIUM`, `UTM_CAMPAIGN`). Requires `ECOMAIL_API_KEY` + `ECOMAIL_LIST_ID` env vars on Vercel (already set). Falls back to skeleton success response when env vars are missing (local dev).
-- **Meta Pixel:** Active (ID `2287597364836978`). Events: `PageView` on both pages, `Lead` on form submit (main.js), `CompleteRegistration` on thank-you page only when `sessionStorage('ugc-registered')` is verified (prevents bot/direct-access inflation)
+- **Meta Pixel:** Active (ID `2287597364836978`). **Blocked until marketing consent** via Cookiebot (`type="text/plain" data-cookieconsent="marketing"`). Events: `PageView` on both pages, `Lead` on form submit (main.js), `CompleteRegistration` on thank-you page only when `sessionStorage('ugc-registered')` is verified (prevents bot/direct-access inflation). On `dekujeme.html`, `CompleteRegistration` also listens for `CookiebotOnAccept` event (fallback for delayed consent).
+- **Cookiebot:** Consent banner on both pages. CBID `28189135-a400-4497-86e8-4fcba007c3e5` (shared domain group with `www.socials.cz`). `data-blockingmode="auto"`. Configured in [Cookiebot Manager](https://manage.cookiebot.com). Banner language auto-detected from `<html lang="cs">`.
 - **GDPR:** All "Ochrana osobních údajů" links point to `https://www.socials.cz/gdpr`
 - **Videos:** 12 compressed videos (2–6.3 MB each), `preload="none"`, lazy autoplay via IntersectionObserver
 - **Video Teaser:** 6 videos (mix human + AI) right after hero, horizontal scroll on mobile, 6-col grid on desktop
@@ -94,7 +95,7 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Calendar integration:** Google Calendar via URL params, Apple/Outlook via static `webinar.ics` file. Vercel serves `.ics` with `Content-Type: text/calendar`.
 - **Form flow:** Submit → timestamp anti-bot check (< 2s = silent reject) → honeypot check → Ecomail API (with UTM data, 1 retry on 5xx/network error) → Lead Pixel event → set `sessionStorage('ugc-registered')` → 300ms delay → redirect to `/dekujeme` → verify sessionStorage → show gated content + CompleteRegistration Pixel → set `ugc-registered-time` timestamp (24h persistence)
 - **Favicon:** SVG (scalable, green dot on dark bg), ICO fallback (32×32), apple-touch-icon (180×180). Both HTML pages reference all three.
-- **SEO basics:** `<link rel="canonical">` set to `https://ugc.socials.cz/`, `og:url` set, Event schema (JSON-LD) with webinar metadata (date, speakers, free offer). No og:image currently — add `images/og-image.jpg` (1200×630) and restore og:image + twitter:card meta tags when ready. `robots.txt` allows `/`, disallows `/api/`.
+- **SEO basics:** `<link rel="canonical">` set to `https://ugc.socials.cz/`, `og:url` set, `og:image` set to `images/og-image.jpg` (1200×630), `twitter:card` summary_large_image. Event schema (JSON-LD) with webinar metadata (date, speakers, free offer). `robots.txt` allows `/`, disallows `/api/`.
 - **Fonts:** Self-hosted Work Sans (variable font, wght 400–800) in `fonts/` directory. Two woff2 files: latin + latin-ext (for Czech characters). Preloaded in both HTML pages. No external Google Fonts requests.
 - **Images:** Hero + speaker images use `<picture>` elements with WebP sources and original PNG/JPG fallback. Responsive `srcset` with mobile-optimized sizes (560w hero, 720w speakers). Original full-size images kept as fallback.
 - **Accessibility:** `:focus-visible` styles on all interactive elements (buttons, inputs, tabs, FAQ, links) — green outline (`var(--c-primary)`) with `outline-offset: 2px` (inputs use `-2px` inset). Playbook TOC text contrast fixed to WCAG AA (4.7:1). Skip-to-content link on both pages. All 18 `<video>` elements have `aria-label` attributes. Print stylesheet hides videos, CTAs, sticky elements.
@@ -110,7 +111,7 @@ Background alternates strictly: dark → elevated → dark → ...
 - **IP detection:** `x-forwarded-for` → `x-real-ip` → `socket.remoteAddress` fallback chain.
 - **Thank-you page gate:** Riverside link + calendar links hidden by default on `/dekujeme`. Shown only when `sessionStorage('ugc-registered')` or `sessionStorage('ugc-registered-time')` within 24h is present. Prevents casual/direct URL access and bot pixel inflation.
 - **Ecomail retry:** Single retry with 1s delay on 5xx/network errors. No retry on 4xx client errors.
-- **Security headers (vercel.json):** `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `Strict-Transport-Security: max-age=63072000; includeSubDomains`, `Content-Security-Policy` (script/style/font-src `'self'` only, no external font/style domains; `unsafe-inline` for Meta Pixel + sessionStorage check) — applied globally via `/(.*) ` rule.
+- **Security headers (vercel.json):** `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `Strict-Transport-Security: max-age=63072000; includeSubDomains`, `Content-Security-Policy` (script/style/font-src `'self'` only + Cookiebot domains `consent.cookiebot.com`, `consentcdn.cookiebot.com`; `frame-src` allows `consentcdn.cookiebot.com` for consent iframe; `img-src` allows `imgsct.cookiebot.com`; `unsafe-inline` for Meta Pixel + sessionStorage check) — applied globally via `/(.*) ` rule.
 
 ## Completed Setup
 
@@ -118,7 +119,6 @@ Background alternates strictly: dark → elevated → dark → ...
 
 ## Remaining TODO
 
-- **OG image:** Blocked on graphic (1200×630 `images/og-image.jpg`). Once provided, add `og:image`, `og:image:width`, `og:image:height`, `twitter:card` meta tags to `index.html`.
 - **Persistent rate limiting (Vercel KV):** In-memory map resets on cold start. Consider Vercel KV for production-grade persistence.
 
 ## Content Guidelines
