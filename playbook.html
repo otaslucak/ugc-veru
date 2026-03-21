@@ -498,6 +498,41 @@
       margin-top: 80px;
     }
 
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 64px 32px;
+      margin: 80px 0 0;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+    }
+
+    .cta-section__title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .cta-section p { max-width: 480px; margin: 0 auto 32px; }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--c-primary);
+      color: var(--c-bg);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 16px 40px;
+      border-radius: 100px;
+      transition: background 0.2s;
+    }
+
+    .cta-btn:hover { background: var(--c-primary-light); }
+
     .playbook-footer__logo { width: 100px; opacity: 0.6; margin-bottom: 16px; }
     .playbook-footer p { font-size: 0.85rem; color: var(--c-text-dim); }
     .playbook-footer a { color: var(--c-primary); text-decoration: none; }
@@ -1486,6 +1521,13 @@
       <p>Pokud vám tento playbook pomohl lépe pochopit, jak UGC funguje v praxi, pak splnil svůj cíl.</p>
       <p><strong>Teď je čas rozhodnout se, jak tento systém zapracujete do svého marketingu.</strong></p>
     </section>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <h2 class="cta-section__title">Potřebujete s tím pomoci?</h2>
+      <p>Pomáháme značkám budovat UGC systém, který přináší výsledky. Od strategie přes casting tvůrců až po škálování kreativ v reklamách.</p>
+      <a href="https://www.socials.cz" class="cta-btn">Ozvěte se nám</a>
+    </div>
 
   </main>
 
