@@ -783,6 +783,82 @@
     .benchmark-bar__fill--green { background: var(--c-primary); }
     .benchmark-bar__fill--bright { background: var(--c-primary-light); }
 
+    /* COPY BUTTON */
+    .copyable { position: relative; }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--c-surface-elevated);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-sm);
+      color: var(--c-text-dim);
+      cursor: pointer;
+      padding: 6px 10px;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+      z-index: 2;
+    }
+
+    .copy-btn:hover {
+      border-color: var(--c-primary);
+      color: var(--c-primary);
+    }
+
+    .copy-btn--copied {
+      border-color: var(--c-primary) !important;
+      color: var(--c-primary) !important;
+      background: rgba(148, 231, 0, 0.1) !important;
+    }
+
+    .copy-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    /* Copy-all button (for brief section) */
+    .copy-all-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 100px;
+      color: var(--c-text-dim);
+      cursor: pointer;
+      padding: 8px 18px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      transition: all 0.2s;
+    }
+
+    .copy-all-btn:hover {
+      border-color: var(--c-primary);
+      color: var(--c-primary);
+    }
+
+    .copy-all-btn--copied {
+      border-color: var(--c-primary) !important;
+      color: var(--c-primary) !important;
+      background: rgba(148, 231, 0, 0.1) !important;
+    }
+
+    .copy-all-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    @media print { .copy-btn, .copy-all-btn { display: none; } }
+
     .playbook-footer__logo { width: 100px; opacity: 0.6; margin-bottom: 16px; }
     .playbook-footer p { font-size: 0.85rem; color: var(--c-text-dim); }
     .playbook-footer a { color: var(--c-primary); text-decoration: none; }
@@ -1400,6 +1476,12 @@
       <h1>UGC Brief Template</h1>
       <p class="lead">Co poslat tvůrci před natáčením.</p>
 
+      <button class="copy-all-btn" data-copy-target="brief-content">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span>Kopírovat celý brief</span>
+      </button>
+
+      <div id="brief-content">
       <div class="card">
         <h3 style="margin-top:0">1. Základní informace o značce</h3>
         <p><strong>Brand:</strong> <span class="text-dim">[vyplňte]</span><br>
@@ -1513,6 +1595,7 @@
           <li>přes: Google Drive / WeTransfer / ...</li>
         </ul>
       </div>
+      </div><!-- /brief-content -->
     </section>
 
     <hr class="divider">
@@ -1523,7 +1606,7 @@
       <h1>UGC Outreach Message Templates</h1>
 
       <h2>1. První zpráva (cold outreach)</h2>
-      <div class="msg-template">
+      <div class="msg-template copyable" style="padding-top: 44px;">
         <p>Ahoj!</p>
         <p>Jmenuji se <span class="placeholder">[vaše jméno]</span> a pracuji na projektu pro značku <span class="placeholder">[brand name]</span>.</p>
         <p>Hledáme UGC tvůrce na krátká videa pro sociální sítě a reklamy. Velmi se mi líbí tvůj styl obsahu a myslím, že by se hodil pro tento projekt.</p>
@@ -1535,7 +1618,7 @@
       </div>
 
       <h2>2. Druhá zpráva (když tvůrce odpoví)</h2>
-      <div class="msg-template">
+      <div class="msg-template copyable" style="padding-top: 44px;">
         <p>Super!</p>
         <p>Pošlu ti víc info o spolupráci.</p>
         <p>Jde o projekt <span class="placeholder">[brand / app name]</span>, který pomáhá <span class="placeholder">[krátký popis produktu]</span>.</p>
@@ -1551,7 +1634,7 @@
       </div>
 
       <h2>3. Zpráva s detaily spolupráce</h2>
-      <div class="msg-template">
+      <div class="msg-template copyable" style="padding-top: 44px;">
         <p>Super, díky za zájem!</p>
         <p>Tady jsou základní detaily spolupráce:</p>
         <p>Produkt / projekt: <span class="placeholder">[název]</span></p>
@@ -1566,7 +1649,7 @@
       </div>
 
       <h2>4. Follow-up zpráva (pokud tvůrce neodpoví)</h2>
-      <div class="msg-template">
+      <div class="msg-template copyable" style="padding-top: 44px;">
         <p>Ahoj!</p>
         <p>Jen se připomínám ohledně UGC spolupráce pro <span class="placeholder">[brand name]</span>.</p>
         <p>Stále hledáme tvůrce na krátká videa a tvůj profil se nám velmi hodí do projektu.</p>
@@ -1574,7 +1657,7 @@
       </div>
 
       <h2>5. Zpráva po spolupráci (budování creator poolu)</h2>
-      <div class="msg-template">
+      <div class="msg-template copyable" style="padding-top: 44px;">
         <p>Díky za spolupráci!</p>
         <p>Video se nám velmi líbilo a určitě budeme rádi, pokud spolu uděláme i další projekty.</p>
         <p>Pokud budeš mít čas v nejbližších měsících na další content, určitě se ozveme.</p>
@@ -1906,5 +1989,42 @@
     <p>&copy; 2026 Socials &bull; <a href="https://www.socials.cz">www.socials.cz</a></p>
   </footer>
 
+  <script>
+  (function() {
+    var clipSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+    var checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+    // Insert copy buttons into each .copyable message template
+    document.querySelectorAll('.msg-template.copyable').forEach(function(el) {
+      var btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.innerHTML = clipSvg + '<span>Kopírovat</span>';
+      btn.addEventListener('click', function() { copyText(el, btn); });
+      el.appendChild(btn);
+    });
+
+    // Handle "copy all" buttons
+    document.querySelectorAll('[data-copy-target]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var target = document.getElementById(btn.getAttribute('data-copy-target'));
+        if (target) copyText(target, btn);
+      });
+    });
+
+    function copyText(el, btn) {
+      var text = el.textContent.replace(/\n{3,}/g, '\n\n').trim();
+      navigator.clipboard.writeText(text).then(function() {
+        var label = btn.querySelector('span');
+        var origText = label.textContent;
+        btn.innerHTML = checkSvg + '<span>Zkopírováno</span>';
+        btn.classList.add(btn.classList.contains('copy-all-btn') ? 'copy-all-btn--copied' : 'copy-btn--copied');
+        setTimeout(function() {
+          btn.innerHTML = clipSvg + '<span>' + origText + '</span>';
+          btn.classList.remove('copy-btn--copied', 'copy-all-btn--copied');
+        }, 2000);
+      });
+    }
+  })();
+  </script>
 </body>
 </html>
