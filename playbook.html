@@ -533,6 +533,256 @@
 
     .cta-btn:hover { background: var(--c-primary-light); }
 
+    /* INLINE CTA (soft) */
+    .inline-cta {
+      text-align: center;
+      padding: 40px 32px;
+      margin: 48px 0;
+      border: 1px solid rgba(148, 231, 0, 0.2);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(148, 231, 0, 0.04), transparent);
+    }
+
+    .inline-cta__text {
+      font-size: 1.05rem;
+      color: var(--c-text-muted);
+      margin-bottom: 20px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .inline-cta__link {
+      display: inline-block;
+      color: var(--c-primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border-bottom: 2px solid var(--c-primary);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+    }
+
+    .inline-cta__link:hover { opacity: 0.8; }
+
+    /* PROCESS FLOW */
+    .process-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin: 40px 0;
+      position: relative;
+    }
+
+    .process-flow__step {
+      text-align: center;
+      padding: 24px 12px;
+      position: relative;
+    }
+
+    .process-flow__step::after {
+      content: '\2192';
+      position: absolute;
+      right: -6px;
+      top: 28px;
+      color: var(--c-primary);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .process-flow__step:last-child::after { content: none; }
+
+    .process-flow__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--c-surface);
+      border: 2px solid var(--c-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 1.2rem;
+    }
+
+    .process-flow__label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-text);
+      margin-bottom: 4px;
+    }
+
+    .process-flow__desc {
+      font-size: 0.75rem;
+      color: var(--c-text-dim);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 600px) {
+      .process-flow { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .process-flow__step:nth-child(2)::after { content: none; }
+    }
+
+    /* VIDEO FLOW */
+    .video-flow {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 32px 0;
+      overflow-x: auto;
+    }
+
+    .video-flow__step {
+      flex: 1;
+      min-width: 100px;
+      text-align: center;
+      padding: 20px 8px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      position: relative;
+    }
+
+    .video-flow__step:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+    .video-flow__step:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+
+    .video-flow__step::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 8px solid var(--c-primary);
+      z-index: 1;
+    }
+
+    .video-flow__step:last-child::after { content: none; }
+
+    .video-flow__num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--c-primary);
+      margin-bottom: 4px;
+    }
+
+    .video-flow__label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--c-text);
+    }
+
+    @media (max-width: 600px) {
+      .video-flow { flex-wrap: wrap; }
+      .video-flow__step { min-width: calc(33.33% - 1px); flex: none; }
+      .video-flow__step:nth-child(3)::after { content: none; }
+      .video-flow__step:first-child { border-radius: var(--radius-sm) 0 0 0; }
+      .video-flow__step:nth-child(3) { border-radius: 0 var(--radius-sm) 0 0; }
+      .video-flow__step:nth-child(4) { border-radius: 0 0 0 var(--radius-sm); }
+      .video-flow__step:last-child { border-radius: 0 0 var(--radius-sm) 0; }
+    }
+
+    /* OUTREACH FUNNEL */
+    .funnel { margin: 40px auto; max-width: 400px; }
+
+    .funnel__level {
+      text-align: center;
+      padding: 16px;
+      margin: 0 auto;
+      border-radius: var(--radius-sm);
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .funnel__level:nth-child(1) {
+      background: rgba(148, 231, 0, 0.15);
+      width: 100%;
+    }
+
+    .funnel__level:nth-child(2) {
+      width: 70%;
+      background: rgba(148, 231, 0, 0.25);
+    }
+
+    .funnel__level:nth-child(3) {
+      width: 45%;
+      background: var(--c-primary);
+      color: var(--c-bg);
+    }
+
+    .funnel__level::after {
+      content: '\25BC';
+      position: absolute;
+      bottom: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--c-primary);
+      font-size: 0.7rem;
+    }
+
+    .funnel__level:last-child::after { content: none; }
+
+    .funnel__num {
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .funnel__label {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .funnel__level:nth-child(3) .funnel__num,
+    .funnel__level:nth-child(3) .funnel__label { color: var(--c-bg); }
+
+    /* BENCHMARK BARS */
+    .benchmark-bars { margin: 24px 0; }
+
+    .benchmark-bar {
+      margin-bottom: 16px;
+    }
+
+    .benchmark-bar__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .benchmark-bar__label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--c-text);
+    }
+
+    .benchmark-bar__value {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--c-primary);
+    }
+
+    .benchmark-bar__track {
+      height: 8px;
+      background: var(--c-surface);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .benchmark-bar__fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+
+    .benchmark-bar__fill--red { background: var(--c-accent-red); }
+    .benchmark-bar__fill--yellow { background: #e6b800; }
+    .benchmark-bar__fill--green { background: var(--c-primary); }
+    .benchmark-bar__fill--bright { background: var(--c-primary-light); }
+
     .playbook-footer__logo { width: 100px; opacity: 0.6; margin-bottom: 16px; }
     .playbook-footer p { font-size: 0.85rem; color: var(--c-text-dim); }
     .playbook-footer a { color: var(--c-primary); text-decoration: none; }
@@ -636,6 +886,30 @@
       </div>
       <p>Pokud se UGC dělá správně, dokáže se stát jedním z nejsilnějších nástrojů pro růst značky. Ne proto, že je „trendový", ale proto, že dokáže přinést <strong>autenticitu, důvěru a výkon v reklamách</strong>.</p>
       <p>Cílem tohoto playbooku je ukázat, jak tento proces nastavit tak, aby UGC nebylo náhodné — ale <strong>systematické, měřitelné a škálovatelné</strong>.</p>
+
+      <!-- PROCESS FLOW INFOGRAPHIC -->
+      <div class="process-flow">
+        <div class="process-flow__step">
+          <div class="process-flow__icon">&#127919;</div>
+          <div class="process-flow__label">Strategie</div>
+          <div class="process-flow__desc">KPI, cíle, pain points</div>
+        </div>
+        <div class="process-flow__step">
+          <div class="process-flow__icon">&#127916;</div>
+          <div class="process-flow__label">Produkce</div>
+          <div class="process-flow__desc">Tvůrci, brief, natáčení</div>
+        </div>
+        <div class="process-flow__step">
+          <div class="process-flow__icon">&#128202;</div>
+          <div class="process-flow__label">Testování</div>
+          <div class="process-flow__desc">Ads, metriky, iterace</div>
+        </div>
+        <div class="process-flow__step">
+          <div class="process-flow__icon">&#128640;</div>
+          <div class="process-flow__label">Škálování</div>
+          <div class="process-flow__desc">Vítězné kreativy</div>
+        </div>
+      </div>
     </section>
 
     <hr class="divider divider--green">
@@ -717,6 +991,12 @@
         <p>Pokud jste se dostali až sem, pravděpodobně už vidíte, že UGC není jen o natočení jednoho videa. Je to celý systém — od strategie po každodenní exekuci.</p>
         <p>Právě v tomto bodě obvykle <strong>končí role foundera nebo CMO</strong>. Strategický směr je nastavený, KPI jsou jasné a proces je definovaný.</p>
         <p>Další kroky už patří marketingovému týmu nebo UGC managerovi, který celý proces řídí, komunikuje s tvůrci a zajišťuje produkci a testování kreativ.</p>
+      </div>
+
+      <!-- SOFT CTA #1 -->
+      <div class="inline-cta">
+        <p class="inline-cta__text">Nechcete exekutivu řešit sami? Pomůžeme vám celý UGC systém nastavit a řídit.</p>
+        <a href="https://www.socials.cz" class="inline-cta__link">Domluvit konzultaci &rarr;</a>
       </div>
     </section>
 
@@ -881,15 +1161,35 @@
 
       <!-- KROK 7 -->
       <h2><span class="step-num">7</span> Produkce videa</h2>
-      <p>Tvůrce natáčí:</p>
-      <ul>
-        <li>hook</li>
-        <li>problém</li>
-        <li>řešení</li>
-        <li>ukázka produktu</li>
-        <li>výsledek</li>
-        <li>CTA</li>
-      </ul>
+      <p>Tvůrce natáčí podle osvědčené struktury:</p>
+
+      <!-- VIDEO STRUCTURE FLOW -->
+      <div class="video-flow">
+        <div class="video-flow__step">
+          <div class="video-flow__num">01</div>
+          <div class="video-flow__label">Hook</div>
+        </div>
+        <div class="video-flow__step">
+          <div class="video-flow__num">02</div>
+          <div class="video-flow__label">Problém</div>
+        </div>
+        <div class="video-flow__step">
+          <div class="video-flow__num">03</div>
+          <div class="video-flow__label">Řešení</div>
+        </div>
+        <div class="video-flow__step">
+          <div class="video-flow__num">04</div>
+          <div class="video-flow__label">Produkt</div>
+        </div>
+        <div class="video-flow__step">
+          <div class="video-flow__num">05</div>
+          <div class="video-flow__label">Výsledek</div>
+        </div>
+        <div class="video-flow__step">
+          <div class="video-flow__num">06</div>
+          <div class="video-flow__label">CTA</div>
+        </div>
+      </div>
 
       <!-- KROK 8 -->
       <h2><span class="step-num">8</span> Odevzdání materiálu</h2>
@@ -983,29 +1283,75 @@
       </ul>
 
       <h3>ROAS (return on ad spend)</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Benchmark</th><th>Hodnocení</th></tr></thead>
-          <tbody>
-            <tr><td><strong>ROAS pod 2</strong></td><td>slabé</td></tr>
-            <tr><td><strong>ROAS 2–3</strong></td><td>průměr</td></tr>
-            <tr><td><strong>ROAS 3+</strong></td><td>dobré video</td></tr>
-            <tr><td><strong>ROAS 5+</strong></td><td>škálovatelná kreativa</td></tr>
-          </tbody>
-        </table>
+      <div class="benchmark-bars">
+        <div class="benchmark-bar">
+          <div class="benchmark-bar__header">
+            <span class="benchmark-bar__label">ROAS pod 2 — slabé</span>
+            <span class="benchmark-bar__value">&lt; 2</span>
+          </div>
+          <div class="benchmark-bar__track">
+            <div class="benchmark-bar__fill benchmark-bar__fill--red" style="width: 25%;"></div>
+          </div>
+        </div>
+        <div class="benchmark-bar">
+          <div class="benchmark-bar__header">
+            <span class="benchmark-bar__label">ROAS 2–3 — průměr</span>
+            <span class="benchmark-bar__value">2–3</span>
+          </div>
+          <div class="benchmark-bar__track">
+            <div class="benchmark-bar__fill benchmark-bar__fill--yellow" style="width: 50%;"></div>
+          </div>
+        </div>
+        <div class="benchmark-bar">
+          <div class="benchmark-bar__header">
+            <span class="benchmark-bar__label">ROAS 3+ — dobré video</span>
+            <span class="benchmark-bar__value">3+</span>
+          </div>
+          <div class="benchmark-bar__track">
+            <div class="benchmark-bar__fill benchmark-bar__fill--green" style="width: 75%;"></div>
+          </div>
+        </div>
+        <div class="benchmark-bar">
+          <div class="benchmark-bar__header">
+            <span class="benchmark-bar__label">ROAS 5+ — škálovatelná kreativa</span>
+            <span class="benchmark-bar__value">5+</span>
+          </div>
+          <div class="benchmark-bar__track">
+            <div class="benchmark-bar__fill benchmark-bar__fill--bright" style="width: 100%;"></div>
+          </div>
+        </div>
       </div>
 
       <h3>Retention rate videa (watch time)</h3>
       <p>Nejdůležitější moment je <strong>prvních 3–5 sekund</strong>.</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Benchmark</th><th>Hodnocení</th></tr></thead>
-          <tbody>
-            <tr><td>pod <strong>30 %</strong></td><td>slabý hook</td></tr>
-            <tr><td><strong>30–40 %</strong></td><td>průměr</td></tr>
-            <tr><td><strong>40 %+</strong></td><td>velmi dobré video</td></tr>
-          </tbody>
-        </table>
+      <div class="benchmark-bars">
+        <div class="benchmark-bar">
+          <div class="benchmark-bar__header">
+            <span class="benchmark-bar__label">pod 30 % — slabý hook</span>
+            <span class="benchmark-bar__value">&lt; 30 %</span>
+          </div>
+          <div class="benchmark-bar__track">
+            <div class="benchmark-bar__fill benchmark-bar__fill--red" style="width: 30%;"></div>
+          </div>
+        </div>
+        <div class="benchmark-bar">
+          <div class="benchmark-bar__header">
+            <span class="benchmark-bar__label">30–40 % — průměr</span>
+            <span class="benchmark-bar__value">30–40 %</span>
+          </div>
+          <div class="benchmark-bar__track">
+            <div class="benchmark-bar__fill benchmark-bar__fill--yellow" style="width: 55%;"></div>
+          </div>
+        </div>
+        <div class="benchmark-bar">
+          <div class="benchmark-bar__header">
+            <span class="benchmark-bar__label">40 %+ — velmi dobré video</span>
+            <span class="benchmark-bar__value">40 %+</span>
+          </div>
+          <div class="benchmark-bar__track">
+            <div class="benchmark-bar__fill benchmark-bar__fill--green" style="width: 85%;"></div>
+          </div>
+        </div>
       </div>
 
       <!-- KROK 14 -->
@@ -1039,6 +1385,12 @@
         </ul>
       </div>
     </section>
+
+    <!-- SOFT CTA #2 -->
+    <div class="inline-cta">
+      <p class="inline-cta__text">15 kroků, desítky hodin práce měsíčně. Chcete tento proces předat týmu, který ho zvládne za vás?</p>
+      <a href="https://www.socials.cz" class="inline-cta__link">Zjistit víc o spolupráci &rarr;</a>
+    </div>
 
     <hr class="divider">
 
@@ -1230,11 +1582,22 @@
 
       <div class="callout callout--tip">
         <div class="callout__title">Tip: Outreach je game of volume</div>
-        <ul>
-          <li>napiš 50 tvůrcům</li>
-          <li>odpoví 20</li>
-          <li>spolupracuješ s 5–10</li>
-        </ul>
+      </div>
+
+      <!-- OUTREACH FUNNEL -->
+      <div class="funnel">
+        <div class="funnel__level">
+          <div class="funnel__num">50</div>
+          <div class="funnel__label">oslovených tvůrců</div>
+        </div>
+        <div class="funnel__level">
+          <div class="funnel__num">20</div>
+          <div class="funnel__label">odpoví</div>
+        </div>
+        <div class="funnel__level">
+          <div class="funnel__num">5–10</div>
+          <div class="funnel__label">spolupráce</div>
+        </div>
       </div>
     </section>
 
@@ -1442,6 +1805,12 @@
         <p>Pokud barter video funguje dobře v reklamách, můžete tvůrci později nabídnout <strong>placenou spolupráci</strong>. Takhle si značky často vytvářejí <strong>dlouhodobý creator pool</strong>.</p>
       </div>
     </section>
+
+    <!-- SOFT CTA #3 -->
+    <div class="inline-cta">
+      <p class="inline-cta__text">Casting tvůrců, briefy, produkce, testování kreativ — řešíme to za desítky značek. Chcete být další?</p>
+      <a href="https://www.socials.cz" class="inline-cta__link">Promluvme si o vašem UGC &rarr;</a>
+    </div>
 
     <hr class="divider divider--green">
 
