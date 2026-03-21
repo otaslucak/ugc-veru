@@ -1098,8 +1098,7 @@
       .msg-template { padding: 16px; }
       .callout { padding: 20px; }
       .cover__meta { flex-direction: column; gap: 12px; }
-      .cover { padding: 48px 20px; padding-bottom: 80px; }
-      .cover__tools { margin-top: 32px; }
+      .cover { padding: 48px 20px; }
       .scenario__stats { grid-template-columns: 1fr; }
       .bonus-section { padding: 28px 20px 24px; }
       .inline-cta { padding: 28px 20px; }
@@ -1125,22 +1124,6 @@
       <span>Performance Marketing</span>
       <span>&bull;</span>
       <span>2026</span>
-    </div>
-    <div class="cover__tools">
-      <p class="cover__tools-label">Chcete s playbookem pracovat? Využít v NotebookLM nebo svém oblíbeném LLM? Stáhněte si ho jako Markdown.</p>
-      <a href="/playbook-cz.md" download="UGC-Playbook-Socials.md" class="cover__download">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Stáhnout Markdown
-      </a>
-      <div class="cover__audio">
-        <div class="cover__audio-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-          Poslechněte si playbook jako podcast
-        </div>
-        <!-- Audio player: nahraďte src za cestu k souboru z NotebookLM -->
-        <div class="cover__audio-placeholder">Audio bude brzy k dispozici</div>
-        <!-- <audio controls preload="none" src="/audio/playbook-podcast.mp3"></audio> -->
-      </div>
     </div>
     <div class="cover__scroll">&#8595; Scrollujte dolů</div>
   </header>
@@ -2222,6 +2205,24 @@
       <h2 class="cta-section__title">Potřebujete s tím pomoci?</h2>
       <p>Pomáháme značkám budovat UGC systém, který přináší výsledky. Od strategie přes casting tvůrců až po škálování kreativ v reklamách.</p>
       <a href="https://www.socials.cz" class="cta-btn">Ozvěte se nám</a>
+    </div>
+
+    <!-- TOOLS: Download + Audio -->
+    <div class="cover__tools" style="margin-top: 80px;">
+      <p class="cover__tools-label">Chcete s playbookem pracovat? Využít v NotebookLM nebo svém oblíbeném LLM? Stáhněte si ho jako Markdown.</p>
+      <a href="/playbook-cz.md" download="UGC-Playbook-Socials.md" class="cover__download">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Stáhnout Markdown
+      </a>
+      <div class="cover__audio">
+        <div class="cover__audio-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          Poslechněte si playbook jako podcast
+        </div>
+        <!-- Audio player: nahraďte src za cestu k souboru z NotebookLM -->
+        <div class="cover__audio-placeholder">Audio bude brzy k dispozici</div>
+        <!-- <audio controls preload="none" src="/audio/playbook-podcast.mp3"></audio> -->
+      </div>
     </div>
 
   </main>
