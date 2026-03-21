@@ -100,6 +100,19 @@
           "value": "attachment; filename=\"ugc-webinar-socials.ics\""
         }
       ]
+    },
+    {
+      "source": "/playbook-cz.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=\"UGC-Playbook-Socials.md\""
+        }
+      ]
     }
   ]
 }
