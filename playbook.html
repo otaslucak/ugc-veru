@@ -2012,7 +2012,14 @@
     });
 
     function copyText(el, btn) {
-      var text = el.textContent.replace(/\n{3,}/g, '\n\n').trim();
+      var clone = el.cloneNode(true);
+      clone.querySelectorAll('.copy-btn, .copy-all-btn').forEach(function(b) { b.remove(); });
+      var text = clone.textContent
+        .split('\n')
+        .map(function(line) { return line.trim(); })
+        .join('\n')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
       navigator.clipboard.writeText(text).then(function() {
         var label = btn.querySelector('span');
         var origText = label.textContent;
