@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <title>Děkujeme za účast — a co dál?</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;800&display=swap');
+
+    * { margin: 0; padding: 0; }
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      background-color: #040404;
+      width: 100% !important;
+    }
+
+    @media only screen and (max-width: 620px) {
+      .email-container { width: 100% !important; }
+      .content-padding { padding-left: 20px !important; padding-right: 20px !important; }
+      .resource-card { display: block !important; width: 100% !important; margin-bottom: 12px !important; }
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #040404;">
+  <!-- Preheader -->
+  <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">
+    Záznam + Playbook + 2minutový dotazník
+    &#847;&zwnj;&nbsp;&#8199;&shy;&#847;&zwnj;&nbsp;&#8199;&shy;&#847;&zwnj;&nbsp;&#8199;&shy;&#847;&zwnj;&nbsp;&#8199;&shy;&#847;&zwnj;&nbsp;&#8199;&shy;&#847;&zwnj;&nbsp;&#8199;&shy;&#847;&zwnj;&nbsp;&#8199;&shy;&#847;&zwnj;&nbsp;&#8199;&shy;
+  </div>
+
+  <!-- Email wrapper -->
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #040404;">
+    <tr>
+      <td align="center" style="padding: 20px 10px;">
+
+        <!-- Email container -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" class="email-container" style="max-width: 600px; width: 100%;">
+
+          <!-- Logo -->
+          <tr>
+            <td align="center" style="padding: 30px 40px 20px;" class="content-padding">
+              <img src="https://ugc.socials.cz/images/socials-logo-white.png" alt="Socials" width="120" style="display: block;">
+            </td>
+          </tr>
+
+          <!-- Content area -->
+          <tr>
+            <td style="background-color: #111111; border-radius: 16px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+
+                <!-- Greeting -->
+                <tr>
+                  <td style="padding: 40px 40px 0;" class="content-padding">
+                    <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; color: #f2f2f2; margin: 0;">
+                      Dobrý den, {{subscriber.name}},
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- Intro -->
+                <tr>
+                  <td style="padding: 20px 40px 0;" class="content-padding">
+                    <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; color: #f2f2f2; margin: 0;">
+                      děkujeme, že jste byli na webináři. Doufáme, že jste si odnesli konkrétní tipy, které můžete rovnou použít v&nbsp;kampaních.
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                  <td style="padding: 28px 40px;" class="content-padding">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr><td style="border-top: 1px solid #2a2a2a;">&nbsp;</td></tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Recording -->
+                <tr>
+                  <td style="padding: 0 40px;" class="content-padding">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="background-color: #1a1a1a; border-radius: 12px; padding: 24px;">
+                          <h3 style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 800; color: #94e700; text-transform: uppercase; margin: 0 0 8px;">
+                            Záznam webináře
+                          </h3>
+                          <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.5; color: #b2b2b2; margin: 0 0 16px;">
+                            Nestihli jste něco? Celý webinář si můžete přehrát znovu.
+                          </p>
+                          <a href="{{RECORDING_URL}}" target="_blank" style="display: inline-block; padding: 10px 24px; font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: #f2f2f2; text-decoration: none; border: 1px solid #94e700; border-radius: 8px;">
+                            Přehrát záznam
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr><td style="padding: 16px 0;">&nbsp;</td></tr>
+
+                <!-- Playbook -->
+                <tr>
+                  <td style="padding: 0 40px;" class="content-padding">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="background-color: #1a1a1a; border-radius: 12px; padding: 24px;">
+                          <h3 style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 800; color: #94e700; text-transform: uppercase; margin: 0 0 8px;">
+                            UGC Playbook
+                          </h3>
+                          <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.5; color: #b2b2b2; margin: 0 0 16px;">
+                            Slíbený bonus — praktický průvodce tvorbou UGC kreativ pro Meta Ads.
+                          </p>
+                          <a href="{{PLAYBOOK_URL}}" target="_blank" style="display: inline-block; padding: 10px 24px; font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: #f2f2f2; text-decoration: none; border: 1px solid #94e700; border-radius: 8px;">
+                            Stáhnout Playbook
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                  <td style="padding: 28px 40px;" class="content-padding">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr><td style="border-top: 1px solid #2a2a2a;">&nbsp;</td></tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Typeform CTA -->
+                <tr>
+                  <td style="padding: 0 40px;" class="content-padding">
+                    <h2 style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 20px; font-weight: 800; color: #f2f2f2; text-transform: uppercase; letter-spacing: -0.02em; margin: 0 0 12px;">
+                      Řekněte nám, jak se vám líbilo
+                    </h2>
+                    <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; color: #b2b2b2; margin: 0;">
+                      2minutový dotazník — pomůže nám připravit další webináře ještě lépe.
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- Typeform CTA button -->
+                <tr>
+                  <td align="center" style="padding: 24px 40px;" class="content-padding">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td align="center" style="background-color: #94e700; border-radius: 12px;">
+                          <a href="{{TYPEFORM_URL}}" target="_blank" style="display: inline-block; padding: 16px 40px; font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 800; color: #040404; text-decoration: none; text-transform: uppercase; letter-spacing: 0.02em;">
+                            VYPLNIT DOTAZNÍK
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                  <td style="padding: 8px 40px 28px;" class="content-padding">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr><td style="border-top: 1px solid #2a2a2a;">&nbsp;</td></tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Resources heading -->
+                <tr>
+                  <td style="padding: 0 40px;" class="content-padding">
+                    <h2 style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 18px; font-weight: 800; color: #f2f2f2; text-transform: uppercase; letter-spacing: -0.02em; margin: 0 0 16px;">
+                      Další obsah od Socials
+                    </h2>
+                  </td>
+                </tr>
+
+                <!-- Resource 1 -->
+                <tr>
+                  <td style="padding: 0 40px 12px;" class="content-padding">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="background-color: #1a1a1a; border-radius: 12px; padding: 20px 24px;">
+                          <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 12px; font-weight: 600; color: #94e700; text-transform: uppercase; margin: 0 0 6px;">
+                            YouTube
+                          </p>
+                          <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 15px; font-weight: 600; color: #f2f2f2; margin: 0 0 4px;">
+                            Socials YouTube kanál
+                          </p>
+                          <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 14px; color: #b2b2b2; line-height: 1.4; margin: 0 0 12px;">
+                            Rozhovory, tipy a case studies z performance marketingu.
+                          </p>
+                          <a href="https://www.youtube.com/@socialsagency?utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-5" target="_blank" style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 600; color: #94e700; text-decoration: none;">
+                            Sledovat &rarr;
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Resource 2 -->
+                <tr>
+                  <td style="padding: 0 40px 12px;" class="content-padding">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="background-color: #1a1a1a; border-radius: 12px; padding: 20px 24px;">
+                          <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 12px; font-weight: 600; color: #94e700; text-transform: uppercase; margin: 0 0 6px;">
+                            Podcast
+                          </p>
+                          <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 15px; font-weight: 600; color: #f2f2f2; margin: 0 0 4px;">
+                            Socials Podcast
+                          </p>
+                          <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 14px; color: #b2b2b2; line-height: 1.4; margin: 0 0 12px;">
+                            Performance marketing bez bullshitu. Nové epizody každý týden.
+                          </p>
+                          <a href="https://www.youtube.com/@socialsagency/podcasts?utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-5" target="_blank" style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 600; color: #94e700; text-decoration: none;">
+                            Poslouchat &rarr;
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Resource 3 -->
+                <tr>
+                  <td style="padding: 0 40px 40px;" class="content-padding">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="background-color: #1a1a1a; border-radius: 12px; padding: 20px 24px;">
+                          <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 12px; font-weight: 600; color: #94e700; text-transform: uppercase; margin: 0 0 6px;">
+                            Case study
+                          </p>
+                          <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 15px; font-weight: 600; color: #f2f2f2; margin: 0 0 4px;">
+                            Natima — UGC pro e-shop
+                          </p>
+                          <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 14px; color: #b2b2b2; line-height: 1.4; margin: 0 0 12px;">
+                            Jak UGC kreativy pomohly snížit CPA a zvýšit ROAS v Meta Ads.
+                          </p>
+                          <a href="https://socials.cz/case-studies/natima?utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-5" target="_blank" style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 600; color: #94e700; text-decoration: none;">
+                            Číst case study &rarr;
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 30px 40px;" class="content-padding">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td align="center">
+                    <img src="https://ugc.socials.cz/images/socials-logo-white.png" alt="Socials" width="80" style="display: block; margin-bottom: 16px;">
+                    <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 13px; color: #b2b2b2; line-height: 1.5; margin: 0;">
+                      <a href="https://socials.cz?utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-5" target="_blank" style="color: #b2b2b2; text-decoration: underline;">socials.cz</a>
+                      &nbsp;&middot;&nbsp;
+                      <a href="https://www.socials.cz/gdpr" target="_blank" style="color: #b2b2b2; text-decoration: underline;">Ochrana osobních údajů</a>
+                    </p>
+                    <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 13px; color: #666666; line-height: 1.5; margin: 8px 0 0;">
+                      <a href="*|UNSUB|*" style="color: #666666; text-decoration: underline;">Odhlásit se z odběru</a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -50,6 +50,10 @@ All compressed: 720×1280, H.264, CRF 28, no audio, `faststart`. Source original
 - **Deploy:** Vercel — https://ugc.socials.cz (alias: ugc-veru.vercel.app)
 - **GitHub:** https://github.com/otaslucak/ugc-veru
 
+### Speakers
+- **Veronika Styková** — UGC tvůrkyně & Meta Ads specialistka (hlavní speaker, foto v hero)
+- **Jaroslav Bobák** — Meta Ads specialista, projektový manažer zaměřený na škálování, moderátor webináře
+
 ### Business Goal
 - Acquire new clients for Socials agency
 - Position Socials as go-to agency for UGC creatives (human + AI avatars)
@@ -116,6 +120,29 @@ Background alternates strictly: dark → elevated → dark → ...
 ## Completed Setup
 
 - **Ecomail autoresponder:** Configured in Ecomail dashboard (Automatizace → trigger: Přidání do seznamu → akce: Odeslat email). Greeting by name, date/time, Riverside link button, calendar links. Condition: tag `ugc-webinar-2026`. Tested and working.
+
+## Email Sequence (Ecomail)
+
+5 HTML email templates in `emails/` directory — warm-up sequence to increase show-up rate.
+
+```
+emails/
+  01-speakers.html      — T-14 (25.3.) Představení speakerů
+  02-teaser.html        — T-7  (1.4.)  Content teaser — 3 body
+  03-reminder.html      — T-2  (6.4.)  Reminder + kalendář + Playbook bonus
+  04-den-d.html         — T-1h (8.4. 9:00) Den D — Riverside link
+  05-followup.html      — T+1  (9.4.)  Follow-up + Typeform + resources
+```
+
+- **Format:** Table-based HTML email, inline CSS, mobile responsive (`@media max-width: 620px`)
+- **Design:** Dark theme (`#040404` bg, `#111111` content), green CTA (`#94e700`), `border-radius: 16px`
+- **Font:** Google Fonts `Work Sans` import + fallback `Arial, Helvetica, sans-serif`
+- **Personalization:** `{{subscriber.name}}` (Ecomail merge tag)
+- **Unsubscribe:** `{{unsubscribe}}` in footer
+- **UTM:** `utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-{1-5}`
+- **Tone:** **Vykání** (formal Czech "you") in all emails
+- **Placeholders:** `{{TYPEFORM_URL}}`, `{{RECORDING_URL}}`, `{{PLAYBOOK_URL}}` — to be filled after webinar
+- **Speaker photos:** Email 01 includes `veronika.png` + `jarda.jpg` (absolute URLs from `ugc.socials.cz`)
 
 ## Remaining TODO
 
