@@ -25,7 +25,8 @@ favicon.svg             — SVG favicon (green dot on dark bg)
 favicon.ico             — ICO fallback (32×32)
 apple-touch-icon.png    — Apple touch icon (180×180)
 kontext.md              — Webinar brief (Czech, not tracked in git)
-playbook.md             — UGC playbook (Slovak, not tracked in git)
+playbook.md             — UGC playbook source (Slovak, not tracked in git)
+playbook.html           — UGC Playbook — styled HTML page (Czech), dark theme, Socials branding, print-ready
 ```
 
 ### Video Structure (12 videos, 3 brands)
@@ -94,6 +95,7 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Playbook Cover:** CSS-only mockup (`.playbook-cover`) with green header, TOC preview, Socials branding
 - **Social Proof:** 28 recenzí linked to [Shoptet profil](https://partneri.shoptet.cz/profesionalove/socials-advertising/), real testimonial from teenwear.eu
 - **Cache strategy:** CSS/JS use `?v=N` query params for cache-busting; `max-age=3600, must-revalidate`. Images/videos/fonts use long-lived `immutable` cache.
+- **UGC Playbook (`/playbook`):** Standalone HTML page in Czech, dark Socials theme (#040404 bg, #94e700 accents, Google Fonts Work Sans). Content translated from Slovak `playbook.md`. Sections: Intro, Strategy (A), Execution (B) with 15-step checklist, Brief Template, Outreach Templates, Pricing Guide, Conclusion. `noindex, nofollow`. Print stylesheet switches to light theme for PDF export. Uses Google Fonts (allowed in CSP via `fonts.googleapis.com` + `fonts.gstatic.com`). Rewrite `/playbook` → `/playbook.html` in vercel.json. Placeholder `{{PLAYBOOK_URL}}` in email templates should point to `https://ugc.socials.cz/playbook`.
 - **Riverside link:** `https://riverside.com/studio/socials-advertisings-studio?t=3a938320e33f7df4b5d4` — **gated** behind sessionStorage on thank-you page (hidden until verified registration), also in Google Calendar details and `.ics` file.
 - **Thank-you page (`/dekujeme`):** Post-registration redirect (300ms delay for Pixel). Animated checkmark (CSS-only), date badge. Riverside button + calendar links are hidden by default (`#thankyou-gated`), shown only when `sessionStorage('ugc-registered')` or `sessionStorage('ugc-registered-time')` (24h window) is present. `CompleteRegistration` Pixel fires only once (first visit), subsequent refreshes within 24h show gated content without re-firing. Direct access without registration shows fallback message (`#thankyou-noauth`) with link back to LP. 3 resource cards (YouTube, Podcast, Natima case study). `noindex, nofollow`.
 - **Calendar integration:** Google Calendar via URL params, Apple/Outlook via static `webinar.ics` file. Vercel serves `.ics` with `Content-Type: text/calendar`.
@@ -115,11 +117,13 @@ Background alternates strictly: dark → elevated → dark → ...
 - **IP detection:** `x-forwarded-for` → `x-real-ip` → `socket.remoteAddress` fallback chain.
 - **Thank-you page gate:** Riverside link + calendar links hidden by default on `/dekujeme`. Shown only when `sessionStorage('ugc-registered')` or `sessionStorage('ugc-registered-time')` within 24h is present. Prevents casual/direct URL access and bot pixel inflation.
 - **Ecomail retry:** Single retry with 1s delay on 5xx/network errors. No retry on 4xx client errors.
-- **Security headers (vercel.json):** `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `Strict-Transport-Security: max-age=63072000; includeSubDomains`, `Content-Security-Policy` (script/style/font-src `'self'` only + Cookiebot domains `consent.cookiebot.com`, `consentcdn.cookiebot.com`; `frame-src` allows `consentcdn.cookiebot.com` for consent iframe; `img-src` allows `imgsct.cookiebot.com`; `unsafe-inline` for Meta Pixel + sessionStorage check) — applied globally via `/(.*) ` rule.
+- **Security headers (vercel.json):** `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `Strict-Transport-Security: max-age=63072000; includeSubDomains`, `Content-Security-Policy` (script/style/font-src `'self'` only + Cookiebot domains `consent.cookiebot.com`, `consentcdn.cookiebot.com`; `style-src` also allows `https://fonts.googleapis.com`; `font-src` also allows `https://fonts.gstatic.com` (for playbook page Google Fonts); `frame-src` allows `consentcdn.cookiebot.com` for consent iframe; `img-src` allows `imgsct.cookiebot.com`; `unsafe-inline` for Meta Pixel + sessionStorage check) — applied globally via `/(.*) ` rule.
 
 ## Completed Setup
 
 - **Ecomail autoresponder:** Configured in Ecomail dashboard (Automatizace → trigger: Přidání do seznamu → akce: Odeslat email). Greeting by name, date/time, Riverside link button, calendar links. Condition: tag `ugc-webinar-2026`. Tested and working.
+- **Ecomail segment:** "UGC webinář 2026" — filter by tag `ugc-webinar-2026` in Hlavní seznam. Used for all 5 email campaigns.
+- **White logo for emails:** `images/socials-logo-white.png` — converted from `socials loga/Socials-full-white.svg` (400px wide PNG, white text on transparent bg). SVG source files in `socials loga/` directory (not tracked in git).
 
 ## Email Sequence (Ecomail)
 
@@ -137,12 +141,15 @@ emails/
 - **Format:** Table-based HTML email, inline CSS, mobile responsive (`@media max-width: 620px`)
 - **Design:** Dark theme (`#040404` bg, `#111111` content), green CTA (`#94e700`), `border-radius: 16px`
 - **Font:** Google Fonts `Work Sans` import + fallback `Arial, Helvetica, sans-serif`
-- **Personalization:** `{{subscriber.name}}` (Ecomail merge tag)
-- **Unsubscribe:** `{{unsubscribe}}` in footer
+- **Personalization:** `*|VOKATIV|*` (Ecomail merge tag — jméno v 5. pádu)
+- **Unsubscribe:** `*|UNSUB|*` in footer (Ecomail format)
+- **Logo:** `socials-logo-white.png` (PNG, white on transparent, converted from `Socials-full-white.svg`)
 - **UTM:** `utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-{1-5}`
 - **Tone:** **Vykání** (formal Czech "you") in all emails
+- **Delivery:** All 5 emails as **scheduled campaigns** (not workflow) — segment `ugc-webinar-2026` in Hlavní seznam
 - **Placeholders:** `{{TYPEFORM_URL}}`, `{{RECORDING_URL}}`, `{{PLAYBOOK_URL}}` — to be filled after webinar
 - **Speaker photos:** Email 01 includes `veronika.png` + `jarda.jpg` (absolute URLs from `ugc.socials.cz`)
+- **Scheduled:** 01→25.3. 8:00, 02→1.4. 8:00, 03→6.4. 8:00, 04→8.4. 9:00, 05→TBD (9.4.)
 
 ## Remaining TODO
 

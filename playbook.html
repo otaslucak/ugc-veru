@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UGC Playbook — Socials</title>
+  <meta name="description" content="Kompletní UGC Playbook: strategie, exekutiva, šablony a pricing guide pro škálování performance kampaní pomocí UGC.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --c-bg: #040404;
+      --c-surface: #111111;
+      --c-surface-elevated: #1a1a1a;
+      --c-border: #2a2a2a;
+      --c-primary: #94e700;
+      --c-primary-light: #b4ee4c;
+      --c-primary-dark: #76b800;
+      --c-text: #f2f2f2;
+      --c-text-muted: #b2b2b2;
+      --c-text-dim: #888888;
+      --c-accent-red: #ff4d4d;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Work Sans', Arial, Helvetica, sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--c-text);
+      background: var(--c-bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .playbook { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+    /* COVER */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px;
+      position: relative;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(148, 231, 0, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cover__logo { width: 140px; margin-bottom: 48px; opacity: 0.9; }
+
+    .cover__badge {
+      display: inline-block;
+      background: rgba(148, 231, 0, 0.1);
+      border: 1px solid rgba(148, 231, 0, 0.3);
+      color: var(--c-primary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+    }
+
+    .cover__title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .cover__title span { color: var(--c-primary); }
+
+    .cover__subtitle {
+      font-size: 1.15rem;
+      color: var(--c-text-muted);
+      max-width: 540px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+
+    .cover__meta {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      color: var(--c-text-dim);
+      font-size: 0.85rem;
+    }
+
+    .cover__scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--c-text-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* TOC */
+    .toc {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      margin: 60px 0;
+    }
+
+    .toc__title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--c-primary);
+      margin-bottom: 24px;
+    }
+
+    .toc__list { list-style: none; counter-reset: toc; }
+    .toc__list li { counter-increment: toc; padding-left: 0; }
+    .toc__list li::before { content: none; }
+
+    .toc__list li a {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0;
+      color: var(--c-text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--c-border);
+      transition: color 0.2s;
+    }
+
+    .toc__list li:last-child a { border-bottom: none; }
+    .toc__list li a:hover { color: var(--c-primary); }
+
+    .toc__list li a::before {
+      content: counter(toc, decimal-leading-zero);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--c-primary);
+      min-width: 28px;
+    }
+
+    .toc__section-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-text-dim);
+      margin-top: 24px;
+      margin-bottom: 8px;
+      padding-top: 16px;
+      border-top: 1px solid var(--c-border);
+    }
+
+    .toc__section-label:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+
+    /* SECTIONS */
+    .section { margin-bottom: 80px; }
+
+    .section__label {
+      display: inline-block;
+      background: rgba(148, 231, 0, 0.1);
+      border: 1px solid rgba(148, 231, 0, 0.25);
+      color: var(--c-primary);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .section__label--dark {
+      background: var(--c-surface);
+      border-color: var(--c-border);
+      color: var(--c-text-muted);
+    }
+
+    /* TYPOGRAPHY */
+    h1, h2, h3, h4 { font-weight: 800; line-height: 1.2; letter-spacing: -0.02em; }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: 20px;
+      margin-top: 56px;
+    }
+
+    h2:first-child { margin-top: 0; }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      margin-top: 36px;
+      color: var(--c-text);
+    }
+
+    h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      margin-top: 24px;
+    }
+
+    p { margin-bottom: 16px; color: var(--c-text-muted); }
+    p:last-child { margin-bottom: 0; }
+    strong { color: var(--c-text); font-weight: 700; }
+    .text-green { color: var(--c-primary); }
+    .text-dim { color: var(--c-text-dim); }
+
+    .lead { font-size: 1.15rem; line-height: 1.7; color: var(--c-text-muted); }
+
+    .highlight {
+      background: linear-gradient(135deg, rgba(148, 231, 0, 0.1), rgba(148, 231, 0, 0.05));
+      border-left: 3px solid var(--c-primary);
+      padding: 20px 24px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 24px 0;
+    }
+
+    .highlight p { color: var(--c-text); margin: 0; }
+
+    /* LISTS */
+    ul, ol { margin-bottom: 20px; padding-left: 0; list-style: none; }
+
+    ul li, ol li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 10px;
+      color: var(--c-text-muted);
+    }
+
+    ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--c-primary);
+    }
+
+    ol { counter-reset: ol; }
+    ol li { counter-increment: ol; }
+
+    ol li::before {
+      content: counter(ol) '.';
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: var(--c-primary);
+      font-size: 0.85rem;
+    }
+
+    ul ul, ol ul, ul ol, ol ol { margin-top: 8px; margin-bottom: 8px; }
+
+    .list-check li::before,
+    .list-cross li::before {
+      width: auto; height: auto; background: none; border-radius: 0; font-size: 1rem; top: 0;
+    }
+
+    .list-check li::before { content: '\2714'; color: var(--c-primary); }
+    .list-cross li::before { content: '\2718'; color: var(--c-accent-red); }
+
+    /* CARDS */
+    .card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin: 24px 0;
+    }
+
+    .card--green {
+      border-color: rgba(148, 231, 0, 0.25);
+      background: linear-gradient(135deg, rgba(148, 231, 0, 0.05), transparent);
+    }
+
+    .card-grid { display: grid; gap: 16px; margin: 24px 0; }
+
+    @media (min-width: 600px) {
+      .card-grid--2 { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* TABLES */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 24px 0;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--c-border);
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    thead { background: var(--c-surface-elevated); }
+
+    th {
+      text-align: left;
+      padding: 14px 20px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-text-dim);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--c-border);
+      color: var(--c-text-muted);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    td strong { color: var(--c-primary); }
+
+    /* CALLOUT */
+    .callout {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+
+    .callout--tip {
+      border-color: rgba(148, 231, 0, 0.3);
+      background: linear-gradient(135deg, rgba(148, 231, 0, 0.05), transparent);
+    }
+
+    .callout--warning {
+      border-color: rgba(255, 77, 77, 0.3);
+      background: linear-gradient(135deg, rgba(255, 77, 77, 0.05), transparent);
+    }
+
+    .callout__title { font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; color: var(--c-text); }
+    .callout p { font-size: 0.95rem; }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: var(--c-border); margin: 60px 0; border: none; }
+    .divider--green { height: 2px; background: linear-gradient(90deg, var(--c-primary), transparent); }
+
+    /* STEP NUM */
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--c-primary);
+      color: var(--c-bg);
+      font-weight: 800;
+      font-size: 0.9rem;
+      border-radius: 50%;
+      margin-right: 12px;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+
+    /* MESSAGE TEMPLATE */
+    .msg-template {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      margin: 20px 0;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .msg-template p { color: var(--c-text); }
+
+    .placeholder {
+      background: rgba(148, 231, 0, 0.15);
+      color: var(--c-primary);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* SCENARIO CARDS */
+    .scenario {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin: 20px 0;
+    }
+
+    .scenario__header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+
+    .scenario__num {
+      background: var(--c-primary);
+      color: var(--c-bg);
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    .scenario__title { font-weight: 700; font-size: 1.1rem; }
+
+    .scenario__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+
+    .scenario__stat {
+      background: var(--c-surface-elevated);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .scenario__stat-value { font-size: 1.5rem; font-weight: 800; color: var(--c-primary); }
+
+    .scenario__stat-label {
+      font-size: 0.75rem;
+      color: var(--c-text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 4px;
+    }
+
+    .scenario__pro, .scenario__con { display: flex; align-items: flex-start; gap: 8px; margin-top: 12px; font-size: 0.9rem; }
+    .scenario__pro { color: var(--c-primary); }
+    .scenario__con { color: var(--c-accent-red); }
+
+    /* BIG QUOTE */
+    .big-quote {
+      font-size: clamp(1.3rem, 3vw, 1.75rem);
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--c-text);
+      text-align: center;
+      padding: 48px 24px;
+    }
+
+    .big-quote span { color: var(--c-primary); }
+
+    .big-quote::before, .big-quote::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--c-primary), transparent);
+      margin: 0 auto 24px;
+    }
+
+    .big-quote::after { margin: 24px auto 0; }
+
+    /* FOOTER */
+    .playbook-footer {
+      text-align: center;
+      padding: 60px 24px 40px;
+      border-top: 1px solid var(--c-border);
+      margin-top: 80px;
+    }
+
+    .playbook-footer__logo { width: 100px; opacity: 0.6; margin-bottom: 16px; }
+    .playbook-footer p { font-size: 0.85rem; color: var(--c-text-dim); }
+    .playbook-footer a { color: var(--c-primary); text-decoration: none; }
+
+    /* PRINT */
+    @media print {
+      :root {
+        --c-bg: #ffffff;
+        --c-surface: #f5f5f5;
+        --c-surface-elevated: #f0f0f0;
+        --c-border: #dddddd;
+        --c-primary: #4a8000;
+        --c-text: #111111;
+        --c-text-muted: #333333;
+        --c-text-dim: #666666;
+      }
+
+      body { font-size: 11pt; line-height: 1.5; }
+      .playbook { max-width: 100%; padding: 0; }
+      .cover { min-height: auto; padding: 40px 0; page-break-after: always; }
+      .cover::before, .cover__scroll { display: none; }
+      .section { margin-bottom: 32px; }
+      .toc { page-break-after: always; }
+      h1, h2, h3 { page-break-after: avoid; }
+      .card, .scenario, .msg-template, .callout { page-break-inside: avoid; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .toc, .card, .scenario { padding: 24px; }
+      .msg-template { padding: 20px; }
+      .cover__meta { flex-direction: column; gap: 12px; }
+      .scenario__stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER -->
+  <header class="cover">
+    <img src="images/socials-logo-white.png" alt="Socials" class="cover__logo">
+    <div class="cover__badge">Exclusive Playbook 2026</div>
+    <h1 class="cover__title">UGC<br><span>Playbook</span></h1>
+    <p class="cover__subtitle">Kompletní framework pro systematickou tvorbu a testování UGC kreativ. Od strategie po exekutivu.</p>
+    <div class="cover__meta">
+      <span>Socials</span>
+      <span>&bull;</span>
+      <span>Performance Marketing</span>
+      <span>&bull;</span>
+      <span>2026</span>
+    </div>
+    <div class="cover__scroll">&#8595; Scrollujte dolů</div>
+  </header>
+
+  <main class="playbook">
+
+    <!-- TOC -->
+    <nav class="toc">
+      <div class="toc__title">Obsah</div>
+      <ol class="toc__list">
+        <span class="toc__section-label">Strategie (Founder / CMO)</span>
+        <li><a href="#intro">Úvod — začněte zde</a></li>
+        <li><a href="#kdy-ugc">Kdy má smysl dělat UGC</a></li>
+        <li><a href="#psychologie">Psychologie prodeje ve videu</a></li>
+        <li><a href="#testovani">Strategické rozhodnutí: testování kreativ</a></li>
+        <li><a href="#budget-roi">Budget a ROI</a></li>
+        <span class="toc__section-label">Exekutiva (UGC systém)</span>
+        <li><a href="#checklist">UGC Collaboration Checklist</a></li>
+        <li><a href="#brief">UGC Brief Template</a></li>
+        <li><a href="#outreach">UGC Outreach Message Templates</a></li>
+        <li><a href="#pricing">UGC Pricing Guide</a></li>
+        <span class="toc__section-label">Závěr</span>
+        <li><a href="#delegace">Proč značky delegují UGC</a></li>
+        <li><a href="#zaver">UGC není content hračka</a></li>
+      </ol>
+    </nav>
+
+
+    <!-- INTRO -->
+    <section id="intro" class="section">
+      <span class="section__label">Úvod</span>
+      <h1>Začněte zde</h1>
+      <p class="lead">Pokud vedete marketing značky nebo firmy, pravděpodobně jste už slyšeli větu: <em>„Potřebujeme víc UGC."</em></p>
+      <p>User Generated Content se stal jedním z nejčastěji skloňovaných pojmů v digitálním marketingu. Značky ho používají v reklamách, na sociálních sítích i na landing pages. V mnoha případech dokáže přinést lepší výsledky než tradičně produkované reklamy.</p>
+      <p>Problém je, že <strong>většina firem k UGC přistupuje velmi chaoticky</strong>.</p>
+      <p>Náhodně osloví několik tvůrců, natočí pár videí a doufají, že některé z nich bude fungovat. Bez strategie, bez systému a bez jasných metrik.</p>
+      <p>A právě tady vzniká rozdíl mezi značkami, které UGC jen zkoušejí — a těmi, které na něm dokážou <strong>systematicky škálovat marketingový výkon</strong>.</p>
+      <div class="highlight">
+        <p>Tento playbook nevznikl jako teoretický návod. Je to praktický framework, který ukazuje, jak k UGC přistupovat jako k <strong>systematickému procesu tvorby a testování kreativ</strong>.</p>
+      </div>
+      <p>Je rozdělený na dvě části:</p>
+      <div class="card-grid card-grid--2">
+        <div class="card card--green">
+          <h4 style="margin-top:0">A — Strategická část</h4>
+          <p>Pomáhá founderům a CMO nastavit správný směr. Co rozhodnout, než se začne točit.</p>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">B — Exekuční část</h4>
+          <p>Konkrétní proces, jak UGC produkovat, řídit a škálovat. Šablony, checklist, pricing.</p>
+        </div>
+      </div>
+      <p>Pokud se UGC dělá správně, dokáže se stát jedním z nejsilnějších nástrojů pro růst značky. Ne proto, že je „trendový", ale proto, že dokáže přinést <strong>autenticitu, důvěru a výkon v reklamách</strong>.</p>
+      <p>Cílem tohoto playbooku je ukázat, jak tento proces nastavit tak, aby UGC nebylo náhodné — ale <strong>systematické, měřitelné a škálovatelné</strong>.</p>
+    </section>
+
+    <hr class="divider divider--green">
+
+    <!-- STRATEGIE -->
+    <section id="kdy-ugc" class="section">
+      <span class="section__label">Část A — Strategie</span>
+      <h1>Kdy má smysl dělat UGC</h1>
+      <p>UGC není řešení každého marketingového problému.</p>
+      <h3>UGC má největší efekt, když:</h3>
+      <ul class="list-check">
+        <li>produkt je už otestovaný</li>
+        <li>existuje základní traffic</li>
+        <li>značka má jasnou nabídku</li>
+      </ul>
+      <h3>UGC nebude fungovat, když:</h3>
+      <ul class="list-cross">
+        <li>produkt nemá product-market fit</li>
+        <li>messaging není jasný</li>
+        <li>landing page nekonvertuje</li>
+      </ul>
+      <div class="highlight">
+        <p>UGC <strong>zesilňuje to, co už funguje</strong>.</p>
+      </div>
+    </section>
+
+    <!-- PSYCHOLOGIE -->
+    <section id="psychologie" class="section">
+      <h1><span class="step-num">2</span> Psychologie prodeje ve videu</h1>
+      <p>Nejlepší UGC videa řeší <strong>pochybnosti zákazníka</strong>.</p>
+      <p>Před tvorbou videí je dobré zadefinovat:</p>
+      <div class="card-grid card-grid--2">
+        <div class="card">
+          <h4 style="margin-top:0">Pain points zákazníka</h4>
+          <ul>
+            <li>„tracking kalorií je otravný"</li>
+            <li>„produkt je příliš drahý"</li>
+            <li>„nefunguje to"</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">Námitky zákazníka</h4>
+          <ul>
+            <li>„už jsem to zkoušel"</li>
+            <li>„nevěřím reklamě"</li>
+            <li>„je to komplikované"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="highlight">
+        <p>Video musí tyto námitky <strong>rozbít</strong>.</p>
+      </div>
+    </section>
+
+    <!-- TESTOVÁNÍ KREATIV -->
+    <section id="testovani" class="section">
+      <h1><span class="step-num">3</span> Strategické rozhodnutí: testování kreativ</h1>
+      <p>UGC je především o <strong>testování kreativ</strong>.</p>
+      <div class="big-quote">
+        Lepší je mít <span>10 různých videí</span> než jedno perfektní.
+      </div>
+      <p>Pravidlo performance marketingu — proto značky budují <strong>creator pool</strong>.</p>
+    </section>
+
+    <!-- BUDGET A ROI -->
+    <section id="budget-roi" class="section">
+      <h1><span class="step-num">4</span> Budget a ROI</h1>
+      <p>Cena UGC videa není nejdůležitější faktor. Důležitější je <strong>výkon kreativy</strong>.</p>
+      <p>Někdy se stane:</p>
+      <ul>
+        <li>video za <strong>30 €</strong> &rarr; generuje tisíce €</li>
+        <li>video za <strong>200 €</strong> &rarr; nefunguje</li>
+      </ul>
+      <div class="highlight">
+        <p>UGC proto vnímejte jako <strong>investici do performance kreativ</strong>.</p>
+      </div>
+      <div class="card card--green" style="margin-top: 40px;">
+        <h3 style="margin-top:0">Kde končí vaše role</h3>
+        <p>Pokud jste se dostali až sem, pravděpodobně už vidíte, že UGC není jen o natočení jednoho videa. Je to celý systém — od strategie po každodenní exekuci.</p>
+        <p>Právě v tomto bodě obvykle <strong>končí role foundera nebo CMO</strong>. Strategický směr je nastavený, KPI jsou jasné a proces je definovaný.</p>
+        <p>Další kroky už patří marketingovému týmu nebo UGC managerovi, který celý proces řídí, komunikuje s tvůrci a zajišťuje produkci a testování kreativ.</p>
+      </div>
+    </section>
+
+    <hr class="divider divider--green">
+
+    <!-- EXEKUTIVA -->
+    <section id="checklist" class="section">
+      <span class="section__label">Část B — Exekutiva</span>
+      <h1>UGC Collaboration Checklist</h1>
+      <p class="lead">Kompletní proces od náboru tvůrců po publikování. Tady začíná operativní práce marketingového týmu.</p>
+
+      <!-- KROK 1 -->
+      <h2><span class="step-num">1</span> Definovat cíl spolupráce</h2>
+      <div class="card-grid card-grid--2">
+        <div class="card">
+          <h4 style="margin-top:0">Cíl kampaně</h4>
+          <ul>
+            <li>brand awareness</li>
+            <li>performance ads</li>
+            <li>content na sociální sítě</li>
+            <li>App downloads / konverze</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">KPI</h4>
+          <ul>
+            <li>views / CTR</li>
+            <li>CPA / ROAS</li>
+            <li>downloads / sales</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">Platformy</h4>
+          <ul>
+            <li>TikTok</li>
+            <li>Instagram</li>
+            <li>Meta Ads</li>
+            <li>YouTube Shorts</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">Typ obsahu</h4>
+          <ul>
+            <li>testimonial</li>
+            <li>unboxing</li>
+            <li>demo produktu</li>
+            <li>lifestyle / storytelling</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- KROK 2 -->
+      <h2><span class="step-num">2</span> Nábor UGC tvůrců</h2>
+      <h3>Vyhledávání</h3>
+      <ul>
+        <li>UGC Facebook skupiny</li>
+        <li>TikTok / IG creators</li>
+        <li>UGC platformy (Influee, Billo atd.)</li>
+        <li>vlastní databáze tvůrců</li>
+      </ul>
+      <h3>Check tvůrce — portfolio</h3>
+      <ul>
+        <li>kvalita videí</li>
+        <li>přirozený projev</li>
+        <li>kamera / světlo / zvuk</li>
+        <li>schopnost storytellingu</li>
+        <li>zkušenost s ads contentem</li>
+      </ul>
+      <h3>Vytvoření databáze</h3>
+      <ul>
+        <li>jméno</li>
+        <li>země / jazyk</li>
+        <li>cena za video</li>
+        <li>niche (fitness, beauty, food...)</li>
+      </ul>
+
+      <!-- KROK 3 -->
+      <h2><span class="step-num">3</span> První oslovení tvůrce</h2>
+      <h3>Outreach zpráva</h3>
+      <ul>
+        <li>krátké představení značky</li>
+        <li>co je produkt / appka</li>
+        <li>typ spolupráce</li>
+        <li>zda je to barter nebo paid</li>
+        <li>CTA: „Máš zájem o víc info?"</li>
+      </ul>
+      <h3>Když tvůrce odpoví</h3>
+      <p>Poslat:</p>
+      <ul>
+        <li>detaily spolupráce</li>
+        <li>počet videí</li>
+        <li>deadline</li>
+        <li>licence</li>
+      </ul>
+
+      <!-- KROK 4 -->
+      <h2><span class="step-num">4</span> Dohodnutí spolupráce</h2>
+      <ul>
+        <li>cena za video</li>
+        <li>počet videí</li>
+        <li>formát videí (9:16)</li>
+        <li>délka videa</li>
+        <li>deadline</li>
+        <li>revize</li>
+      </ul>
+      <h3>Licence</h3>
+      <ul>
+        <li>organické použití</li>
+        <li>paid ads usage</li>
+        <li>whitelisting (pokud je)</li>
+      </ul>
+
+      <!-- KROK 5 -->
+      <h2><span class="step-num">5</span> Smlouva / dohoda</h2>
+      <p>Pokud jde o větší spolupráci:</p>
+      <ul>
+        <li>UGC kontrakt</li>
+        <li>licenční podmínky</li>
+        <li>práva na reklamu</li>
+        <li>exkluzivita (pokud je potřeba)</li>
+      </ul>
+
+      <!-- KROK 6 -->
+      <h2><span class="step-num">6</span> UGC Brief pro tvůrce</h2>
+      <p>Brief musí obsahovat:</p>
+      <div class="card-grid card-grid--2">
+        <div class="card">
+          <h4 style="margin-top:0">Produkt</h4>
+          <ul>
+            <li>co to je</li>
+            <li>hlavní benefity</li>
+            <li>USP</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">Cíl videa</h4>
+          <ul>
+            <li>edukace</li>
+            <li>konverze</li>
+            <li>social proof</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">Hooky + obsah</h4>
+          <ul>
+            <li>první 3 sekundy</li>
+            <li>co ukázat</li>
+            <li>co říct</li>
+            <li>CTA</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">Technické požadavky</h4>
+          <ul>
+            <li>vertical 9:16</li>
+            <li>1080&times;1920</li>
+            <li>bez watermarku</li>
+            <li>dobré světlo, kvalitní obraz</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- KROK 7 -->
+      <h2><span class="step-num">7</span> Produkce videa</h2>
+      <p>Tvůrce natáčí:</p>
+      <ul>
+        <li>hook</li>
+        <li>problém</li>
+        <li>řešení</li>
+        <li>ukázka produktu</li>
+        <li>výsledek</li>
+        <li>CTA</li>
+      </ul>
+
+      <!-- KROK 8 -->
+      <h2><span class="step-num">8</span> Odevzdání materiálu</h2>
+      <p>Tvůrce pošle:</p>
+      <ul>
+        <li>raw video</li>
+        <li>finální video</li>
+        <li>přes Google Drive / WeTransfer / úschovnu</li>
+      </ul>
+      <p>Zkontrolovat:</p>
+      <ul>
+        <li>kvalitu videa</li>
+        <li>zvuk</li>
+        <li>branding</li>
+        <li>CTA</li>
+      </ul>
+
+      <!-- KROK 9 -->
+      <h2><span class="step-num">9</span> Feedback a úpravy</h2>
+      <p>Pokud je potřeba:</p>
+      <ul>
+        <li>zkrácení</li>
+        <li>nový hook</li>
+        <li>texty</li>
+        <li>titulky</li>
+        <li>upravit nevhodné záběry</li>
+      </ul>
+
+      <!-- KROK 10 -->
+      <h2><span class="step-num">10</span> Edit videa</h2>
+      <p>Pokud edit dělá značka:</p>
+      <ul>
+        <li>přidat titulky</li>
+        <li>dynamický střih</li>
+        <li>hudba</li>
+        <li>branding</li>
+      </ul>
+
+      <!-- KROK 11 -->
+      <h2><span class="step-num">11</span> Schválení klientem</h2>
+      <p>Před publikováním:</p>
+      <ul>
+        <li>schválení textu</li>
+        <li>schválení videa</li>
+        <li>schválení CTA</li>
+      </ul>
+
+      <!-- KROK 12 -->
+      <h2><span class="step-num">12</span> Publikování obsahu</h2>
+      <div class="card-grid card-grid--2">
+        <div class="card">
+          <h4 style="margin-top:0">Organické posty</h4>
+          <ul>
+            <li>TikTok</li>
+            <li>Instagram Reels</li>
+            <li>Shorts</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">Reklama</h4>
+          <ul>
+            <li>Meta Ads</li>
+            <li>TikTok Ads</li>
+            <li>Google Ads</li>
+            <li>Bing</li>
+            <li>Srovnávače</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- KROK 13 -->
+      <h2><span class="step-num">13</span> Tracking výkonu</h2>
+      <p>Sledovat:</p>
+
+      <h3>CTR (click-through rate)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Benchmark</th><th>Hodnocení</th></tr></thead>
+          <tbody>
+            <tr><td>pod <strong>0,8 %</strong></td><td>slabé video</td></tr>
+            <tr><td><strong>1–1,5 %</strong></td><td>průměr</td></tr>
+            <tr><td><strong>2 % a víc</strong></td><td>velmi dobré</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>CPA (cost per acquisition)</h3>
+      <ul>
+        <li>CPA vyšší než cíl &rarr; kreativa nefunguje</li>
+        <li>CPA v rámci cíle &rarr; video má potenciál škálovat</li>
+      </ul>
+
+      <h3>ROAS (return on ad spend)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Benchmark</th><th>Hodnocení</th></tr></thead>
+          <tbody>
+            <tr><td><strong>ROAS pod 2</strong></td><td>slabé</td></tr>
+            <tr><td><strong>ROAS 2–3</strong></td><td>průměr</td></tr>
+            <tr><td><strong>ROAS 3+</strong></td><td>dobré video</td></tr>
+            <tr><td><strong>ROAS 5+</strong></td><td>škálovatelná kreativa</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Retention rate videa (watch time)</h3>
+      <p>Nejdůležitější moment je <strong>prvních 3–5 sekund</strong>.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Benchmark</th><th>Hodnocení</th></tr></thead>
+          <tbody>
+            <tr><td>pod <strong>30 %</strong></td><td>slabý hook</td></tr>
+            <tr><td><strong>30–40 %</strong></td><td>průměr</td></tr>
+            <tr><td><strong>40 %+</strong></td><td>velmi dobré video</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- KROK 14 -->
+      <h2><span class="step-num">14</span> Škálování vítězů</h2>
+      <p>Pokud video funguje:</p>
+      <ul>
+        <li>nové verze hooků</li>
+        <li>nový edit</li>
+        <li>víc creators</li>
+        <li>víc formátů</li>
+      </ul>
+
+      <!-- KROK 15 -->
+      <h2><span class="step-num">15</span> Budování UGC poolu</h2>
+      <p>Po spolupráci:</p>
+      <ul>
+        <li>uložit tvůrce do databáze</li>
+        <li>rating spolupráce</li>
+        <li>potenciál pro další kampaně</li>
+      </ul>
+
+      <!-- BONUS TIP -->
+      <div class="callout callout--tip" style="margin-top: 48px;">
+        <div class="callout__title">Bonus tip: Nejčastější chyby při UGC</div>
+        <ul>
+          <li>slabý hook</li>
+          <li>příliš reklamní obsah</li>
+          <li>špatný brief</li>
+          <li>chybějící licence</li>
+          <li>špatná distribuce</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- UGC BRIEF TEMPLATE -->
+    <section id="brief" class="section">
+      <span class="section__label section__label--dark">Šablona</span>
+      <h1>UGC Brief Template</h1>
+      <p class="lead">Co poslat tvůrci před natáčením.</p>
+
+      <div class="card">
+        <h3 style="margin-top:0">1. Základní informace o značce</h3>
+        <p><strong>Brand:</strong> <span class="text-dim">[vyplňte]</span><br>
+        <strong>Produkt / služba:</strong> <span class="text-dim">[vyplňte]</span><br>
+        <strong>Web:</strong> <span class="text-dim">[vyplňte]</span></p>
+        <p>Krátký popis produktu: <span class="text-dim"><em>(2–3 věty, co produkt dělá a pro koho je)</em></span></p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">2. Cíl videa</h3>
+        <ul>
+          <li>reklama (Meta Ads / TikTok Ads)</li>
+          <li>organický post</li>
+          <li>App downloads</li>
+          <li>zvýšení povědomí o značce</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">3. Cílová skupina</h3>
+        <p>Komu je produkt určen? Např.:</p>
+        <ul>
+          <li>ženy 20–35</li>
+          <li>fitness komunita</li>
+          <li>lidé, co chtějí zhubnout</li>
+          <li>busy profesionálové</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">4. Hlavní benefity produktu</h3>
+        <p>Uveďte 3–5 benefitů, které má tvůrce zdůraznit:</p>
+        <p class="text-dim"><em>[vyplňte]</em></p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">5. Key message videa</h3>
+        <p>Co si má divák zapamatovat po zhlédnutí videa?</p>
+        <p>Např.: <em>„Sledování kalorií může být jednoduché a rychlé."</em></p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">6. Hook (první 3 sekundy)</h3>
+        <p>Tvůrce může použít například:</p>
+        <ul>
+          <li>„Tracking kalorií mě vždycky štvalo... až dokud jsem nenašla tohle."</li>
+          <li>„Pokud počítáš kalorie, tohle potřebuješ."</li>
+          <li>„Tohle je nejjednodušší způsob, jak trackovat jídlo."</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">7. Struktura videa (doporučená)</h3>
+        <ol>
+          <li>Hook</li>
+          <li>Problém</li>
+          <li>Ukázka produktu</li>
+          <li>Benefit</li>
+          <li>Výsledek</li>
+          <li>CTA</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">8. CTA (call to action)</h3>
+        <p>Na konci videa říct např.:</p>
+        <ul>
+          <li>„Stáhni appku a vyzkoušej zdarma."</li>
+          <li>„Objednej na našem webu."</li>
+          <li>„Link najdeš v bio."</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">9. Technické požadavky</h3>
+        <ul>
+          <li>vertical 9:16</li>
+          <li>min. 1080&times;1920</li>
+          <li>bez watermarku</li>
+          <li>dobré světlo</li>
+          <li>čistý zvuk</li>
+        </ul>
+      </div>
+
+      <div class="card-grid card-grid--2">
+        <div class="card">
+          <h4 style="margin-top:0">10. Co ve videu ukázat</h4>
+          <ul>
+            <li>používání produktu</li>
+            <li>výsledek</li>
+            <li>detail produktu</li>
+            <li>reálná situace</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">11. Čemu se vyhnout</h4>
+          <ul>
+            <li>příliš reklamní tón</li>
+            <li>čtení textu</li>
+            <li>tmavé video</li>
+            <li>watermark z TikToku</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">12. Odevzdání materiálu</h3>
+        <ul>
+          <li>finální video</li>
+          <li>raw video (pokud je potřeba)</li>
+          <li>přes: Google Drive / WeTransfer / ...</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- OUTREACH TEMPLATES -->
+    <section id="outreach" class="section">
+      <span class="section__label section__label--dark">Šablony zpráv</span>
+      <h1>UGC Outreach Message Templates</h1>
+
+      <h2>1. První zpráva (cold outreach)</h2>
+      <div class="msg-template">
+        <p>Ahoj!</p>
+        <p>Jmenuji se <span class="placeholder">[vaše jméno]</span> a pracuji na projektu pro značku <span class="placeholder">[brand name]</span>.</p>
+        <p>Hledáme UGC tvůrce na krátká videa pro sociální sítě a reklamy. Velmi se mi líbí tvůj styl obsahu a myslím, že by se hodil pro tento projekt.</p>
+        <p>Spolupráce zahrnuje:<br>
+        &bull; tvorbu krátkých videí<br>
+        &bull; jednoduchý scénář / brief<br>
+        &bull; dlouhodobější spolupráci</p>
+        <p>Pokud máš zájem, ráda ti pošlu víc detailů.</p>
+      </div>
+
+      <h2>2. Druhá zpráva (když tvůrce odpoví)</h2>
+      <div class="msg-template">
+        <p>Super!</p>
+        <p>Pošlu ti víc info o spolupráci.</p>
+        <p>Jde o projekt <span class="placeholder">[brand / app name]</span>, který pomáhá <span class="placeholder">[krátký popis produktu]</span>.</p>
+        <p>Spolupráce by zahrnovala:<br>
+        &bull; cca <span class="placeholder">[počet]</span> videí měsíčně<br>
+        &bull; jednoduchá UGC videa (15–30s)<br>
+        &bull; content pro TikTok / Reels / reklamy</p>
+        <p>Tvůrce dostane:<br>
+        &bull; fixní odměnu za video<br>
+        &bull; produkt / appku zdarma<br>
+        &bull; možnost dlouhodobé spolupráce</p>
+        <p>Pokud máš zájem, pošlu ti brief a detaily.</p>
+      </div>
+
+      <h2>3. Zpráva s detaily spolupráce</h2>
+      <div class="msg-template">
+        <p>Super, díky za zájem!</p>
+        <p>Tady jsou základní detaily spolupráce:</p>
+        <p>Produkt / projekt: <span class="placeholder">[název]</span></p>
+        <p>Výstup:<br>
+        &bull; <span class="placeholder">[počet]</span> videí<br>
+        &bull; 15–30 sekund<br>
+        &bull; formát 9:16</p>
+        <p>Odměna: <span class="placeholder">[cena za video]</span></p>
+        <p>Deadline: <span class="placeholder">[datum]</span></p>
+        <p>Video budeme používat na sociálních sítích a v reklamách.</p>
+        <p>Pokud je to pro tebe OK, pošlu ti brief.</p>
+      </div>
+
+      <h2>4. Follow-up zpráva (pokud tvůrce neodpoví)</h2>
+      <div class="msg-template">
+        <p>Ahoj!</p>
+        <p>Jen se připomínám ohledně UGC spolupráce pro <span class="placeholder">[brand name]</span>.</p>
+        <p>Stále hledáme tvůrce na krátká videa a tvůj profil se nám velmi hodí do projektu.</p>
+        <p>Pokud máš zájem, ráda ti pošlu víc detailů.</p>
+      </div>
+
+      <h2>5. Zpráva po spolupráci (budování creator poolu)</h2>
+      <div class="msg-template">
+        <p>Díky za spolupráci!</p>
+        <p>Video se nám velmi líbilo a určitě budeme rádi, pokud spolu uděláme i další projekty.</p>
+        <p>Pokud budeš mít čas v nejbližších měsících na další content, určitě se ozveme.</p>
+      </div>
+
+      <div class="callout callout--tip">
+        <div class="callout__title">Tip: Outreach je game of volume</div>
+        <ul>
+          <li>napiš 50 tvůrcům</li>
+          <li>odpoví 20</li>
+          <li>spolupracuješ s 5–10</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- PRICING GUIDE -->
+    <section id="pricing" class="section">
+      <span class="section__label section__label--dark">Cenový průvodce</span>
+      <h1>UGC Pricing Guide</h1>
+      <p class="lead">Kolik platit UGC tvůrcům.</p>
+
+      <p>Cena UGC videa závisí na:</p>
+      <ul>
+        <li>zkušenostech tvůrce</li>
+        <li>kvalitě produkce</li>
+        <li>licenci na reklamy</li>
+        <li>počtu videí</li>
+        <li>délce spolupráce</li>
+      </ul>
+
+      <h2>Orientační ceník</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Typ tvůrce</th><th>Cena za video</th></tr></thead>
+          <tbody>
+            <tr><td>Začátečník</td><td><strong>50–90 €</strong></td></tr>
+            <tr><td>Středně zkušený tvůrce</td><td><strong>100–120 €</strong></td></tr>
+            <tr><td>Profesionální UGC creator</td><td><strong>150–300 € a víc</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Modelový budget kampaně (500 €)</h2>
+      <p>Cíl: získat co nejvíc kreativ na testování reklam.</p>
+
+      <div class="scenario">
+        <div class="scenario__header">
+          <span class="scenario__num">1</span>
+          <span class="scenario__title">Performance testing (hodně kreativ)</span>
+        </div>
+        <p>Cíl: testovat co nejvíc videí v ads.</p>
+        <div class="scenario__stats">
+          <div class="scenario__stat">
+            <div class="scenario__stat-value">5</div>
+            <div class="scenario__stat-label">Tvůrců</div>
+          </div>
+          <div class="scenario__stat">
+            <div class="scenario__stat-value">10</div>
+            <div class="scenario__stat-label">Videí</div>
+          </div>
+          <div class="scenario__stat">
+            <div class="scenario__stat-value">40 €</div>
+            <div class="scenario__stat-label">Za video</div>
+          </div>
+          <div class="scenario__stat">
+            <div class="scenario__stat-value">400 €</div>
+            <div class="scenario__stat-label">Celkem</div>
+          </div>
+        </div>
+        <p class="text-dim" style="font-size: 0.9rem;">Zbývá 100 € na ads budget.</p>
+        <div class="scenario__pro">&#10004; Hodně kreativ na testování</div>
+        <div class="scenario__con">&#10006; Nižší produkční kvalita (levnější tvůrci)</div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario__header">
+          <span class="scenario__num">2</span>
+          <span class="scenario__title">Balanced strategy</span>
+        </div>
+        <p>Cíl: kombinace kvality a množství.</p>
+        <div class="scenario__stats">
+          <div class="scenario__stat">
+            <div class="scenario__stat-value">4</div>
+            <div class="scenario__stat-label">Tvůrci</div>
+          </div>
+          <div class="scenario__stat">
+            <div class="scenario__stat-value">6</div>
+            <div class="scenario__stat-label">Videí</div>
+          </div>
+          <div class="scenario__stat">
+            <div class="scenario__stat-value">80 €</div>
+            <div class="scenario__stat-label">Za video</div>
+          </div>
+          <div class="scenario__stat">
+            <div class="scenario__stat-value">480 €</div>
+            <div class="scenario__stat-label">Celkem</div>
+          </div>
+        </div>
+        <p class="text-dim" style="font-size: 0.9rem;">4 tvůrci &times; 1–2 videa + 2 extra videa od nejlepšího tvůrce.</p>
+        <div class="scenario__pro">&#10004; Víc stylů tvůrců, pořád dost kreativ</div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario__header">
+          <span class="scenario__num">3</span>
+          <span class="scenario__title">High-quality content</span>
+        </div>
+        <p>Cíl: kvalitnější videa pro brand i ads.</p>
+        <div class="scenario__stats">
+          <div class="scenario__stat">
+            <div class="scenario__stat-value">2</div>
+            <div class="scenario__stat-label">Tvůrci</div>
+          </div>
+          <div class="scenario__stat">
+            <div class="scenario__stat-value">4</div>
+            <div class="scenario__stat-label">Videa</div>
+          </div>
+          <div class="scenario__stat">
+            <div class="scenario__stat-value">200 €</div>
+            <div class="scenario__stat-label">Za video</div>
+          </div>
+          <div class="scenario__stat">
+            <div class="scenario__stat-value">400 €</div>
+            <div class="scenario__stat-label">Celkem</div>
+          </div>
+        </div>
+        <p class="text-dim" style="font-size: 0.9rem;">Zbývá 100 € na ads budget.</p>
+        <div class="scenario__pro">&#10004; Vyšší kvalita videa</div>
+        <div class="scenario__con">&#10006; Méně kreativ na testování</div>
+      </div>
+
+      <div class="big-quote">
+        Pokud je cíl performance marketing:<br>
+        lepší je mít <span>10 průměrných videí než 2 perfektní</span>.<br>
+        <small style="font-size: 0.6em; font-weight: 400; color: var(--c-text-dim);">Protože algoritmus potřebuje testovat.</small>
+      </div>
+
+      <h2>Ideální poměr rozpočtu</h2>
+      <p>Při malých kampaních:</p>
+      <div class="card-grid card-grid--2">
+        <div class="card card--green" style="text-align:center">
+          <div style="font-size: 2rem; font-weight: 800; color: var(--c-primary);">60 %</div>
+          <p>UGC content</p>
+        </div>
+        <div class="card" style="text-align:center">
+          <div style="font-size: 2rem; font-weight: 800;">40 %</div>
+          <p>Reklama (ads budget)</p>
+        </div>
+      </div>
+
+      <h3>Příklad malé kampaně (1 000 €)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Položka</th><th>Budget</th></tr></thead>
+          <tbody>
+            <tr><td>UGC tvůrci</td><td><strong>400 €</strong></td></tr>
+            <tr><td>Ads budget</td><td><strong>600 €</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout--warning">
+        <div class="callout__title">Největší chyba</div>
+        <p>Zaplatit 500 € za jedno video.</p>
+      </div>
+
+      <div class="callout callout--tip">
+        <div class="callout__title">Správný přístup</div>
+        <ul class="list-check">
+          <li>vytvořit <strong>creator pool</strong></li>
+          <li>testovat víc videí</li>
+          <li>škálovat vítěze</li>
+        </ul>
+      </div>
+
+      <h2>Bonus tip: Zkuste barter spolupráce</h2>
+      <p>Pokud má značka <strong>velmi malý budget nebo teprve začíná</strong>, může být dobrým startem i <strong>barter spolupráce</strong>.</p>
+      <p>Barter znamená, že tvůrce dostane <strong>produkt nebo službu výměnou za video</strong>, namísto finanční odměny.</p>
+      <p>Je ale potřeba říct otevřeně: v UGC komunitě je <strong>barter často nepopulární</strong> a hodně zkušených tvůrců ho odmítá. Proč?</p>
+      <ul>
+        <li>tvůrci investují čas do natáčení</li>
+        <li>mají náklady na techniku</li>
+        <li>UGC je pro ně práce</li>
+      </ul>
+
+      <h3>Kdy barter funguje nejlépe</h3>
+      <ul>
+        <li>u <strong>nových a začínajících tvůrců</strong></li>
+        <li>u tvůrců, kteří si budují <strong>portfolio</strong></li>
+        <li>u produktů, které jsou pro tvůrce zajímavé (kosmetika, fitness, oblečení, doplňky stravy, aplikace)</li>
+      </ul>
+
+      <h3>Jak barter nastavit správně</h3>
+      <p>I barter spolupráce by měla mít jasná pravidla:</p>
+      <ul>
+        <li>počet videí</li>
+        <li>formát videí</li>
+        <li>deadline</li>
+        <li>licence na použití videa</li>
+      </ul>
+
+      <div class="card-grid card-grid--2">
+        <div class="card">
+          <p style="color: var(--c-accent-red); margin-bottom: 8px;">&#10006; Barter by neměl být:</p>
+          <p>„Pošli nám video a uvidíme."</p>
+        </div>
+        <div class="card card--green">
+          <p style="color: var(--c-primary); margin-bottom: 8px;">&#10004; Ale:</p>
+          <p>Jasná dohoda o spolupráci.</p>
+        </div>
+      </div>
+
+      <div class="callout callout--tip">
+        <div class="callout__title">Praktický tip</div>
+        <p>Pokud barter video funguje dobře v reklamách, můžete tvůrci později nabídnout <strong>placenou spolupráci</strong>. Takhle si značky často vytvářejí <strong>dlouhodobý creator pool</strong>.</p>
+      </div>
+    </section>
+
+    <hr class="divider divider--green">
+
+    <!-- PROČ ZNAČKY DELEGUJÍ UGC -->
+    <section id="delegace" class="section">
+      <span class="section__label">Závěr</span>
+      <h1>Proč značky delegují UGC</h1>
+      <p class="lead">Na první pohled může UGC vypadat jednoduše: „Stačí najít tvůrce a natočit video."</p>
+      <p><strong>Realita</strong> je ale jiná.</p>
+      <p>Aby UGC fungovalo v performance marketingu, jde o <strong>komplexní proces</strong>, který zahrnuje desítky kroků:</p>
+      <ul>
+        <li>definování strategie a KPI</li>
+        <li>analýzu pain-pointů zákazníků</li>
+        <li>nábor a komunikaci s tvůrci</li>
+        <li>vyjednávání spolupráce</li>
+        <li>přípravu briefů</li>
+        <li>kontrolu produkce videí</li>
+        <li>úpravy a edit</li>
+        <li>řešení licencí a fakturace</li>
+        <li>publikování obsahu</li>
+        <li>testování kreativ v reklamách</li>
+        <li>vyhodnocování výkonu a škálování vítězů</li>
+      </ul>
+      <p>To znamená, že jedna UGC kampaň může zahrnovat <strong>desítky hodin práce měsíčně</strong>.</p>
+      <p>Proto většina rostoucích značek:</p>
+      <ul>
+        <li>buduje <strong>interní UGC tým</strong>, nebo</li>
+        <li>spolupracuje s <strong>externím partnerem nebo agenturou</strong></li>
+      </ul>
+
+      <h3>Delegování UGC umožňuje značce:</h3>
+      <ul class="list-check">
+        <li>rychleji testovat nové kreativy</li>
+        <li>škálovat performance kampaně</li>
+        <li>soustředit se na strategická rozhodnutí namísto operativy</li>
+      </ul>
+
+      <div class="callout callout--tip">
+        <div class="callout__title">Pointa pro foundery a CMO</div>
+        <p>Úlohou majitele není řešit každý detail procesu. Jeho úlohou je:</p>
+        <ul class="list-check">
+          <li>nastavit <strong>strategický směr</strong></li>
+          <li>definovat <strong>KPI a cíle</strong></li>
+          <li>zajistit <strong>systém, který bude produkovat nové kreativy</strong></li>
+        </ul>
+        <p style="margin-top:12px;">Samotnou exekuci pak zajišťuje <strong>marketingový tým nebo UGC manager</strong>.</p>
+      </div>
+    </section>
+
+    <!-- ZÁVĚR -->
+    <section id="zaver" class="section">
+      <h1>UGC není content hračka</h1>
+      <p class="lead">User Generated Content se v posledních letech stal jedním z nejefektivnějších nástrojů digitálního marketingu. Ne proto, že je „trendový", ale proto, že dokáže přinést to, co dnešní zákazníci hledají nejvíc — <strong>autenticitu, důvěru a reálnou zkušenost s produktem</strong>.</p>
+      <p>Jak jsme si ukázali v tomto playbooku, úspěšné UGC kampaně však nevznikají náhodou. Za každým videem stojí <strong>promyšlený proces</strong>, který zahrnuje strategii, výběr správných tvůrců, přípravu briefů, produkci obsahu a následné testování výkonu v reklamách.</p>
+      <p>UGC proto není jednorázová aktivita. Je to <strong>systém tvorby kreativ</strong>, který umožňuje značkám:</p>
+      <ul>
+        <li>rychleji testovat nové marketingové nápady</li>
+        <li>získávat autentický obsah od reálných lidí</li>
+        <li>zvyšovat výkon reklam na sociálních sítích</li>
+        <li>škálovat performance kampaně</li>
+      </ul>
+      <p>Firmy, které dnes rostou nejrychleji, často neprodukují jen jednu reklamu. Produkují <strong>desítky kreativ měsíčně</strong>, testují je v reklamách a škálují ty, které přinášejí výsledky.</p>
+      <p>Právě proto hodně značek postupně přechází od náhodné tvorby obsahu k <strong>systematickému UGC frameworku</strong>.</p>
+
+      <h2>Co si z tohoto playbooku odnést</h2>
+      <div class="big-quote">
+        UGC není o jednom videu. Je o <span>procesu, který umožňuje neustále testovat nové kreativy</span> a zvyšovat výkon marketingu.
+      </div>
+      <p>Když je tento proces nastavený správně, UGC se může stát jedním z nejdůležitějších pilířů růstu značky.</p>
+
+      <h2>Poslední myšlenka</h2>
+      <p>Majitel firmy nebo marketingový lídr nemusí řešit každý detail produkce videí. Jeho úlohou je nastavit <strong>strategický směr a systém</strong>, který bude obsah produkovat a testovat.</p>
+      <p>Exekuce pak patří marketingovému týmu, UGC managerovi nebo externímu partnerovi.</p>
+      <div class="highlight">
+        <p>Důležité je, aby UGC nebylo náhodné — ale <strong>systematické, měřitelné a škálovatelné</strong>.</p>
+      </div>
+      <p>Pokud vám tento playbook pomohl lépe pochopit, jak UGC funguje v praxi, pak splnil svůj cíl.</p>
+      <p><strong>Teď je čas rozhodnout se, jak tento systém zapracujete do svého marketingu.</strong></p>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="playbook-footer">
+    <img src="images/socials-logo-white.png" alt="Socials" class="playbook-footer__logo">
+    <p>&copy; 2026 Socials &bull; <a href="https://www.socials.cz">www.socials.cz</a></p>
+  </footer>
+
+</body>
+</html>
