@@ -9,6 +9,33 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Cookiebot -->
+  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="28189135-a400-4497-86e8-4fcba007c3e5" data-blockingmode="auto" type="text/javascript"></script>
+
+  <!-- GA4 (blocked until statistics consent) -->
+  <script type="text/plain" data-cookieconsent="statistics" async src="https://www.googletagmanager.com/gtag/js?id=G-239XYDWJXB"></script>
+  <script type="text/plain" data-cookieconsent="statistics">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-239XYDWJXB');
+  </script>
+
+  <!-- Meta Pixel (blocked until marketing consent) -->
+  <script type="text/plain" data-cookieconsent="marketing">
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2287597364836978');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2287597364836978&ev=PageView&noscript=1" /></noscript>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -2149,6 +2176,99 @@
         }, 2000);
       });
     }
+  })();
+
+  // -- TRACKING EVENTS --
+  (function() {
+    var scrollFired = {};
+
+    // Scroll depth tracking (50%, 100%)
+    window.addEventListener('scroll', function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight <= 0) return;
+      var pct = Math.round((scrollTop / docHeight) * 100);
+
+      [50, 100].forEach(function(threshold) {
+        if (pct >= threshold && !scrollFired[threshold]) {
+          scrollFired[threshold] = true;
+
+          // GA4
+          if (typeof gtag === 'function') {
+            gtag('event', 'scroll_depth', {
+              percent_scrolled: threshold,
+              page_title: 'UGC Playbook'
+            });
+          }
+
+          // Meta Pixel — ViewContent at 50%, at 100%
+          if (typeof fbq === 'function') {
+            fbq('track', 'ViewContent', {
+              content_name: 'UGC Playbook',
+              content_category: 'playbook_scroll_' + threshold
+            });
+          }
+        }
+      });
+    }, { passive: true });
+
+    // Copy button tracking
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.copy-btn, .copy-all-btn');
+      if (!btn) return;
+
+      var template = btn.closest('.msg-template');
+      var section = btn.closest('section');
+      var label = 'unknown';
+
+      if (btn.classList.contains('copy-all-btn')) {
+        label = 'brief_template';
+      } else if (template) {
+        var heading = template.querySelector('.msg-template__label');
+        label = heading ? heading.textContent.trim() : 'outreach_message';
+      }
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'copy_content', {
+          content_type: 'template',
+          content_id: label
+        });
+      }
+    });
+
+    // CTA click tracking
+    document.addEventListener('click', function(e) {
+      var link = e.target.closest('.inline-cta__link, .cta-btn');
+      if (!link) return;
+
+      var ctaType = link.classList.contains('cta-btn') ? 'final_cta' : 'inline_cta';
+      var ctaText = link.textContent.trim();
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'cta_click', {
+          cta_type: ctaType,
+          cta_text: ctaText,
+          page_title: 'UGC Playbook'
+        });
+      }
+
+      if (typeof fbq === 'function' && ctaType === 'final_cta') {
+        fbq('track', 'Contact');
+      }
+    });
+
+    // TOC navigation tracking
+    document.addEventListener('click', function(e) {
+      var tocLink = e.target.closest('.toc__list a');
+      if (!tocLink) return;
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'toc_navigation', {
+          section_target: tocLink.getAttribute('href'),
+          section_name: tocLink.textContent.trim()
+        });
+      }
+    });
   })();
   </script>
 </body>
