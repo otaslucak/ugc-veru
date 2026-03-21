@@ -533,6 +533,90 @@
 
     .cta-btn:hover { background: var(--c-primary-light); }
 
+    /* BONUS SECTION */
+    .bonus-section {
+      position: relative;
+      margin: 48px 0;
+      padding: 40px 32px 32px;
+      background: var(--c-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148, 231, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .bonus-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--c-primary), var(--c-primary-light), var(--c-primary));
+    }
+
+    .bonus-section::after {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(148, 231, 0, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .bonus-section__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--c-primary), var(--c-primary-dark));
+      color: var(--c-bg);
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .bonus-section__badge svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .bonus-section h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+    }
+
+    .bonus-section h3 { margin-top: 28px; }
+
+    .bonus-section .card-grid { margin-top: 20px; }
+
+    /* Small bonus callout variant */
+    .callout--bonus {
+      position: relative;
+      border-color: rgba(148, 231, 0, 0.3);
+      background: var(--c-surface);
+      overflow: hidden;
+      padding-top: 32px;
+    }
+
+    .callout--bonus::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--c-primary), transparent);
+    }
+
+    .callout--bonus .bonus-section__badge {
+      margin-bottom: 12px;
+    }
+
     /* INLINE CTA (soft) */
     .inline-cta {
       text-align: center;
@@ -1450,8 +1534,12 @@
       </ul>
 
       <!-- BONUS TIP -->
-      <div class="callout callout--tip" style="margin-top: 48px;">
-        <div class="callout__title">Bonus tip: Nejčastější chyby při UGC</div>
+      <div class="callout callout--bonus" style="margin-top: 48px;">
+        <div class="bonus-section__badge">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Bonus
+        </div>
+        <div class="callout__title">Nejčastější chyby při UGC</div>
         <ul>
           <li>slabý hook</li>
           <li>příliš reklamní obsah</li>
@@ -1664,7 +1752,8 @@
       </div>
 
       <div class="callout callout--tip">
-        <div class="callout__title">Tip: Outreach je game of volume</div>
+        <div class="callout__title">Tip: Oslovování tvůrců je hra s čísly</div>
+        <p>Nečekejte, že vám odpoví každý. Většina tvůrců zprávu přečte a nereaguje, a to je úplně normální. Důležité je oslovit dostatečně velký počet lidí, protože jen zlomek z nich se dostane až ke spolupráci.</p>
       </div>
 
       <!-- OUTREACH FUNNEL -->
@@ -1846,46 +1935,52 @@
         </ul>
       </div>
 
-      <h2>Bonus tip: Zkuste barter spolupráce</h2>
-      <p>Pokud má značka <strong>velmi malý budget nebo teprve začíná</strong>, může být dobrým startem i <strong>barter spolupráce</strong>.</p>
-      <p>Barter znamená, že tvůrce dostane <strong>produkt nebo službu výměnou za video</strong>, namísto finanční odměny.</p>
-      <p>Je ale potřeba říct otevřeně: v UGC komunitě je <strong>barter často nepopulární</strong> a hodně zkušených tvůrců ho odmítá. Proč?</p>
-      <ul>
-        <li>tvůrci investují čas do natáčení</li>
-        <li>mají náklady na techniku</li>
-        <li>UGC je pro ně práce</li>
-      </ul>
-
-      <h3>Kdy barter funguje nejlépe</h3>
-      <ul>
-        <li>u <strong>nových a začínajících tvůrců</strong></li>
-        <li>u tvůrců, kteří si budují <strong>portfolio</strong></li>
-        <li>u produktů, které jsou pro tvůrce zajímavé (kosmetika, fitness, oblečení, doplňky stravy, aplikace)</li>
-      </ul>
-
-      <h3>Jak barter nastavit správně</h3>
-      <p>I barter spolupráce by měla mít jasná pravidla:</p>
-      <ul>
-        <li>počet videí</li>
-        <li>formát videí</li>
-        <li>deadline</li>
-        <li>licence na použití videa</li>
-      </ul>
-
-      <div class="card-grid card-grid--2">
-        <div class="card">
-          <p style="color: var(--c-accent-red); margin-bottom: 8px;">&#10006; Barter by neměl být:</p>
-          <p>„Pošli nám video a uvidíme."</p>
+      <div class="bonus-section">
+        <div class="bonus-section__badge">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Bonus
         </div>
-        <div class="card card--green">
-          <p style="color: var(--c-primary); margin-bottom: 8px;">&#10004; Ale:</p>
-          <p>Jasná dohoda o spolupráci.</p>
-        </div>
-      </div>
+        <h2>Zkuste barter spolupráce</h2>
+        <p>Pokud má značka <strong>velmi malý budget nebo teprve začíná</strong>, může být dobrým startem i <strong>barter spolupráce</strong>.</p>
+        <p>Barter znamená, že tvůrce dostane <strong>produkt nebo službu výměnou za video</strong>, namísto finanční odměny.</p>
+        <p>Je ale potřeba říct otevřeně: v UGC komunitě je <strong>barter často nepopulární</strong> a hodně zkušených tvůrců ho odmítá. Proč?</p>
+        <ul>
+          <li>tvůrci investují čas do natáčení</li>
+          <li>mají náklady na techniku</li>
+          <li>UGC je pro ně práce</li>
+        </ul>
 
-      <div class="callout callout--tip">
-        <div class="callout__title">Praktický tip</div>
-        <p>Pokud barter video funguje dobře v reklamách, můžete tvůrci později nabídnout <strong>placenou spolupráci</strong>. Takhle si značky často vytvářejí <strong>dlouhodobý creator pool</strong>.</p>
+        <h3>Kdy barter funguje nejlépe</h3>
+        <ul>
+          <li>u <strong>nových a začínajících tvůrců</strong></li>
+          <li>u tvůrců, kteří si budují <strong>portfolio</strong></li>
+          <li>u produktů, které jsou pro tvůrce zajímavé (kosmetika, fitness, oblečení, doplňky stravy, aplikace)</li>
+        </ul>
+
+        <h3>Jak barter nastavit správně</h3>
+        <p>I barter spolupráce by měla mít jasná pravidla:</p>
+        <ul>
+          <li>počet videí</li>
+          <li>formát videí</li>
+          <li>deadline</li>
+          <li>licence na použití videa</li>
+        </ul>
+
+        <div class="card-grid card-grid--2">
+          <div class="card">
+            <p style="color: var(--c-accent-red); margin-bottom: 8px;">&#10006; Barter by neměl být:</p>
+            <p>„Pošli nám video a uvidíme."</p>
+          </div>
+          <div class="card card--green">
+            <p style="color: var(--c-primary); margin-bottom: 8px;">&#10004; Ale:</p>
+            <p>Jasná dohoda o spolupráci.</p>
+          </div>
+        </div>
+
+        <div class="callout callout--tip">
+          <div class="callout__title">Praktický tip</div>
+          <p>Pokud barter video funguje dobře v reklamách, můžete tvůrci později nabídnout <strong>placenou spolupráci</strong>. Takhle si značky často vytvářejí <strong>dlouhodobý creator pool</strong>.</p>
+        </div>
       </div>
     </section>
 
