@@ -170,7 +170,7 @@ emails/
 
 - **Target:** Hlavní seznam, EXCLUDING segment "UGC webinář 2026" (already registered)
 - **Broadcast 1 (`broadcast-invite`):** Value-first — 4 data-driven UGC tips (retention benchmarks, variant testing, briefs, UGC as system), 30stránkový Playbook bonus mention (AI formát + audio), CTA to ugc.socials.cz. UTM: `ugc-webinar-broadcast`. Scheduled: 24.3. via Ecomail segment "Bez webinářového tagu" (tag `ugc-webinar-2026` neobsahuje).
-- **Broadcast 2 (`broadcast-playbook`):** Playbook-focused — for those who opened broadcast 1 but didn't register. Playbook contents checklist, 3 format box (PDF, Markdown for AI tools, podcast audio), CTA to register. UTM: `ugc-webinar-broadcast-2`.
+- **Broadcast 2 (`broadcast-playbook`):** Playbook-focused — same segment as broadcast 1 (celý hlavní seznam bez tagu). Playbook contents checklist, 3 format box (PDF, Markdown for AI tools, podcast audio), CTA to register. UTM: `ugc-webinar-broadcast-2`. Scheduled: 26.–27.3. via Ecomail segment "Bez webinářového tagu".
 - **Same design system** as sequence emails (dark theme, green CTA, `*|VOKATIV|*`, vykání, table-based)
 
 ## Remaining TODO
