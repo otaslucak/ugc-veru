@@ -153,6 +153,21 @@ emails/
 - **Speaker photos:** Email 01 includes `veronika.png` + `jarda.jpg` (absolute URLs from `ugc.socials.cz`)
 - **Scheduled:** 01→25.3. 8:00, 02→1.4. 8:00, 03→6.4. 8:00, 04→8.4. 9:00, 05→TBD (9.4.)
 
+## Broadcast Emails (Ecomail)
+
+2 broadcast emails in `emails/` directory — invitation for main list subscribers who haven't registered for the webinar.
+
+```
+emails/
+  broadcast-invite.html   — 4 UGC tipy + bonus mention + CTA registrace
+  broadcast-playbook.html — Playbook jako hlavní lákadlo (3 formáty: PDF, MD, podcast)
+```
+
+- **Target:** Hlavní seznam, EXCLUDING segment "UGC webinář 2026" (already registered)
+- **Broadcast 1 (`broadcast-invite`):** Value-first — 4 data-driven UGC tips (retention benchmarks, cost per winning creative, briefs, UGC as system), bonus Playbook mention, CTA to ugc.socials.cz. UTM: `ugc-webinar-broadcast`.
+- **Broadcast 2 (`broadcast-playbook`):** Playbook-focused — for those who opened broadcast 1 but didn't register. Playbook contents checklist, 3 format box (PDF, Markdown for AI tools, podcast audio), CTA to register. UTM: `ugc-webinar-broadcast-2`.
+- **Same design system** as sequence emails (dark theme, green CTA, `*|VOKATIV|*`, vykání, table-based)
+
 ## Remaining TODO
 
 - **Persistent rate limiting (Vercel KV):** In-memory map resets on cold start. Consider Vercel KV for production-grade persistence.
