@@ -33,8 +33,11 @@
     @media only screen and (max-width: 620px) {
       .email-container { width: 100% !important; }
       .content-padding { padding-left: 20px !important; padding-right: 20px !important; }
-      .speaker-block { display: block !important; width: 100% !important; }
-      .speaker-spacer { display: block !important; height: 24px !important; width: 100% !important; }
+      .speaker-photo { display: block !important; width: 100% !important; text-align: center !important; padding-right: 0 !important; padding-bottom: 16px !important; }
+      .speaker-photo img { margin: 0 auto !important; }
+      .speaker-info { display: block !important; width: 100% !important; text-align: center !important; }
+      .calendar-btn { display: block !important; width: 100% !important; text-align: center !important; padding-right: 0 !important; margin-bottom: 12px !important; }
+      .calendar-btn a { width: 100% !important; text-align: center !important; box-sizing: border-box !important; }
       .mobile-center { text-align: center !important; }
     }
   </style>
@@ -70,7 +73,7 @@
                 <tr>
                   <td style="padding: 40px 40px 0;" class="content-padding">
                     <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; color: #f2f2f2; margin: 0;">
-                      Dobrý den, {{subscriber.name}},
+                      Dobrý den, *|VOKATIV|*,
                     </p>
                   </td>
                 </tr>
@@ -98,10 +101,10 @@
                   <td style="padding: 0 40px;" class="content-padding">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                       <tr>
-                        <td width="80" valign="top" style="padding-right: 20px;">
+                        <td width="80" valign="top" style="padding-right: 20px;" class="speaker-photo">
                           <img src="https://ugc.socials.cz/images/veronika.png" alt="Veronika Styková" width="80" style="display: block; border-radius: 50%; width: 80px; height: 80px; object-fit: cover;">
                         </td>
-                        <td valign="top">
+                        <td valign="top" class="speaker-info">
                           <h2 style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 20px; font-weight: 800; color: #94e700; text-transform: uppercase; letter-spacing: -0.02em; margin: 0 0 4px;">
                             Veronika Styková
                           </h2>
@@ -125,10 +128,10 @@
                   <td style="padding: 0 40px;" class="content-padding">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                       <tr>
-                        <td width="80" valign="top" style="padding-right: 20px;">
+                        <td width="80" valign="top" style="padding-right: 20px;" class="speaker-photo">
                           <img src="https://ugc.socials.cz/images/jarda.jpg" alt="Jaroslav Bobák" width="80" style="display: block; border-radius: 50%; width: 80px; height: 80px; object-fit: cover;">
                         </td>
-                        <td valign="top">
+                        <td valign="top" class="speaker-info">
                           <h2 style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 20px; font-weight: 800; color: #94e700; text-transform: uppercase; letter-spacing: -0.02em; margin: 0 0 4px;">
                             Jaroslav Bobák
                           </h2>
@@ -157,7 +160,7 @@
                 <tr>
                   <td style="padding: 0 40px;" class="content-padding">
                     <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; color: #f2f2f2; margin: 0;">
-                      <strong style="color: #94e700;">Jedna věc na ochutnávku:</strong> V jedné z kampaní snížilo UGC video CPA o 40 % oproti studiové kreativě — ale jen díky správnému hooku v prvních 2 sekundách. Jak na to? To vám řekneme 8. dubna.
+                      <strong style="color: #94e700;">Jedna věc na ochutnávku:</strong> Za 22 dní se z podprůměrně prodávaného produktu stal 3.&nbsp;nejprodávanější na celém e-shopu EcoBamboo. A&nbsp;to vše pomocí UGC videí, na kterých jsme spolupracovali s&nbsp;agenturou DudeUp. Jak přesně? Přečtěte si případovku a&nbsp;8.&nbsp;dubna se na vás těšíme na webináři, kde vám řekneme víc.
                     </p>
                   </td>
                 </tr>
@@ -168,8 +171,40 @@
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                       <tr>
                         <td align="center" style="background-color: #94e700; border-radius: 12px;">
-                          <a href="https://ugc.socials.cz/?utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-1" target="_blank" style="display: inline-block; padding: 16px 40px; font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 800; color: #040404; text-decoration: none; text-transform: uppercase; letter-spacing: 0.02em;">
-                            CHCI SE DOZVĚDĚT VÍC
+                          <a href="https://www.socials.cz/pripadove-studie/ecobamboo?utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-1" target="_blank" style="display: inline-block; padding: 16px 40px; font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 800; color: #040404; text-decoration: none; text-transform: uppercase; letter-spacing: 0.02em;">
+                            PŘEČÍST PŘÍPADOVKU
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                  <td style="padding: 0 40px 28px;" class="content-padding">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr><td style="border-top: 1px solid #2a2a2a;">&nbsp;</td></tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Calendar links -->
+                <tr>
+                  <td align="center" style="padding: 0 40px 40px;" class="content-padding">
+                    <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.5; color: #f2f2f2; margin: 0 0 12px; text-align: center;">
+                      Pokud jste tak ještě neudělali, přidejte si webinář do kalendáře:
+                    </p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center">
+                      <tr>
+                        <td class="calendar-btn" style="padding-right: 12px;">
+                          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=UGC+Webin%C3%A1%C5%99+%E2%80%94+Socials&dates=20260408T080000Z/20260408T084500Z&details=UGC:+Kdy+zvy%C5%A1uje+v%C3%BDkon+kampan%C3%AD+a+kdy+je+to+jen+drah%C3%BD+obsah%3F%0ALive+webin%C3%A1%C5%99+od+Socials.%0A%0APřipojit+se:+https://riverside.com/studio/socials-advertisings-studio?t%3D3a938320e33f7df4b5d4&location=Online+p%C5%99es+Riverside" target="_blank" style="display: inline-block; padding: 10px 20px; font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: #f2f2f2; text-decoration: none; border: 1px solid #2a2a2a; border-radius: 8px;">
+                            Google Calendar
+                          </a>
+                        </td>
+                        <td class="calendar-btn">
+                          <a href="https://ugc.socials.cz/webinar.ics" target="_blank" style="display: inline-block; padding: 10px 20px; font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: #f2f2f2; text-decoration: none; border: 1px solid #2a2a2a; border-radius: 8px;">
+                            Apple / Outlook (.ics)
                           </a>
                         </td>
                       </tr>

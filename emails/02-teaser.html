@@ -33,6 +33,9 @@
     @media only screen and (max-width: 620px) {
       .email-container { width: 100% !important; }
       .content-padding { padding-left: 20px !important; padding-right: 20px !important; }
+      .calendar-btn { display: block !important; width: 100% !important; text-align: center !important; padding-right: 0 !important; margin-bottom: 12px !important; }
+      .calendar-btn a { width: 100% !important; text-align: center !important; box-sizing: border-box !important; }
+      .mobile-center { text-align: center !important; }
     }
   </style>
 </head>
@@ -67,7 +70,7 @@
                 <tr>
                   <td style="padding: 40px 40px 0;" class="content-padding">
                     <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; color: #f2f2f2; margin: 0;">
-                      Dobrý den, {{subscriber.name}},
+                      Dobrý den, *|VOKATIV|*,
                     </p>
                   </td>
                 </tr>
@@ -166,11 +169,11 @@
                   </td>
                 </tr>
 
-                <!-- Video teaser -->
+                <!-- Natima case study teaser -->
                 <tr>
                   <td style="padding: 0 40px;" class="content-padding">
                     <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; color: #f2f2f2; margin: 0;">
-                      Chcete si udělat představu, o jakých kreativách budeme mluvit? Na landing page najdete <strong style="color: #94e700;">ukázková videa</strong> — reálné UGC i AI avataři.
+                      Chcete vidět, jak to vypadá v&nbsp;praxi? Podívejte se na případovku Natima — <strong style="color: #94e700;">6 přístupů ke kreativám</strong>, kde právě ten druhý, UGC, byl jeden ze stěžejních variant reklamy.
                     </p>
                   </td>
                 </tr>
@@ -181,8 +184,40 @@
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                       <tr>
                         <td align="center" style="background-color: #94e700; border-radius: 12px;">
-                          <a href="https://ugc.socials.cz/?utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-2" target="_blank" style="display: inline-block; padding: 16px 40px; font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 800; color: #040404; text-decoration: none; text-transform: uppercase; letter-spacing: 0.02em;">
-                            PODÍVAT SE NA UKÁZKY
+                          <a href="https://www.socials.cz/pripadove-studie/natima?utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-2" target="_blank" style="display: inline-block; padding: 16px 40px; font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 800; color: #040404; text-decoration: none; text-transform: uppercase; letter-spacing: 0.02em;">
+                            PŘEČÍST PŘÍPADOVKU
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                  <td style="padding: 0 40px 28px;" class="content-padding">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr><td style="border-top: 1px solid #2a2a2a;">&nbsp;</td></tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Calendar links -->
+                <tr>
+                  <td align="center" style="padding: 0 40px 40px;" class="content-padding">
+                    <p style="font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.5; color: #f2f2f2; margin: 0 0 12px; text-align: center;">
+                      Pokud jste tak ještě neudělali, přidejte si webinář do kalendáře, abyste na to nemuseli myslet:
+                    </p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center">
+                      <tr>
+                        <td class="calendar-btn" style="padding-right: 12px;">
+                          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=UGC+Webin%C3%A1%C5%99+%E2%80%94+Socials&dates=20260408T080000Z/20260408T084500Z&details=UGC:+Kdy+zvy%C5%A1uje+v%C3%BDkon+kampan%C3%AD+a+kdy+je+to+jen+drah%C3%BD+obsah%3F%0ALive+webin%C3%A1%C5%99+od+Socials.%0A%0APřipojit+se:+https://riverside.com/studio/socials-advertisings-studio?t%3D3a938320e33f7df4b5d4&location=Online+p%C5%99es+Riverside" target="_blank" style="display: inline-block; padding: 10px 20px; font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: #f2f2f2; text-decoration: none; border: 1px solid #2a2a2a; border-radius: 8px;">
+                            Google Calendar
+                          </a>
+                        </td>
+                        <td class="calendar-btn">
+                          <a href="https://ugc.socials.cz/webinar.ics" target="_blank" style="display: inline-block; padding: 10px 20px; font-family: 'Work Sans', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 600; color: #f2f2f2; text-decoration: none; border: 1px solid #2a2a2a; border-radius: 8px;">
+                            Apple / Outlook (.ics)
                           </a>
                         </td>
                       </tr>

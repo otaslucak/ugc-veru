@@ -135,9 +135,9 @@ Background alternates strictly: dark → elevated → dark → ...
 emails/
   01-speakers.html      — T-14 (25.3.) Představení speakerů
   02-teaser.html        — T-7  (1.4.)  Content teaser — 3 body
-  03-reminder.html      — T-2  (6.4.)  Reminder + kalendář + Playbook bonus
+  03-reminder.html      — T-2  (6.4.)  Playbook intro + kalendář + podcast CTA
   04-den-d.html         — T-1h (8.4. 9:00) Den D — Riverside link
-  05-followup.html      — T+1  (9.4.)  Follow-up + Typeform + resources
+  05-followup.html      — T+1  (9.4.)  Follow-up — Playbook + Typeform feedback + resources
 ```
 
 - **Format:** Table-based HTML email, inline CSS, mobile responsive (`@media max-width: 620px`)
@@ -149,9 +149,14 @@ emails/
 - **UTM:** `utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-{1-5}`
 - **Tone:** **Vykání** (formal Czech "you") in all emails
 - **Delivery:** All 5 emails as **scheduled campaigns** (not workflow) — segment `ugc-webinar-2026` in Hlavní seznam
-- **Placeholders:** `{{TYPEFORM_URL}}`, `{{RECORDING_URL}}`, `{{PLAYBOOK_URL}}` — to be filled after webinar
+- **Placeholders:** `{{TYPEFORM_URL}}` — to be filled after webinar (Typeform feedback survey)
 - **Speaker photos:** Email 01 includes `veronika.png` + `jarda.jpg` (absolute URLs from `ugc.socials.cz`)
 - **Scheduled:** 01→25.3. 8:00, 02→1.4. 8:00, 03→6.4. 8:00, 04→8.4. 9:00, 05→TBD (9.4.)
+- **Email 01 specifics:** CTA → EcoBamboo case study (`socials.cz/pripadove-studie/ecobamboo`). Teaser text: 22 dní, 3. nejprodávanější produkt, spolupráce s agenturou DudeUp na UGC videích.
+- **Email 02 specifics:** CTA → Natima case study (`socials.cz/pripadove-studie/natima`). Teaser: 6 přístupů ke kreativám, #2 = UGC jako stěžejní varianta reklamy.
+- **Email 03 specifics:** Intro leads with 30 stránkový UGC Playbook (strategický + exekuční dokument, checklist, briefy, ceník, insighty). Mentions AI format (ChatGPT/Claude/Gemini) + audio verze. Bonus section removed (duplicated intro). CTA → 100. díl Socials podcastu „Co funguje v Meta Ads v roce 2026?" (Radka Hrejsková + Jarda Bobák), link na Spotify Podcasters.
+- **Email 05 specifics:** One email for entire segment (no attendee/non-attendee split). No recording. Primary CTA = Playbook page (`/playbook` — read online, Markdown export, audio version). Secondary CTA = Typeform feedback (outlined button in card, progress bar, "max. 2 minuty"). Resources section (YouTube, Podcast, Case study).
+- **Calendar links:** Emails 01–03 include calendar buttons (Google Calendar + Apple/Outlook .ics) at bottom of content area. Email 01 centered, emails 02–03 left-aligned. Mobile: stacked full-width (`.calendar-btn`).
 
 ## Broadcast Emails (Ecomail)
 
