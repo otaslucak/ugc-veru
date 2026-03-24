@@ -1170,14 +1170,46 @@
 
       body { font-size: 11pt; line-height: 1.5; }
       .playbook { max-width: 100%; padding: 0; }
-      .cover { min-height: auto; padding: 40px 0; page-break-after: always; }
+      .cover { min-height: auto; padding: 32px 0; page-break-after: always; }
       .cover::before, .cover__scroll { display: none; }
       .cover__logo, .playbook-footer__logo { filter: invert(1); }
       .theme-toggle { display: none; }
-      .section { margin-bottom: 32px; }
+
+      /* Hide interactive/non-printable elements */
+      .playbook-tools { display: none; }
+      .inline-cta { display: none; }
+      .bonus-section::after { display: none; }
+      .cta-btn { display: none; }
+
+      /* Spacing — save paper */
+      .section { margin-bottom: 24px; }
+      h2 { margin-top: 36px; }
+
+      /* Page break rules */
       .toc { page-break-after: always; }
       h1, h2, h3 { page-break-after: avoid; }
       .card, .scenario, .msg-template, .callout { page-break-inside: avoid; }
+      .bonus-section, .big-quote, .process-flow,
+      .video-flow, .funnel, .table-wrap { page-break-inside: avoid; }
+      .highlight { page-break-inside: avoid; }
+      .benchmark-bars { page-break-inside: avoid; }
+      .card-grid { page-break-inside: avoid; }
+
+      /* Fix overflow for print */
+      .table-wrap { overflow-x: visible; }
+      .video-flow { overflow-x: visible; }
+
+      /* Replace gradients with solid colors */
+      .highlight { background: #f0f7e6; }
+      .callout--tip { background: #f0f7e6; border-color: var(--c-primary); }
+      .callout--warning { background: #fef0f0; border-color: var(--c-accent-red); }
+      .divider--green { background: var(--c-primary); }
+
+      /* CTA section — keep text, hide button */
+      .cta-section { border: 1px solid var(--c-border); }
+
+      /* Footer */
+      .playbook-footer { margin-top: 40px; padding: 24px 0; }
     }
 
     /* RESPONSIVE */
