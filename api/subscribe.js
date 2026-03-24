@@ -48,21 +48,28 @@ function cleanupStaleEntries() {
    ------------------------------------------------------------------ */
 var ALLOWED_ORIGINS = [
   'https://ugc.socials.cz',
-  'https://ugc-veru.vercel.app',
-  'http://localhost:3000'
+  'https://ugc-veru.vercel.app'
 ];
+
+// Allow localhost only in development
+if (process.env.NODE_ENV !== 'production') {
+  ALLOWED_ORIGINS.push('http://localhost:3000');
+}
 
 module.exports = async function handler(req, res) {
   // --- CORS headers (before anything else) ---
   var origin = req.headers.origin || '';
-  var allowedOrigin = ALLOWED_ORIGINS.indexOf(origin) !== -1 ? origin : ALLOWED_ORIGINS[0];
-  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  var isAllowed = ALLOWED_ORIGINS.indexOf(origin) !== -1;
+
+  if (isAllowed) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  }
 
   // --- Handle preflight ---
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return res.status(isAllowed ? 200 : 403).end();
   }
 
   // --- Only allow POST ---
