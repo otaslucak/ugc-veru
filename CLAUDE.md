@@ -94,6 +94,7 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Video Teaser:** 6 videos (mix human + AI) right after hero, horizontal scroll on mobile, 6-col grid on desktop
 - **Tabbed Video Showcase:** 3 tabs (Natios/Nutworld/Virexa), tab switch pauses hidden videos and re-observes visible ones via hoisted `videoObserver`
 - **AI Avatar badges:** Green outline variant (`.video-card__badge--ai`) to distinguish AI-generated creatives
+- **AI Avatar disclaimer:** Italic `.section__note` under Video Showcase subtitle — clarifies AI avatar videos are tech demos, some never ran in real campaigns (added after client concern about brand perception)
 - **Playbook Cover:** CSS-only mockup (`.playbook-cover`) with green header, TOC preview, Socials branding
 - **Social Proof:** 28 recenzí linked to [Shoptet profil](https://partneri.shoptet.cz/profesionalove/socials-advertising/), real testimonial from teenwear.eu
 - **Cache strategy:** CSS/JS use `?v=N` query params for cache-busting; `max-age=3600, must-revalidate`. Images/videos/fonts/audio use long-lived `immutable` cache.
@@ -112,7 +113,7 @@ Background alternates strictly: dark → elevated → dark → ...
 ## Security
 
 - **Rate limiting:** In-memory per-IP tracking in `api/subscribe.js`. Max 5 requests per 10 minutes per IP. Returns `429`. Per-request cleanup of stale entries (`cleanupStaleEntries()`). Note: resets on cold start (serverless limitation).
-- **CORS:** `Access-Control-Allow-Origin` restricted to `https://ugc.socials.cz`, `https://ugc-veru.vercel.app`, and `http://localhost:3000`. No wildcard.
+- **CORS:** `Access-Control-Allow-Origin` restricted to `https://ugc.socials.cz` and `https://ugc-veru.vercel.app`. `http://localhost:3000` added only when `NODE_ENV !== 'production'`. Unknown origins receive no CORS headers (preflight returns 403). No wildcard, no fallback to default origin.
 - **OPTIONS handling:** CORS headers set and preflight handled before POST method check in `api/subscribe.js`.
 - **Input validation:** Backend rejects name > 200 chars, email > 254 chars, UTM fields > 500 chars each (400). HTML inputs have `maxlength="100"` (name) and `maxlength="254"` (email).
 - **Anti-bot (4 layers):** (1) Honeypot field `website` — hidden, bots fill it → silent reject (client-side). (2) Timestamp field `_ts` — set to `Date.now()` on page load, submissions under 2 seconds are silently rejected (client-side). (3) Server-side `_ts` validation — `_ts` is sent in POST body, backend rejects if missing or < 2s with fake 200 success (silent reject). (4) Rate limiting on backend.
@@ -173,10 +174,6 @@ emails/
 - **Broadcast 2 (`broadcast-playbook`):** Playbook-focused — same segment as broadcast 1 (celý hlavní seznam bez tagu). Playbook contents checklist, 3 format box (PDF, Markdown for AI tools, podcast audio), CTA to register. UTM: `ugc-webinar-broadcast-2`. Scheduled: 26.–27.3. via Ecomail segment "Bez webinářového tagu".
 - **Same design system** as sequence emails (dark theme, green CTA, `*|VOKATIV|*`, vykání, table-based)
 
-## Remaining TODO
-
-- **Persistent rate limiting (Vercel KV):** In-memory map resets on cold start. Consider Vercel KV for production-grade persistence.
-
 ## Content Guidelines
 
 - Data-first, no fluff — every claim backed by real campaign numbers
@@ -197,6 +194,11 @@ emails/
 - **Font:** Work Sans (400, 600, 800)
 - **Headings:** Weight 800, ALL CAPS, tight letter spacing
 - **Body:** Weight 400, 1rem, 130% line height
+
+### Logo
+- **Header logo height:** 28px (`.header__logo`), white via `filter: brightness(0) invert(1)`
+- **Footer logo:** same SVG (`socials-logo.svg`), same filter
+- **Source SVGs:** `socials loga/` directory (not tracked in git)
 
 ### Border Radius
 - Large: 16px / Medium: 12px / Small: 8px
