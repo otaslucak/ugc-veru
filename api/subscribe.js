@@ -1,10 +1,12 @@
 /**
  * Vercel Serverless Function — /api/subscribe
- * Proxy for Ecomail API subscriber registration.
+ * Proxy for Ecomail API subscriber registration + CRM webhook.
  *
  * Env variables required on Vercel:
- *   ECOMAIL_API_KEY  — API key from Ecomail account
- *   ECOMAIL_LIST_ID  — Target list ID in Ecomail
+ *   ECOMAIL_API_KEY    — API key from Ecomail account
+ *   ECOMAIL_LIST_ID    — Target list ID in Ecomail
+ *   CRM_WEBHOOK_URL    — Supabase Edge Function URL for prospect webhook (optional)
+ *   CRM_WEBHOOK_TOKEN  — Bearer token for CRM webhook (optional)
  */
 
 /* ------------------------------------------------------------------
@@ -54,6 +56,48 @@ var ALLOWED_ORIGINS = [
 // Allow localhost only in development
 if (process.env.NODE_ENV !== 'production') {
   ALLOWED_ORIGINS.push('http://localhost:3000');
+}
+
+/* ------------------------------------------------------------------
+   CRM webhook — fire-and-forget, never blocks the response
+   ------------------------------------------------------------------ */
+function sendToCrm(fullName, email, utmSource, utmMedium, utmCampaign) {
+  var url = process.env.CRM_WEBHOOK_URL;
+  var token = process.env.CRM_WEBHOOK_TOKEN;
+
+  if (!url || !token) return;
+
+  var payload = JSON.stringify({
+    name: fullName,
+    email: email,
+    phone: '',
+    company: '',
+    interaction_type: 'webinar_registration',
+    interaction_title: 'UGC',
+    metadata: {
+      source: 'landing-page',
+      utm_source: utmSource || undefined,
+      utm_medium: utmMedium || undefined,
+      utm_campaign: utmCampaign || undefined
+    }
+  });
+
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    },
+    body: payload
+  }).then(function (r) {
+    if (!r.ok) {
+      r.text().then(function (t) {
+        console.error('CRM webhook error:', r.status, t);
+      });
+    }
+  }).catch(function (err) {
+    console.error('CRM webhook failed:', err);
+  });
 }
 
 module.exports = async function handler(req, res) {
@@ -178,6 +222,9 @@ module.exports = async function handler(req, res) {
       });
 
       if (response.ok) {
+        // Fire-and-forget: send to CRM webhook (non-blocking)
+        sendToCrm(name, email, utmSource, utmMedium, utmCampaign);
+
         return res.status(200).json({
           ok: true,
           message: 'Successfully registered.'
