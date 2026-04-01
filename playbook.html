@@ -724,6 +724,76 @@
 
     .bonus-section .card-grid { margin-top: 20px; }
 
+    /* SPEAKER CARD (bonus video) */
+    .speaker-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      margin: 24px 0;
+      padding: 24px;
+      background: var(--c-bg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--c-border);
+    }
+
+    .speaker-card__photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 20%;
+      flex-shrink: 0;
+      border: 2px solid var(--c-primary-a25);
+    }
+
+    .speaker-card__name {
+      font-weight: 800;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .speaker-card__title {
+      font-size: 0.82rem;
+      color: var(--c-primary);
+      margin-bottom: 8px;
+    }
+
+    .speaker-card__bio {
+      font-size: 0.88rem;
+      color: var(--c-text-muted);
+      line-height: 1.5;
+    }
+
+    .speaker-card__link {
+      color: var(--c-primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .speaker-card__link:hover {
+      text-decoration: underline;
+    }
+
+    /* VIDEO EMBED (responsive 16:9) */
+    .video-embed {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      margin: 24px 0;
+    }
+
+    .video-embed iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: var(--radius-md);
+    }
+
     /* Small bonus callout variant */
     .callout--bonus {
       position: relative;
@@ -1184,6 +1254,7 @@
       .playbook-tools { display: none; }
       .inline-cta { display: none; }
       .bonus-section::after { display: none; }
+      .video-embed { display: none; }
       .cta-btn { display: none; }
 
       /* Spacing — save paper */
@@ -1231,6 +1302,7 @@
       .cta-section { padding: 40px 20px; margin-top: 48px; }
       th, td { padding: 10px 12px; font-size: 0.82rem; }
       .big-quote { padding: 32px 16px; }
+      .speaker-card { flex-direction: column; align-items: center; text-align: center; gap: 16px; }
       .copy-btn { top: 8px; right: 8px; padding: 5px 8px; font-size: 0.7rem; }
       .section__label { font-size: 0.65rem; }
     }
@@ -1441,6 +1513,7 @@
         <li><a href="#pricing">UGC Pricing Guide</a></li>
         <span class="toc__section-label">Závěr</span>
         <li><a href="#delegace">Proč značky delegují UGC</a></li>
+        <li><a href="#pravni-aspekty">UGC a právo: Na co si dát pozor</a></li>
         <li><a href="#zaver">UGC není content hračka</a></li>
       </ol>
     </nav>
@@ -2461,6 +2534,37 @@
         <p style="margin-top:12px;">Samotnou exekuci pak zajišťuje <strong>marketingový tým nebo UGC manager</strong>.</p>
       </div>
     </section>
+
+    <!-- BONUS VIDEO: Právní aspekty UGC -->
+    <div class="bonus-section" id="pravni-aspekty">
+      <div class="bonus-section__badge">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Extra bonus
+      </div>
+      <h2>UGC a právo: Na co si dát pozor</h2>
+      <p>Spolupráce s UGC tvůrci a využití AI avatarů v reklamách přináší nejen kreativní, ale i právní výzvy. Proto jsme si pozvali advokátku <strong>Petru Dolejšovou</strong>, která se specializuje na právo v marketingu, AI a e-commerce.</p>
+
+      <div class="speaker-card">
+        <img src="images/petra-dolejsova.jpg" alt="Petra Dolejšová" class="speaker-card__photo" width="100" height="100">
+        <div>
+          <div class="speaker-card__name">Mgr. Petra Dolejšová</div>
+          <div class="speaker-card__title">Advokátka &bull; Bez paragrafů</div>
+          <p class="speaker-card__bio">Petra je advokátka, která předává know-how pod značkou Bez paragrafů. Školí právo v oblasti marketingu, AI a e-commerce. Posluchači odcházejí překvapení, jak právo umí bavit. Za svou práci obdržela v roce 2023 ocenění <strong>Digitální osobnost roku</strong>. <a href="https://www.petradolejsova.cz/" class="speaker-card__link" target="_blank" rel="noopener">petradolejsova.cz</a></p>
+        </div>
+      </div>
+
+      <div class="video-embed">
+        <iframe src="https://www.youtube-nocookie.com/embed/6tHkub3oF2E" title="UGC a právo — rozhovor s Petrou Dolejšovou" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+
+      <h3>V rozhovoru se dozvíte</h3>
+      <ul>
+        <li>licenční podmínky u UGC videí a práva na použití v reklamách</li>
+        <li>právní rámec AI avatarů v marketingu</li>
+        <li>co musí obsahovat smlouva s UGC tvůrcem</li>
+        <li>časté právní chyby, kterým se vyhnout</li>
+      </ul>
+    </div>
 
     <!-- ZÁVĚR -->
     <section id="zaver" class="section">
