@@ -61,43 +61,57 @@ if (process.env.NODE_ENV !== 'production') {
 /* ------------------------------------------------------------------
    CRM webhook — fire-and-forget, never blocks the response
    ------------------------------------------------------------------ */
-function sendToCrm(fullName, email, utmSource, utmMedium, utmCampaign) {
+async function sendToCrm(fullName, email, utmSource, utmMedium, utmCampaign, source) {
   var url = process.env.CRM_WEBHOOK_URL;
   var token = process.env.CRM_WEBHOOK_TOKEN;
 
-  if (!url || !token) return;
+  if (!url || !token) {
+    console.log('CRM webhook skipped: missing env vars');
+    return;
+  }
+
+  var isPlaybookGate = source === 'playbook-gate';
 
   var payload = JSON.stringify({
     name: fullName,
     email: email,
     phone: '',
     company: '',
-    interaction_type: 'webinar_registration',
+    interaction_type: isPlaybookGate ? 'playbook_download' : 'webinar_registration',
     interaction_title: 'UGC',
     metadata: {
-      source: 'landing-page',
+      source: isPlaybookGate ? 'playbook-gate' : 'landing-page',
       utm_source: utmSource || undefined,
       utm_medium: utmMedium || undefined,
       utm_campaign: utmCampaign || undefined
     }
   });
 
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token
-    },
-    body: payload
-  }).then(function (r) {
+  try {
+    var controller = new AbortController();
+    var timeout = setTimeout(function () { controller.abort(); }, 5000);
+
+    var r = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: payload,
+      signal: controller.signal
+    });
+
+    clearTimeout(timeout);
+
     if (!r.ok) {
-      r.text().then(function (t) {
-        console.error('CRM webhook error:', r.status, t);
-      });
+      var t = await r.text();
+      console.error('CRM webhook error:', r.status, t);
+    } else {
+      console.log('CRM webhook sent:', email);
     }
-  }).catch(function (err) {
-    console.error('CRM webhook failed:', err);
-  });
+  } catch (err) {
+    console.error('CRM webhook failed:', err.name === 'AbortError' ? 'timeout (5s)' : err);
+  }
 }
 
 module.exports = async function handler(req, res) {
@@ -160,6 +174,9 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'UTM parameter too long (max 500 characters).' });
   }
 
+  // Source field — distinguishes playbook gate from webinar registration
+  var source = (body.source || '').trim();
+
   // Anti-bot: reject submissions faster than 2 seconds (silent reject)
   var ts = parseInt(body._ts, 10);
   if (!ts || (Date.now() - ts) < 2000) {
@@ -188,6 +205,9 @@ module.exports = async function handler(req, res) {
     });
   }
 
+  // Playbook gate uses different tag and disables autoresponders
+  var isPlaybookGate = source === 'playbook-gate';
+
   // Call Ecomail API (with 1 retry on transient failure)
   var ecomailUrl = 'https://api2.ecomailapp.cz/lists/' + listId + '/subscribe';
   var ecomailBody = JSON.stringify({
@@ -195,15 +215,15 @@ module.exports = async function handler(req, res) {
       email: email,
       name: firstName,
       surname: surname,
-      source: 'ugc-webinar-lp',
-      tags: ['ugc-webinar-2026'],
+      source: isPlaybookGate ? 'ugc-playbook-gate' : 'ugc-webinar-lp',
+      tags: [isPlaybookGate ? 'ugc-playbook-organic' : 'ugc-webinar-2026'],
       custom_fields: {
         UTM_SOURCE: utmSource,
         UTM_MEDIUM: utmMedium,
         UTM_CAMPAIGN: utmCampaign
       }
     },
-    trigger_autoresponders: true,
+    trigger_autoresponders: !isPlaybookGate,
     update_existing: true,
     skip_confirmation: true
   });
@@ -222,8 +242,8 @@ module.exports = async function handler(req, res) {
       });
 
       if (response.ok) {
-        // Fire-and-forget: send to CRM webhook (non-blocking)
-        sendToCrm(name, email, utmSource, utmMedium, utmCampaign);
+        // Send to CRM webhook (awaited with 5s timeout, failure won't affect response)
+        await sendToCrm(name, email, utmSource, utmMedium, utmCampaign, source);
 
         return res.status(200).json({
           ok: true,
