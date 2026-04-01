@@ -1370,7 +1370,7 @@
       <form id="playbook-gate-form" novalidate>
         <input type="text" name="name" placeholder="Jméno a příjmení" required maxlength="100" autocomplete="name">
         <input type="email" name="email" placeholder="Váš e-mail" required maxlength="254" autocomplete="email">
-        <input type="text" name="fax_number" tabindex="-1" autocomplete="off" class="playbook-gate__honey">
+        <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;"><input type="text" name="fax_number" tabindex="-1" autocomplete="new-password"></div>
         <input type="hidden" name="_ts" value="">
         <button type="submit" class="playbook-gate-btn">Odemknout playbook zdarma</button>
       </form>
@@ -2677,17 +2677,15 @@
       e.preventDefault();
 
       // Honeypot check
-      var honey = form.querySelector('[name="fax_number"]').value;
-      if (honey) { console.log('[gate] honeypot filled:', honey); return; }
+      if (form.querySelector('[name="fax_number"]').value) return;
 
       // Timestamp check (< 2s = bot)
       var ts = parseInt(form.querySelector('[name="_ts"]').value, 10);
-      var elapsed = Date.now() - ts;
-      if (!ts || elapsed < 2000) { console.log('[gate] timestamp fail:', ts, elapsed); return; }
+      if (!ts || (Date.now() - ts) < 2000) return;
 
       var nameVal = form.querySelector('[name="name"]').value.trim();
       var emailVal = form.querySelector('[name="email"]').value.trim();
-      if (!nameVal || !emailVal) { console.log('[gate] empty fields:', nameVal, emailVal); return; }
+      if (!nameVal || !emailVal) return;
 
       var btn = form.querySelector('.playbook-gate-btn');
       var msgEl = document.getElementById('playbook-gate-msg');
