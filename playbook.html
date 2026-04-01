@@ -37,7 +37,12 @@
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2287597364836978&ev=PageView&noscript=1" /></noscript>
 
   <script>
-    (function(){if(localStorage.getItem('playbook-theme')==='light')document.documentElement.classList.add('light')})();
+    (function(){
+      if(localStorage.getItem('playbook-theme')==='light')document.documentElement.classList.add('light');
+      var p=new URLSearchParams(window.location.search);
+      if(p.get('access')==='subscriber'){localStorage.setItem('playbook-access','1');history.replaceState(null,'',window.location.pathname)}
+      if(!localStorage.getItem('playbook-access'))document.documentElement.classList.add('playbook-gated');
+    })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1229,9 +1234,150 @@
       .copy-btn { top: 8px; right: 8px; padding: 5px 8px; font-size: 0.7rem; }
       .section__label { font-size: 0.65rem; }
     }
+
+    /* PLAYBOOK GATE */
+    .playbook-gated .playbook,
+    .playbook-gated .cover {
+      filter: blur(8px);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .playbook-gate-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(4, 4, 4, 0.92);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .playbook-gated .playbook-gate-overlay { display: flex; }
+
+    .playbook-gate-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+    }
+    .playbook-gate-card h2 {
+      font-family: 'Work Sans', Arial, Helvetica, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--c-text);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin: 0 0 8px;
+    }
+    .playbook-gate-card p {
+      font-size: 0.95rem;
+      color: var(--c-text-muted);
+      line-height: 1.5;
+      margin: 0 0 24px;
+    }
+    .playbook-gate-card input {
+      display: block;
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      background: var(--c-bg);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-md);
+      color: var(--c-text);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .playbook-gate-card input:focus-visible {
+      outline: 2px solid var(--c-primary);
+      outline-offset: -2px;
+    }
+    .playbook-gate-card input::placeholder { color: var(--c-text-dim); }
+    .playbook-gate-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: var(--c-primary);
+      color: var(--c-bg);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .playbook-gate-btn:hover { background: var(--c-primary-light); }
+    .playbook-gate-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .playbook-gate-btn:focus-visible {
+      outline: 2px solid var(--c-primary);
+      outline-offset: 2px;
+    }
+    .playbook-gate__gdpr {
+      font-size: 0.78rem;
+      color: var(--c-text-dim);
+      line-height: 1.4;
+      margin-top: 16px;
+    }
+    .playbook-gate__gdpr a { color: var(--c-text-muted); }
+    .playbook-gate__msg {
+      display: none;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    .playbook-gate__msg--error {
+      display: block;
+      background: var(--c-red-a05);
+      border: 1px solid var(--c-accent-red);
+      color: var(--c-accent-red);
+    }
+    .playbook-gate__msg--success {
+      display: block;
+      background: var(--c-primary-a10);
+      border: 1px solid var(--c-primary);
+      color: var(--c-primary);
+    }
+    .playbook-gate__honey { position: absolute; left: -9999px; }
+
+    html.light .playbook-gate-overlay { background: rgba(255, 255, 255, 0.92); }
+
+    @media (max-width: 600px) {
+      .playbook-gate-card { padding: 28px 20px; }
+      .playbook-gate-card h2 { font-size: 1.25rem; }
+    }
+
+    @media print {
+      .playbook-gate-overlay { display: none !important; }
+      .playbook-gated .playbook,
+      .playbook-gated .cover { filter: none; pointer-events: auto; user-select: auto; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- PLAYBOOK GATE -->
+  <div class="playbook-gate-overlay" id="playbook-gate">
+    <div class="playbook-gate-card">
+      <h2>UGC Playbook</h2>
+      <p>30 stránek strategií, checklistů a&nbsp;šablon pro UGC kreativy. Zadejte e-mail a&nbsp;playbook je váš.</p>
+      <form id="playbook-gate-form" novalidate>
+        <input type="text" name="name" placeholder="Jméno a příjmení" required maxlength="100" autocomplete="name">
+        <input type="email" name="email" placeholder="Váš e-mail" required maxlength="254" autocomplete="email">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="playbook-gate__honey">
+        <input type="hidden" name="_ts" value="">
+        <button type="submit" class="playbook-gate-btn">Odemknout playbook zdarma</button>
+      </form>
+      <p class="playbook-gate__gdpr">Odesláním souhlasíte se zpracováním údajů a&nbsp;příležitostným zasíláním obsahu o&nbsp;UGC a&nbsp;performance marketingu. <a href="https://www.socials.cz/gdpr" target="_blank">Ochrana osobních údajů</a></p>
+      <div id="playbook-gate-msg"></div>
+    </div>
+  </div>
 
   <!-- THEME TOGGLE -->
   <button class="theme-toggle" id="theme-toggle" aria-label="Přepnout světlý/tmavý režim">
@@ -2516,6 +2662,88 @@
           link_text: 'Stáhnout Markdown'
         });
       }
+    });
+  })();
+
+  // -- PLAYBOOK GATE --
+  (function() {
+    var form = document.getElementById('playbook-gate-form');
+    if (!form) return;
+
+    // Set anti-bot timestamp
+    form.querySelector('[name="_ts"]').value = Date.now();
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Honeypot check
+      if (form.querySelector('[name="website"]').value) return;
+
+      // Timestamp check (< 2s = bot)
+      var ts = parseInt(form.querySelector('[name="_ts"]').value, 10);
+      if (!ts || (Date.now() - ts) < 2000) return;
+
+      var nameVal = form.querySelector('[name="name"]').value.trim();
+      var emailVal = form.querySelector('[name="email"]').value.trim();
+      if (!nameVal || !emailVal) return;
+
+      var btn = form.querySelector('.playbook-gate-btn');
+      var msgEl = document.getElementById('playbook-gate-msg');
+      btn.disabled = true;
+      btn.textContent = 'Odesílám…';
+      msgEl.className = 'playbook-gate__msg';
+      msgEl.style.display = 'none';
+
+      // Collect UTM params from current URL
+      var params = new URLSearchParams(window.location.search);
+
+      fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: nameVal,
+          email: emailVal,
+          source: 'playbook-gate',
+          utm_source: params.get('utm_source') || '',
+          utm_medium: params.get('utm_medium') || '',
+          utm_campaign: params.get('utm_campaign') || '',
+          _ts: ts
+        })
+      })
+      .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+      .then(function(res) {
+        if (res.ok && res.data.ok) {
+          msgEl.className = 'playbook-gate__msg playbook-gate__msg--success';
+          msgEl.textContent = 'Hotovo! Playbook se odemyká…';
+          msgEl.style.display = 'block';
+
+          localStorage.setItem('playbook-access', '1');
+
+          // GA4 event
+          if (typeof gtag === 'function') {
+            gtag('event', 'playbook_unlock', { method: 'email_gate' });
+          }
+
+          // Meta Pixel Lead (distinct content_name for reporting)
+          if (typeof fbq === 'function') {
+            fbq('track', 'Lead', { content_name: 'playbook-gate' });
+          }
+
+          setTimeout(function() {
+            document.documentElement.classList.remove('playbook-gated');
+            document.getElementById('playbook-gate').style.display = 'none';
+          }, 800);
+        } else {
+          throw new Error(res.data.error || 'Něco se pokazilo.');
+        }
+      })
+      .catch(function(err) {
+        msgEl.className = 'playbook-gate__msg playbook-gate__msg--error';
+        msgEl.textContent = err.message || 'Něco se pokazilo. Zkuste to prosím znovu.';
+        msgEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Odemknout playbook zdarma';
+      });
     });
   })();
   </script>

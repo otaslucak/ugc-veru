@@ -13,10 +13,10 @@ index.html              — Landing page (13 sections incl. video teaser + tabbe
 dekujeme.html           — Thank-you page (post-registration confirmation + resources)
 css/styles.css          — Mobile-first styles, custom properties, components
 js/main.js              — Countdown, sticky header, accordion, form AJAX, lazy video, tab switching, anti-bot, sessionStorage gate
-api/subscribe.js        — Vercel serverless function (Ecomail API proxy, rate limiting, CORS, input validation)
+api/subscribe.js        — Vercel serverless function (Ecomail API proxy + CRM webhook, rate limiting, CORS, input validation, playbook-gate source routing)
 vercel.json             — Vercel config (rewrites, cache headers, security headers)
 webinar.ics             — iCalendar file for Apple/Outlook calendar import
-.env.example            — Env var documentation (ECOMAIL_API_KEY, ECOMAIL_LIST_ID)
+.env.example            — Env var documentation (ECOMAIL_API_KEY, ECOMAIL_LIST_ID, CRM_WEBHOOK_URL, CRM_WEBHOOK_TOKEN)
 robots.txt              — Crawler directives (allow /, disallow /api/)
 fonts/                  — Self-hosted Work Sans woff2 (latin + latin-ext)
 images/                 — veronika.png, jarda.jpg, socials-logo.svg, og-image.jpg + WebP variants + responsive sizes
@@ -87,6 +87,7 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Hero layout:** On mobile: badge → headline (short, no prefix) → Veronika photo → form. On desktop: 2-column grid with headline+subtitle+form left, photo right.
 - **3 registration forms:** hero, mid-page, final CTA — all submit to `/api/subscribe`. Placeholder "Jméno a příjmení" — backend splits into `name` + `surname`.
 - **Ecomail integration:** Fully wired. `api/subscribe.js` calls Ecomail `/lists/{id}/subscribe` with `skip_confirmation`, `trigger_autoresponders`, `update_existing`. Full name is split on whitespace: first word → `name`, rest → `surname`. Contacts land in "Hlavní seznam" with tag `ugc-webinar-2026`. UTM params (`utm_source`, `utm_medium`, `utm_campaign`) parsed from URL and stored as custom fields (`UTM_SOURCE`, `UTM_MEDIUM`, `UTM_CAMPAIGN`). Requires `ECOMAIL_API_KEY` + `ECOMAIL_LIST_ID` env vars on Vercel (already set). Falls back to skeleton success response when env vars are missing (local dev).
+- **CRM webhook:** After successful Ecomail registration, `api/subscribe.js` sends a fire-and-forget POST to a Supabase Edge Function (`prospect-webhook`). Payload: `name`, `email`, `phone` (empty), `company` (empty), `interaction_type: "webinar_registration"`, `interaction_title: "UGC"`, `metadata` with `source: "landing-page"` + UTM params. Non-blocking — CRM failure never affects user response, errors logged to Vercel console. Requires `CRM_WEBHOOK_URL` + `CRM_WEBHOOK_TOKEN` env vars (optional — skipped silently when missing).
 - **Meta Pixel:** Active (ID `2287597364836978`). **Blocked until marketing consent** via Cookiebot (`type="text/plain" data-cookieconsent="marketing"`). Events: `PageView` on both pages, `Lead` on form submit (main.js), `CompleteRegistration` on thank-you page only when `sessionStorage('ugc-registered')` is verified (prevents bot/direct-access inflation). On `dekujeme.html`, `CompleteRegistration` also listens for `CookiebotOnAccept` event (fallback for delayed consent).
 - **Cookiebot:** Consent banner on both pages. CBID `28189135-a400-4497-86e8-4fcba007c3e5` (shared domain group with `www.socials.cz`). `data-blockingmode="auto"`. Configured in [Cookiebot Manager](https://manage.cookiebot.com). Banner language auto-detected from `<html lang="cs">`.
 - **GDPR:** All "Ochrana osobních údajů" links point to `https://www.socials.cz/gdpr`
@@ -102,7 +103,7 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Riverside link:** `https://riverside.com/studio/socials-advertisings-studio?t=3a938320e33f7df4b5d4` — **gated** behind sessionStorage on thank-you page (hidden until verified registration), also in Google Calendar details and `.ics` file.
 - **Thank-you page (`/dekujeme`):** Post-registration redirect (300ms delay for Pixel). Animated checkmark (CSS-only), date badge. Riverside button + calendar links are hidden by default (`#thankyou-gated`), shown only when `sessionStorage('ugc-registered')` or `sessionStorage('ugc-registered-time')` (24h window) is present. `CompleteRegistration` Pixel fires only once (first visit), subsequent refreshes within 24h show gated content without re-firing. Direct access without registration shows fallback message (`#thankyou-noauth`) with link back to LP. 3 resource cards (YouTube, Podcast, Natima case study). `noindex, nofollow`.
 - **Calendar integration:** Google Calendar via URL params, Apple/Outlook via static `webinar.ics` file. Vercel serves `.ics` with `Content-Type: text/calendar`.
-- **Form flow:** Submit → timestamp anti-bot check (< 2s = silent reject) → honeypot check → Ecomail API (with UTM data, 1 retry on 5xx/network error) → Lead Pixel event → set `sessionStorage('ugc-registered')` → 300ms delay → redirect to `/dekujeme` → verify sessionStorage → show gated content + CompleteRegistration Pixel → set `ugc-registered-time` timestamp (24h persistence)
+- **Form flow:** Submit → timestamp anti-bot check (< 2s = silent reject) → honeypot check → Ecomail API (with UTM data, 1 retry on 5xx/network error) → CRM webhook (fire-and-forget) → Lead Pixel event → set `sessionStorage('ugc-registered')` → 300ms delay → redirect to `/dekujeme` → verify sessionStorage → show gated content + CompleteRegistration Pixel → set `ugc-registered-time` timestamp (24h persistence)
 - **Favicon:** SVG (scalable, green dot on dark bg), ICO fallback (32×32), apple-touch-icon (180×180). Both HTML pages reference all three.
 - **SEO basics:** `<link rel="canonical">` set to `https://ugc.socials.cz/`, `og:url` set, `og:image` set to `images/og-image.jpg` (1200×630), `twitter:card` summary_large_image. Event schema (JSON-LD) with webinar metadata (date, speakers, free offer). `robots.txt` allows `/`, disallows `/api/`.
 - **Fonts:** Self-hosted Work Sans (variable font, wght 400–800) in `fonts/` directory. Two woff2 files: latin + latin-ext (for Czech characters). Preloaded in both HTML pages. No external Google Fonts requests.
@@ -121,6 +122,24 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Thank-you page gate:** Riverside link + calendar links hidden by default on `/dekujeme`. Shown only when `sessionStorage('ugc-registered')` or `sessionStorage('ugc-registered-time')` within 24h is present. Prevents casual/direct URL access and bot pixel inflation.
 - **Ecomail retry:** Single retry with 1s delay on 5xx/network errors. No retry on 4xx client errors.
 - **Security headers (vercel.json):** `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `Strict-Transport-Security: max-age=63072000; includeSubDomains`, `Content-Security-Policy` (script/style/font-src `'self'` only + Cookiebot domains `consent.cookiebot.com`, `consentcdn.cookiebot.com`; `style-src` also allows `https://fonts.googleapis.com`; `font-src` also allows `https://fonts.gstatic.com` (for playbook page Google Fonts); `frame-src` allows `consentcdn.cookiebot.com` for consent iframe; `img-src` allows `imgsct.cookiebot.com`; `unsafe-inline` for Meta Pixel + sessionStorage check) — applied globally via `/(.*) ` rule.
+
+## Playbook Soft Gate (Lead Capture)
+
+Soft email gate on `/playbook` — captures organic leads when attendees share the link.
+
+**How it works:**
+1. Email/Typeform links include `?access=subscriber` → bypasses gate, stores `localStorage('playbook-access')`, strips param from URL
+2. Direct access (no parameter, no localStorage) → playbook content blurred behind overlay with name + email form
+3. On email submit → `POST /api/subscribe` with `source: "playbook-gate"` → Ecomail tag `ugc-playbook-organic` (distinct from `ugc-webinar-2026`), `trigger_autoresponders: false` → CRM webhook with `interaction_type: "playbook_download"` → reveal content → store `localStorage('playbook-access')`
+4. Return visits with localStorage → no gate
+
+**Gate flow:** FOUC prevention via inline `<head>` script (adds `.playbook-gated` class before paint) → CSS `filter: blur(8px)` on `.playbook` + `.cover` → fixed overlay `#playbook-gate` with form → anti-bot (honeypot + timestamp) → fetch `/api/subscribe` → GA4 `playbook_unlock` event + Meta Pixel `Lead` with `content_name: 'playbook-gate'` → 800ms delay → remove `.playbook-gated` class + hide overlay
+
+**Subscriber links (all include `?access=subscriber`):**
+- Email 05 (`emails/05-followup.html`) — playbook CTA
+- Typeform thank-you screen — "Otevřít playbook" button
+
+**Ecomail segmentation:** `ugc-webinar-2026` (webinar registrants) vs `ugc-playbook-organic` (organic playbook leads)
 
 ## Completed Setup
 
@@ -156,7 +175,7 @@ emails/
 - **Email 01 specifics:** CTA → EcoBamboo case study (`socials.cz/pripadove-studie/ecobamboo`). Teaser text: 22 dní, 3. nejprodávanější produkt, spolupráce s agenturou DudeUp na UGC videích.
 - **Email 02 specifics:** CTA → Natima case study (`socials.cz/pripadove-studie/natima`). Teaser: 6 přístupů ke kreativám, #2 = UGC jako stěžejní varianta reklamy.
 - **Email 03 specifics:** Intro leads with 30 stránkový UGC Playbook (strategický + exekuční dokument, checklist, briefy, ceník, insighty). Mentions AI format (ChatGPT/Claude/Gemini) + audio verze. Bonus section removed (duplicated intro). CTA → 100. díl Socials podcastu „Co funguje v Meta Ads v roce 2026?" (Radka Hrejsková + Jarda Bobák), link na Spotify Podcasters.
-- **Email 05 specifics:** One email for entire segment (no attendee/non-attendee split). No recording. Primary CTA = Playbook page (`/playbook` — read online, Markdown export, audio version). Secondary CTA = Typeform feedback (URL with hidden fields: `https://kr3cjcjdmo4.typeform.com/to/H9eox8Sm?utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-5#email=*|EMAIL|*&first_name=*|NAME|*&last_name=*|SURNAME|*`, outlined button in card, "5 krátkých otázek", "max. 2 minuty"). Resources section (YouTube, Podcast, Instagram, LinkedIn, Facebook).
+- **Email 05 specifics:** One email for entire segment (no attendee/non-attendee split). No recording. Primary CTA = Playbook page (`/playbook?access=subscriber` — bypasses soft gate, read online, Markdown export, audio version). Secondary CTA = Typeform feedback (URL with hidden fields: `https://kr3cjcjdmo4.typeform.com/to/H9eox8Sm?utm_source=ecomail&utm_medium=email&utm_campaign=ugc-webinar-seq-5#email=*|EMAIL|*&first_name=*|NAME|*&last_name=*|SURNAME|*`, outlined button in card, "5 krátkých otázek", "max. 2 minuty"). Resources section (YouTube, Podcast, Instagram, LinkedIn, Facebook).
 - **Calendar links:** Emails 01–03 include calendar buttons (Google Calendar + Apple/Outlook .ics) at bottom of content area. Email 01 centered, emails 02–03 left-aligned. Mobile: stacked full-width (`.calendar-btn`).
 
 ## Broadcast Emails (Ecomail)
