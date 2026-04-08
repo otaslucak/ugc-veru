@@ -73,7 +73,7 @@
   <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="28189135-a400-4497-86e8-4fcba007c3e5" data-blockingmode="auto" type="text/javascript"></script>
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=6">
+  <link rel="stylesheet" href="css/styles.css?v=7">
 
   <!-- Meta Pixel (blocked until marketing consent via Cookiebot) -->
   <script type="text/plain" data-cookieconsent="marketing">
@@ -846,6 +846,36 @@
         <div class="form__error" role="alert"></div>
       </form>
 
+      <!-- Live state (10:00–11:00) -->
+      <div class="final-cta__live" id="live-state">
+        <div class="live-badge">
+          <span class="live-badge__dot"></span> Webinář právě probíhá
+        </div>
+        <p class="final-cta__live-text">Vyplňte jméno a email a připojte se k živému vysílání.</p>
+        <form class="form" id="live-form" data-form="register">
+          <div class="form__row">
+            <input type="text" name="name" class="form__input" placeholder="Jméno a příjmení" required autocomplete="name" maxlength="100">
+            <input type="email" name="email" class="form__input" placeholder="Váš email" required autocomplete="email" maxlength="254">
+          </div>
+          <div class="form__honeypot" aria-hidden="true">
+            <label for="live-website">Website</label>
+            <input type="text" name="website" id="live-website" tabindex="-1" autocomplete="off">
+          </div>
+          <input type="hidden" name="_ts" value="">
+          <button type="submit" class="btn btn--primary btn--full">Připojit se k webináři</button>
+          <p class="form__micro text-center">
+            <a href="https://www.socials.cz/gdpr" target="_blank" rel="noopener">Ochrana osobních údajů</a>
+          </p>
+          <div class="form__error" role="alert"></div>
+        </form>
+        <div class="live-gate" id="live-gate" role="alert">
+          <p class="live-gate__text">Děkujeme! Klikněte na tlačítko níže a připojte se:</p>
+          <a href="https://riverside.com/studio/socials-advertisings-studio" target="_blank" rel="noopener" class="btn btn--primary btn--full">
+            Otevřít Riverside stream &rarr;
+          </a>
+        </div>
+      </div>
+
       <!-- Expired state -->
       <div class="final-cta__expired" id="expired-state">
         <p class="final-cta__expired-text">Webinář už proběhl. Děkujeme všem účastníkům!</p>
@@ -875,6 +905,6 @@
   </div>
 
   <!-- JS -->
-  <script src="js/main.js?v=7" defer></script>
+  <script src="js/main.js?v=8" defer></script>
 </body>
 </html>

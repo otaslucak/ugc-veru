@@ -7,9 +7,9 @@ BEGIN:VEVENT
 DTSTART:20260408T080000Z
 DTEND:20260408T084500Z
 SUMMARY:UGC Webinář — Socials
-DESCRIPTION:UGC: Kdy zvyšuje výkon kampaní a kdy je to jen drahý obsah?\nLive webinář od Socials.\n\nPřipojit se: https://riverside.com/studio/socials-advertisings-studio?t=3a938320e33f7df4b5d4
+DESCRIPTION:UGC: Kdy zvyšuje výkon kampaní a kdy je to jen drahý obsah?\nLive webinář od Socials.\n\nPřipojit se: https://riverside.com/studio/socials-advertisings-studio
 LOCATION:Online přes Riverside
-URL:https://riverside.com/studio/socials-advertisings-studio?t=3a938320e33f7df4b5d4
+URL:https://riverside.com/studio/socials-advertisings-studio
 STATUS:CONFIRMED
 END:VEVENT
 END:VCALENDAR
