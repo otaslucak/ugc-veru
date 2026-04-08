@@ -99,7 +99,6 @@
   <header class="header" id="header">
     <div class="container header__inner">
       <a href="/" aria-label="Socials"><img src="images/socials-logo.svg" alt="Socials" class="header__logo"></a>
-      <a href="#hero-form" class="btn btn--primary">Registrovat se zdarma</a>
     </div>
   </header>
 
@@ -112,7 +111,7 @@
         <!-- Headline block -->
         <div class="hero__headline">
           <div class="hero__badge">
-            Live webinář &bull; Středa 8.4.2026 &bull; 10:00
+            Webinář proběhl &bull; 8.4.2026
           </div>
 
           <h1 class="hero__title">
@@ -146,48 +145,6 @@
           </div>
         </div>
 
-        <!-- Registration form (1/3) -->
-        <div class="hero__form-wrap">
-          <form class="form" id="hero-form" data-form="register">
-            <div class="form__row">
-              <input
-                type="text"
-                name="name"
-                class="form__input"
-                placeholder="Jméno a příjmení"
-                required
-                autocomplete="name"
-                maxlength="100"
-              >
-              <input
-                type="email"
-                name="email"
-                class="form__input"
-                placeholder="Váš email"
-                required
-                autocomplete="email"
-                maxlength="254"
-              >
-            </div>
-            <!-- Honeypot -->
-            <div class="form__honeypot" aria-hidden="true">
-              <label for="hero-website">Website</label>
-              <input type="text" name="website" id="hero-website" tabindex="-1" autocomplete="off">
-            </div>
-            <input type="hidden" name="_ts" value="">
-            <button type="submit" class="btn btn--primary btn--full">
-              Registrovat se zdarma
-            </button>
-            <p class="form__micro">
-              Zdarma &bull; 45 min &bull; Bez prodejního pitche &bull;
-              <a href="https://www.socials.cz/gdpr" target="_blank" rel="noopener">Ochrana osobních údajů</a>
-            </p>
-            <div class="form__success" role="alert">
-              Děkujeme! Odkaz na webinář přijde na váš email.
-            </div>
-            <div class="form__error" role="alert"></div>
-          </form>
-        </div>
       </div>
     </div>
   </section>
@@ -572,36 +529,6 @@
   </section>
 
   <!-- ====================================================================
-       MID CTA (2/3)
-       ==================================================================== -->
-  <section class="section section--elevated mid-cta" id="mid-cta">
-    <div class="container">
-      <h2 class="section__title text-center mb-2">Chcete se přihlásit?</h2>
-      <p class="section__subtitle text-center mb-4" style="margin-left:auto;margin-right:auto;">Zdarma, 45 minut, bez prodejního pitche. Registrace trvá 10 sekund.</p>
-
-      <form class="form" id="mid-form" data-form="register">
-        <div class="form__row">
-          <input type="text" name="name" class="form__input" placeholder="Jméno a příjmení" required autocomplete="name" maxlength="100">
-          <input type="email" name="email" class="form__input" placeholder="Váš email" required autocomplete="email" maxlength="254">
-        </div>
-        <div class="form__honeypot" aria-hidden="true">
-          <label for="mid-website">Website</label>
-          <input type="text" name="website" id="mid-website" tabindex="-1" autocomplete="off">
-        </div>
-        <input type="hidden" name="_ts" value="">
-        <button type="submit" class="btn btn--primary btn--full">Registrovat se zdarma</button>
-        <p class="form__micro text-center">
-          <a href="https://www.socials.cz/gdpr" target="_blank" rel="noopener">Ochrana osobních údajů</a>
-        </p>
-        <div class="form__success" role="alert">
-          Děkujeme! Odkaz na webinář přijde na váš email.
-        </div>
-        <div class="form__error" role="alert"></div>
-      </form>
-    </div>
-  </section>
-
-  <!-- ====================================================================
        7. BONUS: UGC PLAYBOOK
        ==================================================================== -->
   <section class="section section--dark bonus" id="bonus">
@@ -796,90 +723,14 @@
   </section>
 
   <!-- ====================================================================
-       10. FINAL CTA
+       10. FINAL CTA — Webinář proběhl
        ==================================================================== -->
   <section class="section section--elevated final-cta" id="final-cta">
     <div class="container">
-      <!-- Countdown -->
-      <div class="countdown" id="countdown">
-        <div class="countdown__block">
-          <div class="countdown__value" id="countdown-days">--</div>
-          <div class="countdown__label">Dnů</div>
-        </div>
-        <div class="countdown__block">
-          <div class="countdown__value" id="countdown-hours">--</div>
-          <div class="countdown__label">Hodin</div>
-        </div>
-        <div class="countdown__block">
-          <div class="countdown__value" id="countdown-minutes">--</div>
-          <div class="countdown__label">Minut</div>
-        </div>
-        <div class="countdown__block">
-          <div class="countdown__value" id="countdown-seconds">--</div>
-          <div class="countdown__label">Sekund</div>
-        </div>
-      </div>
-
-      <h2 class="section__title mb-2">Přihlaste se na webinář</h2>
+      <h2 class="section__title text-center mb-2">Webinář proběhl</h2>
       <p class="final-cta__info">
-        <strong>Středa 8. dubna 2026</strong> v 10:00 &bull; Online přes Riverside &bull; Zdarma
+        Děkujeme všem, kteří se zúčastnili živého vysílání ve středu <strong>8. dubna 2026</strong>.
       </p>
-
-      <!-- Registration form (3/3) -->
-      <form class="form" id="final-form" data-form="register">
-        <div class="form__row">
-          <input type="text" name="name" class="form__input" placeholder="Jméno a příjmení" required autocomplete="name" maxlength="100">
-          <input type="email" name="email" class="form__input" placeholder="Váš email" required autocomplete="email" maxlength="254">
-        </div>
-        <div class="form__honeypot" aria-hidden="true">
-          <label for="final-website">Website</label>
-          <input type="text" name="website" id="final-website" tabindex="-1" autocomplete="off">
-        </div>
-        <input type="hidden" name="_ts" value="">
-        <button type="submit" class="btn btn--primary btn--full">Registrovat se zdarma</button>
-        <p class="form__micro text-center">
-          <a href="https://www.socials.cz/gdpr" target="_blank" rel="noopener">Ochrana osobních údajů</a>
-        </p>
-        <div class="form__success" role="alert">
-          Děkujeme! Odkaz na webinář přijde na váš email.
-        </div>
-        <div class="form__error" role="alert"></div>
-      </form>
-
-      <!-- Live state (10:00–11:00) -->
-      <div class="final-cta__live" id="live-state">
-        <div class="live-badge">
-          <span class="live-badge__dot"></span> Webinář právě probíhá
-        </div>
-        <p class="final-cta__live-text">Vyplňte jméno a email a připojte se k živému vysílání.</p>
-        <form class="form" id="live-form" data-form="register">
-          <div class="form__row">
-            <input type="text" name="name" class="form__input" placeholder="Jméno a příjmení" required autocomplete="name" maxlength="100">
-            <input type="email" name="email" class="form__input" placeholder="Váš email" required autocomplete="email" maxlength="254">
-          </div>
-          <div class="form__honeypot" aria-hidden="true">
-            <label for="live-website">Website</label>
-            <input type="text" name="website" id="live-website" tabindex="-1" autocomplete="off">
-          </div>
-          <input type="hidden" name="_ts" value="">
-          <button type="submit" class="btn btn--primary btn--full">Připojit se k webináři</button>
-          <p class="form__micro text-center">
-            <a href="https://www.socials.cz/gdpr" target="_blank" rel="noopener">Ochrana osobních údajů</a>
-          </p>
-          <div class="form__error" role="alert"></div>
-        </form>
-        <div class="live-gate" id="live-gate" role="alert">
-          <p class="live-gate__text">Děkujeme! Klikněte na tlačítko níže a připojte se:</p>
-          <a href="https://riverside.com/studio/socials-advertisings-studio" target="_blank" rel="noopener" class="btn btn--primary btn--full">
-            Otevřít Riverside stream &rarr;
-          </a>
-        </div>
-      </div>
-
-      <!-- Expired state -->
-      <div class="final-cta__expired" id="expired-state">
-        <p class="final-cta__expired-text">Webinář už proběhl. Děkujeme všem účastníkům!</p>
-      </div>
     </div>
   </section>
 
@@ -897,14 +748,7 @@
     </div>
   </footer>
 
-  <!-- ====================================================================
-       STICKY MOBILE CTA
-       ==================================================================== -->
-  <div class="sticky-cta" id="sticky-cta">
-    <a href="#hero-form" class="btn btn--primary btn--full">Registrovat se zdarma</a>
-  </div>
-
   <!-- JS -->
-  <script src="js/main.js?v=8" defer></script>
+  <script src="js/main.js?v=9" defer></script>
 </body>
 </html>

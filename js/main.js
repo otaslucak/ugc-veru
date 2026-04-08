@@ -1,50 +1,10 @@
 /* ==========================================================================
    UGC Webinar Landing Page — JavaScript
-   Countdown, sticky header, FAQ accordion, form AJAX, sticky mobile CTA
+   Sticky header, FAQ accordion, lazy video, tab switching, smooth scroll
    ========================================================================== */
 
 (function () {
   'use strict';
-
-  /* ------------------------------------------------------------------
-     COUNTDOWN TIMER — 8.4.2026 10:00 CET (Europe/Prague)
-     ------------------------------------------------------------------ */
-  const WEBINAR_DATE = new Date('2026-04-08T10:00:00+02:00');
-
-  const countdownEl = document.getElementById('countdown');
-  const daysEl = document.getElementById('countdown-days');
-  const hoursEl = document.getElementById('countdown-hours');
-  const minutesEl = document.getElementById('countdown-minutes');
-  const secondsEl = document.getElementById('countdown-seconds');
-  const expiredEl = document.getElementById('expired-state');
-
-  function updateCountdown() {
-    const now = Date.now();
-    const diff = WEBINAR_DATE.getTime() - now;
-
-    if (diff <= 0) {
-      // Webinar has passed
-      if (countdownEl) countdownEl.style.display = 'none';
-      if (expiredEl) expiredEl.classList.add('is-visible');
-      // Hide final CTA forms
-      var finalForm = document.getElementById('final-form');
-      if (finalForm) finalForm.style.display = 'none';
-      return;
-    }
-
-    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
-    if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
-    if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
-    if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
 
   /* ------------------------------------------------------------------
      STICKY HEADER
@@ -93,98 +53,6 @@
         btn.setAttribute('aria-expanded', 'true');
         answer.style.maxHeight = answer.scrollHeight + 'px';
       }
-    });
-  });
-
-  /* ------------------------------------------------------------------
-     FORM AJAX SUBMISSION
-     ------------------------------------------------------------------ */
-  var forms = document.querySelectorAll('[data-form="register"]');
-
-  // Set timestamp on all forms for anti-bot check
-  forms.forEach(function (form) {
-    var tsField = form.querySelector('input[name="_ts"]');
-    if (tsField) tsField.value = Date.now();
-  });
-
-  forms.forEach(function (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      var formData = new FormData(form);
-      var honeypot = formData.get('website');
-
-      // Honeypot check
-      if (honeypot) return;
-
-      // Timestamp anti-bot check — reject if submitted in under 2 seconds
-      var ts = parseInt(formData.get('_ts'), 10);
-      if (!ts || (Date.now() - ts) < 2000) return;
-
-      var name = formData.get('name');
-      var email = formData.get('email');
-
-      if (!name || !email) return;
-
-      var submitBtn = form.querySelector('button[type="submit"]');
-      var successEl = form.querySelector('.form__success');
-      var errorEl = form.querySelector('.form__error');
-
-      // Reset states
-      successEl.classList.remove('is-visible');
-      errorEl.classList.remove('is-visible');
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Odesílám...';
-
-      var urlParams = new URLSearchParams(window.location.search);
-      var utmSource = urlParams.get('utm_source') || '';
-      var utmMedium = urlParams.get('utm_medium') || '';
-      var utmCampaign = urlParams.get('utm_campaign') || '';
-
-      fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          utm_source: utmSource,
-          utm_medium: utmMedium,
-          utm_campaign: utmCampaign,
-          _ts: ts
-        })
-      })
-        .then(function (res) {
-          if (!res.ok) throw new Error('Server error');
-          return res.json();
-        })
-        .then(function () {
-          // Success
-          successEl.classList.add('is-visible');
-          form.reset();
-
-          // Fire Meta Pixel Lead event
-          if (typeof fbq === 'function') {
-            fbq('track', 'Lead');
-          }
-
-          // Set sessionStorage flag for thank-you page verification
-          try { sessionStorage.setItem('ugc-registered', '1'); } catch (e) {}
-
-          // Hide form fields
-          var inputs = form.querySelectorAll('.form__row, .form__micro, button[type="submit"]');
-          inputs.forEach(function (el) { el.style.display = 'none'; });
-
-          // Redirect to thank-you page (300ms delay for Pixel event)
-          setTimeout(function () {
-            window.location.href = '/dekujeme';
-          }, 300);
-        })
-        .catch(function () {
-          errorEl.textContent = 'Něco se pokazilo. Zkuste to prosím znovu.';
-          errorEl.classList.add('is-visible');
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Registrovat se zdarma';
-        });
     });
   });
 
@@ -284,40 +152,6 @@
       }
     });
   });
-
-  /* ------------------------------------------------------------------
-     STICKY MOBILE CTA (IntersectionObserver)
-     Shows when no form is visible on screen
-     ------------------------------------------------------------------ */
-  var stickyCta = document.getElementById('sticky-cta');
-
-  if (stickyCta && 'IntersectionObserver' in window) {
-    var formSections = document.querySelectorAll('[data-form="register"]');
-    var visibleForms = new Set();
-
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            visibleForms.add(entry.target);
-          } else {
-            visibleForms.delete(entry.target);
-          }
-        });
-
-        if (visibleForms.size === 0) {
-          stickyCta.classList.add('is-visible');
-        } else {
-          stickyCta.classList.remove('is-visible');
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    formSections.forEach(function (form) {
-      observer.observe(form);
-    });
-  }
 
   /* ------------------------------------------------------------------
      SMOOTH SCROLL for anchor links

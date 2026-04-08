@@ -9,10 +9,10 @@ Landing page for a UGC webinar by Socials agency. Standalone HTML/CSS/JS, deploy
 ## Repository Structure
 
 ```
-index.html              — Landing page (13 sections incl. video teaser + tabbed showcase)
-dekujeme.html           — Thank-you page (post-registration confirmation + resources)
+index.html              — Landing page (12 sections, post-webinar state — no registration forms)
+dekujeme.html           — Thank-you page (post-registration confirmation + resources, orphaned after webinar)
 css/styles.css          — Mobile-first styles, custom properties, components
-js/main.js              — Countdown, sticky header, accordion, form AJAX, lazy video, tab switching, anti-bot, sessionStorage gate
+js/main.js              — Sticky header, FAQ accordion, lazy video, tab switching, smooth scroll
 api/subscribe.js        — Vercel serverless function (Ecomail API proxy + CRM webhook, rate limiting, CORS, input validation, playbook-gate source routing)
 vercel.json             — Vercel config (rewrites, cache headers, security headers)
 webinar.ics             — iCalendar file for Apple/Outlook calendar import
@@ -62,30 +62,30 @@ All compressed: 720×1280, H.264, CRF 28, no audio, `faststart`. Source original
 - Position Socials as go-to agency for UGC creatives (human + AI avatars)
 - Bonus/lead magnet: UGC Playbook for attendees who watch until the end
 
-## Section Order (13 sections)
+## Section Order (12 sections, post-webinar)
 
-1. Hero (dark) — headline, photo, registration form
+1. Hero (dark) — badge „Webinář proběhl • 8.4.2026", headline, photo (no form)
 2. Video Teaser (elevated) — 6 compact videos, horizontal scroll mobile, 6-col desktop
 3. Pain Points (dark) — 5 pain cards
 4. Takeaways (elevated) — 5 numbered items
 5. Personas (dark) — 3 target audience cards
 6. Speakers (elevated) — Veronika + Jaroslav Bobák
 7. Video Showcase (dark) — **tabbed**: Natios (4) | Nutworld (5) | Virexa (3)
-8. Mid CTA (elevated) — registration form 2/3
-9. Bonus (dark) — UGC Playbook with CSS cover mockup
-10. Social Proof (elevated) — stats + testimonial (Shoptet link)
-11. FAQ (dark) — accordion
-12. Final CTA (elevated) — countdown + registration form 3/3
-13. Footer
+8. Bonus (dark) — UGC Playbook with CSS cover mockup
+9. Social Proof (elevated) — stats + testimonial (Shoptet link)
+10. FAQ (dark) — accordion
+11. Final CTA (elevated) — „Webinář proběhl" info block (no countdown, no form)
+12. Footer
 
-Background alternates strictly: dark → elevated → dark → ...
+Background alternates dark → elevated → dark → ..., **except sections 7+8 (Video Showcase → Bonus) which are both dark** — adjacent dark sections after Mid CTA removal in post-webinar cleanup. Acceptable visual trade-off; revisit if recording pivot happens.
 
 ## Technical Notes
 
+- **⚠️ Post-webinar state (from 8.4.2026 afternoon):** Landing page was stripped of all registration functionality after the live webinar ended. Removed: all 3 forms (hero/mid/final), countdown timer, live-state with Riverside button, expired-state, header CTA button, sticky mobile CTA, entire Mid CTA section. JS: removed countdown state machine, form AJAX handler, sticky CTA observer. Hero badge changed to „Webinář proběhl • 8.4.2026". Final CTA section repurposed to simple „Webinář proběhl — Děkujeme všem..." message. `api/subscribe.js`, Ecomail integration, CRM webhook, and rate limiting all remain in place because `/playbook` soft gate still uses them. `/dekujeme` page is orphaned (no forms to set sessionStorage) but still accessible. Full recording pivot (per original TODO) was NOT performed — no „Chci záznam" CTA added because recording wasn't ready yet. Revisit when recording is published.
 - **No framework** — standalone HTML + CSS + vanilla JS
 - **Mobile-first** — most traffic from Meta Ads is mobile
-- **Hero layout:** On mobile: badge → headline (short, no prefix) → Veronika photo → form. On desktop: 2-column grid with headline+subtitle+form left, photo right.
-- **3 registration forms:** hero, mid-page, final CTA — all submit to `/api/subscribe`. Placeholder "Jméno a příjmení" — backend splits into `name` + `surname`.
+- **Hero layout:** On mobile: badge → headline (short, no prefix) → Veronika photo (vertical flex). On desktop: 2-column grid with headline+subtitle left, photo right. No registration form after post-webinar cleanup.
+- **Registration forms: REMOVED from LP.** Historically there were 3 forms (hero, mid-page, final CTA) submitting to `/api/subscribe`, each with placeholder "Jméno a příjmení" (backend splits into `name` + `surname`). The backend API + Ecomail integration + CRM webhook remain intact and are still used by the `/playbook` soft gate.
 - **Ecomail integration:** Fully wired. `api/subscribe.js` calls Ecomail `/lists/{id}/subscribe` with `skip_confirmation`, `trigger_autoresponders`, `update_existing`. Full name is split on whitespace: first word → `name`, rest → `surname`. Contacts land in "Hlavní seznam" with tag `ugc-webinar-2026`. UTM params (`utm_source`, `utm_medium`, `utm_campaign`) parsed from URL and stored as custom fields (`UTM_SOURCE`, `UTM_MEDIUM`, `UTM_CAMPAIGN`). Requires `ECOMAIL_API_KEY` + `ECOMAIL_LIST_ID` env vars on Vercel (already set). Falls back to skeleton success response when env vars are missing (local dev).
 - **CRM webhook:** After successful Ecomail registration, `api/subscribe.js` sends an **awaited** POST (5s `AbortController` timeout) to a Supabase Edge Function (`prospect-webhook`). Payload: `name`, `email`, `phone` (empty), `company` (empty), `interaction_type: "webinar_registration"`, `interaction_title: "UGC"`, `metadata` with `source: "landing-page"` + UTM params. CRM failure never affects user response (wrapped in try/catch), results logged to Vercel console (`CRM webhook sent:` / `CRM webhook error:` / `CRM webhook failed:` / `CRM webhook skipped:`). Requires `CRM_WEBHOOK_URL` + `CRM_WEBHOOK_TOKEN` env vars (optional — skipped with log when missing). **Note:** Previously used fire-and-forget (`fetch` without `await`), which broke because Vercel terminates serverless instances before unawaited promises complete.
 - **Meta Pixel:** Active (ID `2287597364836978`). **Blocked until marketing consent** via Cookiebot (`type="text/plain" data-cookieconsent="marketing"`). Events: `PageView` on both pages, `Lead` on form submit (main.js), `CompleteRegistration` on thank-you page only when `sessionStorage('ugc-registered')` is verified (prevents bot/direct-access inflation). On `dekujeme.html`, `CompleteRegistration` also listens for `CookiebotOnAccept` event (fallback for delayed consent).
@@ -103,13 +103,13 @@ Background alternates strictly: dark → elevated → dark → ...
 - **Riverside link:** `https://riverside.com/studio/socials-advertisings-studio` — **audience link** (bez `?t=` tokenu, který je speaker invite!) — **gated** behind sessionStorage on thank-you page (hidden until verified registration), also in Google Calendar details and `.ics` file. **⚠️ POZOR:** původně zde byl link `?t=3a938320e33f7df4b5d4`, což byl **speaker invite** a omylem byl rozeslán v emailu 04 (Den D) — 8.4.2026 9:00. Bylo rychle opraveno + rozeslán opravný email `emails/04b-oprava-link.html`.
 - **Thank-you page (`/dekujeme`):** Post-registration redirect (300ms delay for Pixel). Animated checkmark (CSS-only), date badge. Riverside button + calendar links are hidden by default (`#thankyou-gated`), shown only when `sessionStorage('ugc-registered')` or `sessionStorage('ugc-registered-time')` (24h window) is present. `CompleteRegistration` Pixel fires only once (first visit), subsequent refreshes within 24h show gated content without re-firing. Direct access without registration shows fallback message (`#thankyou-noauth`) with link back to LP. 3 resource cards (YouTube, Podcast, Natima case study). `noindex, nofollow`.
 - **Calendar integration:** Google Calendar via URL params, Apple/Outlook via static `webinar.ics` file. Vercel serves `.ics` with `Content-Type: text/calendar`.
-- **Form flow:** Submit → timestamp anti-bot check (< 2s = silent reject) → honeypot check → Ecomail API (with UTM data, 1 retry on 5xx/network error) → CRM webhook (awaited, 5s timeout) → Lead Pixel event → set `sessionStorage('ugc-registered')` → 300ms delay → redirect to `/dekujeme` → verify sessionStorage → show gated content + CompleteRegistration Pixel → set `ugc-registered-time` timestamp (24h persistence)
+- **Form flow (historical, LP forms removed after webinar — still applies to `/playbook` soft gate):** Submit → timestamp anti-bot check (< 2s = silent reject) → honeypot check → Ecomail API (with UTM data, 1 retry on 5xx/network error) → CRM webhook (awaited, 5s timeout) → Lead Pixel event → set `sessionStorage('ugc-registered')` → 300ms delay → redirect to `/dekujeme` → verify sessionStorage → show gated content + CompleteRegistration Pixel → set `ugc-registered-time` timestamp (24h persistence)
 - **Favicon:** SVG (scalable, green dot on dark bg), ICO fallback (32×32), apple-touch-icon (180×180). Both HTML pages reference all three.
 - **SEO basics:** `<link rel="canonical">` set to `https://ugc.socials.cz/`, `og:url` set, `og:image` set to `images/og-image.jpg` (1200×630), `twitter:card` summary_large_image. Event schema (JSON-LD) with webinar metadata (date, speakers, free offer). `robots.txt` allows `/`, disallows `/api/`.
 - **Fonts:** Self-hosted Work Sans (variable font, wght 400–800) in `fonts/` directory. Two woff2 files: latin + latin-ext (for Czech characters). Preloaded in both HTML pages. No external Google Fonts requests.
 - **Images:** Hero + speaker images use `<picture>` elements with WebP sources and original PNG/JPG fallback. Responsive `srcset` with mobile-optimized sizes (560w hero, 720w speakers). Original full-size images kept as fallback.
 - **Accessibility:** `:focus-visible` styles on all interactive elements (buttons, inputs, tabs, FAQ, links) — green outline (`var(--c-primary)`) with `outline-offset: 2px` (inputs use `-2px` inset). Playbook TOC text contrast fixed to WCAG AA (4.7:1). Skip-to-content link on both pages. All 18 `<video>` elements have `aria-label` attributes. Print stylesheet: light theme, hides videos/CTAs/sticky elements/tools/inline-CTAs/theme-toggle; `page-break-inside: avoid` on cards/scenarios/callouts/bonus-sections/quotes/infographics/tables/benchmarks; gradients replaced with solid colors (#f0f7e6 green, #fef0f0 red); reduced spacing for paper savings; overflow-x visible on tables/flows.
-- **Countdown 3 states:** (1) `pending` — countdown ticks down to 10:00. (2) `live` (10:00–11:00) — countdown hidden, hero/mid forms hidden, header+sticky CTA hidden, `#live-state` shown with pulsing "Webinář právě probíhá" badge + gated form. User fills name+email → Ecomail registration → Riverside link revealed inline (`#live-gate`), no redirect to /dekujeme. (3) `expired` (after 11:00) — countdown hidden, final-form hidden, "Webinář už proběhl" message shown.
+- **Countdown 3 states (REMOVED 8.4.2026 after webinar):** Historically there were 3 states: (1) `pending` — countdown ticks down to 10:00. (2) `live` (10:00–11:00) — countdown hidden, hero/mid forms hidden, header+sticky CTA hidden, `#live-state` shown with pulsing "Webinář právě probíhá" badge + gated form. User fills name+email → Ecomail registration → Riverside link revealed inline (`#live-gate`), no redirect to /dekujeme. (3) `expired` (after 11:00) — countdown hidden, final-form hidden, "Webinář už proběhl" message shown. All state machine logic removed from `js/main.js`, all target DOM elements removed from `index.html`.
 - **Performance target:** LCP < 2.5s, total page < 300KB (excl. lazy-loaded videos)
 
 ## Security
@@ -225,7 +225,15 @@ emails/
 
 ## TODO (post-webinar)
 
-- [ ] **Převést LP na sběr registrací na záznam** — po skončení webináře (8.4. 11:00+) LP dál sbírá emaily, ale s upraveným messagingem: CTA text → "Získat záznam zdarma" / "Chci záznam", success message → "Odkaz na záznam vám pošleme emailem.", hero badge → "Záznam k dispozici" místo data. Skrýt countdown sekci, případně nahradit statickým bannerem. Zvážit úpravu Schema.org `eventStatus` na `EventMovedOnline` nebo odstranění. Email 05 follow-up by měl obsahovat odkaz na záznam.
+- [x] **Odstranit registrační funkcionalitu po skončení webináře** (hotovo 8.4.2026) — všechny 3 formy, countdown, live-state, Riverside tlačítko, header CTA, sticky mobile CTA, celá Mid CTA sekce odstraněny. Hero badge změněn na „Webinář proběhl". Final CTA nahrazeno info zprávou „Webinář proběhl". JS vyčištěn od mrtvé logiky. Viz commit a „Post-webinar state" poznámka v Technical Notes.
+
+- [ ] **(Volitelné) Plná pivotace LP na sběr registrací na záznam** — jakmile bude záznam ready, LP může znovu sbírat emaily s upraveným messagingem: CTA text → „Získat záznam zdarma" / „Chci záznam", success message → „Odkaz na záznam vám pošleme emailem.", hero badge → „Záznam k dispozici". Potřeba vrátit form handler + `api/subscribe` flow (backend stále funguje, používá ho playbook gate). Zvážit úpravu Schema.org `eventStatus` na `EventMovedOnline` nebo odstranění. Email 05 follow-up by měl obsahovat odkaz na záznam.
+
+- [ ] **Vyčistit zastaralé meta tagy a Schema.org** — `<title>`, meta description, OG tags, Schema.org Event JSON-LD stále odkazují na „Live webinář 8.4.2026 10:00". Když se bude sdílet URL po webináři, social preview stále ukazuje pre-event messaging. Nízká priorita (většina traffiku už přišla), ale pro správnost aktualizovat.
+
+- [ ] **FAQ v budoucím čase** — odpovědi v FAQ sekci stále používají budoucí čas („Záznam plánujeme zpřístupnit", „Odkaz vám pošleme emailem po registraci", „Playbook pošleme emailem všem, kteří webinář dosledují do konce"). Buď přepsat do minulého času, nebo odstranit nerelevantní otázky, nebo odstranit celou FAQ sekci.
+
+- [ ] **Orphaned `/dekujeme` page** — thank-you stránka je stále živá, ale už nejsou formy, které by nastavily `sessionStorage('ugc-registered')`, takže přímý přístup vždy zobrazí fallback „no auth" zprávu. Zvážit: (A) ponechat (harmless), (B) redirect na `/`, (C) odstranit. Pokud se někdy vrátí registrace pro záznam, bude potřeba znovu.
 
 ### Ecomail / DNS infrastructure cleanup
 
